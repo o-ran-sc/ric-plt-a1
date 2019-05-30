@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebe233d9_9bd167e2",
+        "filename": "docs/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-05-30T19:15:54Z",
+      "side": 1,
+      "message": "If you add the line of equals signs BEFORE the A1 Mediator line as well, that bumps it up to something like a \u003cH1\u003e head.  Then a single line of equals below is an \u003cH2\u003e head.   A single line of hyphens below is an \u003cH3\u003e head.  And so on.",
+      "revId": "cc2250acf384412fdd606e83f93f9802b1397dbe",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
