@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da0ab683_00219995",
+        "filename": "LICENSE.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-05-30T18:45:31Z",
+      "side": 1,
+      "message": "this should say AT\u0026T and Nokia somewhere, like the file headers, maybe?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "5ad8f03e1fc7683bb59da31f59edc2f6c0b2372b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a59f16_4c61e8ae",
+        "filename": "a1/openapi.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-05-30T18:45:31Z",
+      "side": 1,
+      "message": "pls put the annoying license header on this file also, yaml is fine with comments",
+      "revId": "5ad8f03e1fc7683bb59da31f59edc2f6c0b2372b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b18b46_13d0a4dd",
+        "filename": "docs/developer-guide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-05-30T18:45:31Z",
+      "side": 1,
+      "message": "Title should be something like \"A1 Developer Guide\"\n\npls insert license header",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "5ad8f03e1fc7683bb59da31f59edc2f6c0b2372b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599e9630_bfc5fe6f",
+        "filename": "docs/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-05-30T18:45:31Z",
+      "side": 1,
+      "message": "Might be helpful to say \"RIC - A1 Mediator Overview\" or something like that in your top-level index.  Not sure what will look best tho.\n\nPls insert license header.",
+      "revId": "5ad8f03e1fc7683bb59da31f59edc2f6c0b2372b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db792d5_cad35869",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-05-30T18:45:31Z",
+      "side": 1,
+      "message": "Would be helpful to start with \"A1 Mediator Release Notes\" or other descriptive title.\n\nalso pls put lic hdr here also",
+      "revId": "5ad8f03e1fc7683bb59da31f59edc2f6c0b2372b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
