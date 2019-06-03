@@ -14,16 +14,9 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 # ==================================================================================
-FROM python:3.7
+FROM nexus3.o-ran-sc.org:10004/bldr-ric-debian-python:stretch-p3.7-r1.0.24
 
 ADD . /tmp
-
-# Install RMR
-RUN apt-get update && apt-get install -y gcc git cmake
-RUN git clone https://gerrit.oran-osc.org/r/ric-plt/lib/rmr
-WORKDIR rmr
-RUN git checkout a012cf63dfdad3656c995cb06c316fd208c63b98
-RUN mkdir .build; cd .build; cmake ..; make install
 
 # Install python-rmr
 RUN pip install --upgrade pip
