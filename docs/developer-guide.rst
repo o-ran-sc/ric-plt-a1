@@ -37,7 +37,9 @@ This project follows semver. When changes are made, the versions are in:
 
 3) ``container-tag.yaml``
 
-4) ``a1/openapi.yml``
+4) ``a1mediator/values.yaml``
+
+5) ``a1/openapi.yml``
 
 Running locally
 ===============
