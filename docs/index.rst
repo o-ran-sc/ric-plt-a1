@@ -64,6 +64,16 @@ which is an initial delay until the first rcv is tried. 2)
 timeouts and send failures should be retried before A1 gives up and
 returns a 503. The default is ``4``.
 
+K8S
+---
+The helm chart is in the folder `a1mediator`.
+
+::
+
+    helm install --devel a1mediator/ --name a1 --set imageCredentials.username=xxx --set imageCredentials.password=xxx
+
+The username and password here are the credentials to the registry defined in `a1mediator/values.yaml`. Currently this is the LF docker registry.
+
 Docker
 ------
 
