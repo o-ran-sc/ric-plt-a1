@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "92a3267d_20ccc0d3",
+        "filename": "a1mediator/templates/deployment.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T18:11:55Z",
+      "side": 1,
+      "message": "I made the names less obnoxious, but the defaults are hardcoded in the code and documented in docs/index.rst. I don\u0027t want to have to change them in two places\n\npatch 7",
+      "parentUuid": "81a79128_55539544",
+      "revId": "c5375cc07c918de5f924a9e7f4c07180ec552bac",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50a2b358_6acccb94",
         "filename": "a1mediator/templates/deployment.yaml",
         "patchSetId": 4
