@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "174ed4a8_5a843642",
+        "filename": "a1mediator/templates/deployment.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000047
+      },
+      "writtenOn": "2019-06-06T17:41:07Z",
+      "side": 1,
+      "message": "this should be a value.  see the other charts in the RIC deployment tree — we\u0027ve got global secrets for this.",
+      "revId": "c5375cc07c918de5f924a9e7f4c07180ec552bac",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a79128_55539544",
+        "filename": "a1mediator/templates/deployment.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000047
+      },
+      "writtenOn": "2019-06-06T17:41:07Z",
+      "side": 1,
+      "message": "consider renaming this value and the one below to something structured and less shouty.  maybe \nrmr:\n retry:\n  interval: 10\n  times: 5\n\n... with sensible defaults using the \u0027default\u0027 function",
+      "revId": "c5375cc07c918de5f924a9e7f4c07180ec552bac",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a2b358_6acccb94",
+        "filename": "a1mediator/templates/deployment.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000047
+      },
+      "writtenOn": "2019-06-06T17:41:07Z",
+      "side": 1,
+      "message": "as above, i think there\u0027s a standard naming for this in the RIC that allows you be configured from a global values file, while allowing for local/site overrides.",
+      "revId": "c5375cc07c918de5f924a9e7f4c07180ec552bac",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
