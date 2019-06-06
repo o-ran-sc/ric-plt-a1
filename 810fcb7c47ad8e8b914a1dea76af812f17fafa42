@@ -16,6 +16,24 @@
       "revId": "810fcb7c47ad8e8b914a1dea76af812f17fafa42",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76fdd70_9a2147fc",
+        "filename": "a1mediator/templates/NOTES.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T18:04:37Z",
+      "side": 0,
+      "message": "This was generated from the helm template generate. It is useful. I can add it to .gitignore.\n\nfixed in patch 6",
+      "parentUuid": "3c8e331c_4d023479",
+      "revId": "810fcb7c47ad8e8b914a1dea76af812f17fafa42",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     }
   ]
 }
