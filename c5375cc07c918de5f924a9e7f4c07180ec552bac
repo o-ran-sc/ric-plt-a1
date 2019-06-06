@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9801f8bf_052de177",
+        "filename": "a1mediator/templates/deployment.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T18:24:41Z",
+      "side": 1,
+      "message": "fixed in patch 8, but i left in my helper, as it is useful for deploying locally. Ive documented the value.",
+      "parentUuid": "174ed4a8_5a843642",
+      "revId": "c5375cc07c918de5f924a9e7f4c07180ec552bac",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81a79128_55539544",
         "filename": "a1mediator/templates/deployment.yaml",
         "patchSetId": 4
