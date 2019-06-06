@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c8e331c_4d023479",
+        "filename": "a1mediator/templates/NOTES.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000047
+      },
+      "writtenOn": "2019-06-06T17:42:40Z",
+      "side": 0,
+      "message": "probably don\u0027t need this in the repo, right?",
+      "revId": "810fcb7c47ad8e8b914a1dea76af812f17fafa42",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
