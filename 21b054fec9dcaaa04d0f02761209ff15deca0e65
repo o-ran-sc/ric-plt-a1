@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9b47b01f_bdfbd3af",
+        "filename": "a1mediator/templates/config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T17:33:53Z",
+      "side": 1,
+      "message": "This really cleaned things up, thanks!",
+      "parentUuid": "4d2f6bf9_01d5ce51",
+      "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27a76e14_4560f879",
         "filename": "a1mediator/templates/config.yaml",
         "patchSetId": 2
