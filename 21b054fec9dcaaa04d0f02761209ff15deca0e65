@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d2f6bf9_01d5ce51",
+        "filename": "a1mediator/templates/config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T17:32:22Z",
+      "side": 1,
+      "message": "Fixed in patch 4",
+      "parentUuid": "9896bbbd_e47b6699",
+      "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27a76e14_4560f879",
         "filename": "a1mediator/templates/config.yaml",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46afb64_faed1a72",
+        "filename": "a1mediator/templates/config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T17:32:22Z",
+      "side": 1,
+      "message": "fixed in patch 3",
+      "parentUuid": "27a76e14_4560f879",
+      "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bee10b84_70052724",
+        "filename": "a1mediator/templates/config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T17:32:22Z",
+      "side": 1,
+      "message": "no. i dont know what newrt is, this has to do with rmr language, but the local.rt is hardcxoded in a1 and it looks for it.",
+      "parentUuid": "0d03ae95_3469b1b1",
+      "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe09fbc8_e7f8eb88",
         "filename": "a1mediator/templates/config.yaml",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2566321c_be3b8202",
+        "filename": "a1mediator/templates/config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T17:32:22Z",
+      "side": 1,
+      "message": "I dont think this is worth fixing, because this whole local.rt business is going away, in place of the route manager. This is temporary. This is literally a static file that should be mounted in for just the near term, but is deprecated by the route manager.",
+      "parentUuid": "fe09fbc8_e7f8eb88",
+      "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b700529b_96f67298",
+        "filename": "a1mediator/templates/config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T17:32:22Z",
+      "side": 1,
+      "message": "ok, i agree this should be a \"file\".Let me try to learn how to do that",
+      "parentUuid": "3784aaf2_18c5d519",
+      "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abc45b56_7ef9c2cb",
         "filename": "a1mediator/templates/config.yaml",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2019-06-06T16:02:31Z",
       "side": 1,
       "message": "this is another place where you probably want to move this out of the template proper and into an external file, with value substitution as appropriate (you can run gotpl expansion on an included file with something like \n\n{{ (tpl (.Files.Glob \"/path/to/include/from-filename\") }}\n\nsee also \"asconfig\" to convert included stuff to a format suitable for configmaps",
+      "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5c3eff_9502fd3f",
+        "filename": "a1mediator/templates/config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-06T17:32:22Z",
+      "side": 1,
+      "message": "ok, i agree this should be a \"file\".Let me try to learn how to do that",
+      "parentUuid": "abc45b56_7ef9c2cb",
       "revId": "21b054fec9dcaaa04d0f02761209ff15deca0e65",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
