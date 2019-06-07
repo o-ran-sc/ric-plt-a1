@@ -35,7 +35,7 @@ This project follows semver. When changes are made, the versions are in:
 
 2) ``setup.py``
 
-3) ``container-tag.yaml``
+3) ``ci/container-tag.yaml``
 
 4) ``a1/openapi.yml``
 
@@ -43,7 +43,7 @@ Running locally
 ===============
 
 1. This requires that RMR is installed on the base system. (the
-   Dockerfile does this when running in Docker)
+   ci/Dockerfile does this when running in Docker)
 
 2. It also requires rmr-python >= 0.10.1 installed. (The dockerfile also
    does this)
