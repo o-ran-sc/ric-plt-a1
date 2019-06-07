@@ -33,6 +33,24 @@
       "revId": "56060df9ad73ff054141df160e0fd7664e66148f",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4073113_9f70ee36",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-06-07T15:09:23Z",
+      "side": 1,
+      "message": "Can\u0027t do ..; Docker will not allow \u0027upward\u0027 references in the filesystem. \n\n I would assume docker build would be executed from the top directory, with a command like: \"docker build -f ci/Dockerfile .\" and that would make \"ADD .\" correct.",
+      "parentUuid": "2c035341_741d1652",
+      "revId": "56060df9ad73ff054141df160e0fd7664e66148f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
