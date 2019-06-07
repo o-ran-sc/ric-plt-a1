@@ -16,6 +16,23 @@
       "revId": "56060df9ad73ff054141df160e0fd7664e66148f",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c035341_741d1652",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-07T14:52:40Z",
+      "side": 1,
+      "message": "did you test this? pretty sure this wont work, maybe need ..?",
+      "revId": "56060df9ad73ff054141df160e0fd7664e66148f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
