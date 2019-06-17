@@ -18,12 +18,10 @@ FROM python:3.7
 
 ADD receiver.py /
 
-# Install RMR
-RUN apt-get update && apt-get install -y gcc git cmake
-RUN git clone https://gerrit.oran-osc.org/r/ric-plt/lib/rmr
-WORKDIR rmr
-RUN git checkout 68d09fa5028e47e763c44c30647da31e77eda64a
-RUN mkdir .build; cd .build; cmake ..; make install
+# Install RMr
+# see https://packagecloud.io/o-ran-sc/master/packages/debian/stretch/rmr_1.0.33_amd64.deb
+RUN wget --content-disposition https://packagecloud.io/o-ran-sc/master/packages/debian/stretch/rmr_1.0.33_amd64.deb/download.deb
+RUN dpkg -i rmr_1.0.33_amd64.deb
 
 # Install python-rmr
 RUN pip install --upgrade pip 
