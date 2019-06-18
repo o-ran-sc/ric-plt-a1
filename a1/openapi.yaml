@@ -16,7 +16,7 @@
 # ==================================================================================
 openapi: 3.0.0
 info:
-  version: 0.8.0
+  version: 0.8.3
   title: RIC A1
 paths:
   '/ric/policies/{policyname}':
