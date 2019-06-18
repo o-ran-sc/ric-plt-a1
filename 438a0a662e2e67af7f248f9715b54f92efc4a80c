@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af1526e5_eabe80d8",
+        "filename": "Dockerfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-18T17:16:58Z",
+      "side": 1,
+      "message": "what does this small mod achieve?",
+      "revId": "438a0a662e2e67af7f248f9715b54f92efc4a80c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
