@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f4f7dc1_eb09c59e",
+        "filename": "Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-21T18:30:39Z",
+      "side": 1,
+      "message": "how does this work locally? Back to D.K.s comment about whether that is good practice.",
+      "parentUuid": "4f1623e4_5ac57124",
+      "revId": "3eeee0df227d23e2a76b49cd4bbbcd8ff2733a05",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f59569c_70be1ed9",
         "filename": "Dockerfile",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2019-06-21T14:37:01Z",
       "side": 1,
       "message": "Please add \"-nv\" as argument to wget, I see I forgot that earlier",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "3eeee0df227d23e2a76b49cd4bbbcd8ff2733a05",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abd9c33_0a2e8bb9",
+        "filename": "Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-06-21T18:30:39Z",
+      "side": 1,
+      "message": "I lifted this command directly from the packagecloud.io website without modification.",
+      "parentUuid": "9f59569c_70be1ed9",
       "range": {
         "startLine": 28,
         "startChar": 8,
