@@ -46,6 +46,30 @@
       "revId": "fdf050451414e1a816e343bcd56f33186a742e49",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f47b83a_97a3c812",
+        "filename": "a1/openapi.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-08-21T20:22:56Z",
+      "side": 1,
+      "message": "Right, to be clear I\u0027m not asking for a content model with fields and structure, I just want \"object\" or whatever is the most generic type that OpenAPI allows you to declare. Because today the generated code answers nothing at all (void).",
+      "parentUuid": "8d1f367d_996fd249",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 7
+      },
+      "revId": "fdf050451414e1a816e343bcd56f33186a742e49",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
