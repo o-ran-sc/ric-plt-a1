@@ -123,7 +123,7 @@ def _get_handler(policyname):
     mtype_send, mtype_return = _get_needed_policy_fetch_info(policyname)
 
     if not (mtype_send and mtype_return):
-        return "POLICY DOES NOT SUPPORT FETCHING", 400
+        return "POLICY DOES NOT SUPPORT FETCHING", 501
 
     # send rmr, wait for ACK
     return_payload = a1rmr.send_ack_retry("", message_type=mtype_send, expected_ack_message_type=mtype_return)
@@ -153,9 +153,81 @@ def get_handler(policyname):
     return _try_func_return(lambda: _get_handler(policyname))
 
 
-def healthcheck_handler():
+# Healthcheck
+
+
+def get_healthcheck():
     """
     Handles healthcheck GET
     Currently, this basically checks the server is alive.a1rmr
     """
     return "", 200
+
+
+# Policy types
+
+
+def get_all_policy_types():
+    """
+    Handles GET /a1-p/policytypes
+    """
+    return "", 501
+
+
+def create_policy_type(policyid):
+    """
+    Handles PUT /a1-p/policytypes/policyid
+    """
+    return "", 501
+
+
+def get_policy_type(policyid):
+    """
+    Handles GET /a1-p/policytypes/policyid
+    """
+    return "", 501
+
+
+def delete_policy_type(policyid):
+    """
+    Handles DELETE /a1-p/policytypes/policyid
+    """
+    return "", 501
+
+
+# Policy instances
+
+
+def get_all_instances_for_type(policyid):
+    """
+    Handles GET /a1-p/policytypes/policyid/policies
+    """
+    return "", 501
+
+
+def get_policy_instance(policyid, instancename):
+    """
+    Handles GET /a1-p/policytypes/polidyid/policies/instancename
+    """
+    return "", 501
+
+
+def get_policy_instance_status(policyid, instancename):
+    """
+    Handles GET /a1-p/policytypes/polidyid/policies/instancename/status
+    """
+    return "", 501
+
+
+def create_or_replace_policy_instance(policyid, instancename):
+    """
+    Handles PUT /a1-p/policytypes/polidyid/policies/instancename
+    """
+    return "", 501
+
+
+def delete_policy_instance(policyid, instancename):
+    """
+    Handles DELETE /a1-p/policytypes/polidyid/policies/instancename
+    """
+    return "", 501
