@@ -20,8 +20,8 @@ FROM python:3.7-alpine
 COPY receiver.py /
 
 # copy NNG and rmr out of the  CI builder nng
-COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:3-a3.9 /usr/local/lib64/libnng.so /usr/local/lib64/libnng.so
-COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:3-a3.9 /usr/local/lib64/librmr_nng.so /usr/local/lib64/librmr_nng.so
+COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:4-a3.9 /usr/local/lib64/libnng.so /usr/local/lib64/libnng.so
+COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:4-a3.9 /usr/local/lib64/librmr_nng.so /usr/local/lib64/librmr_nng.so
 
 # Install RMr python bindings
 RUN pip install --upgrade pip

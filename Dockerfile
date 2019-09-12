@@ -17,8 +17,8 @@
 FROM python:3.7-alpine
 
 # copy NNG and rmr out of the  CI builder nng
-COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:3-a3.9 /usr/local/lib64/libnng.so /usr/local/lib64/libnng.so
-COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:3-a3.9 /usr/local/lib64/librmr_nng.so /usr/local/lib64/librmr_nng.so
+COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:4-a3.9 /usr/local/lib64/libnng.so /usr/local/lib64/libnng.so
+COPY --from=nexus3.o-ran-sc.org:10004/bldr-alpine3:4-a3.9 /usr/local/lib64/librmr_nng.so /usr/local/lib64/librmr_nng.so
 
 COPY a1/ /tmp/a1
 COPY tests/ /tmp/tests
@@ -32,7 +32,7 @@ RUN mkdir -p /opt/route/
 RUN apk add gcc musl-dev
 
 # do the actual install; this writes into /usr/local, need root
-RUN pip install .
+RUN pip install --upgrade pip && pip install .
 
 # Switch to a non-root user for security reasons.
 # a1 does not currently write into any dirs so no chowns are needed at this time.
@@ -44,5 +44,8 @@ USER $A1USER
 EXPOSE 10000
 ENV LD_LIBRARY_PATH /usr/local/lib/:/usr/local/lib64
 ENV RMR_SEED_RT /opt/route/local.rt
+
+# dont buffer logging
+ENV PYTHONUNBUFFERED 1
 
 CMD run.py
