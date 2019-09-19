@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d24e5cd_c1434415",
+        "filename": "tox.ini",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-09-19T16:40:01Z",
+      "side": 1,
+      "message": "i suspect the ENV variable sitepackagesdir isn\u0027t correct in this system, hence why it\u0027s unable to find a1\nthis worked locally\nhowever this change works in both places\nfeels slightly dirty to have to add an __init__ to tests, though, but that thread said it fixed for many people",
+      "revId": "a84245aac0d02537bdff0e79b872d47ef3bd4593",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    }
+  ]
+}
