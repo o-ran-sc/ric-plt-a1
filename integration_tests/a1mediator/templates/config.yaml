@@ -7,5 +7,5 @@ data:
     newrt|start
     rte|20000|testreceiverrmrservice:4560
     rte|20001|delayreceiverrmrservice:4563
-    rte|21024|{{ .Values.rmrservice.name }}:{{ .Values.rmrservice.port }}
+    rte|20002|testreceiverrmrservice:4563 # purposefully bad:
     newrt|end

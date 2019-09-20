@@ -205,7 +205,8 @@ stages:
         test: foo
 
   - name: test the admission control policy status get
-    delay_before: 8  # give it a few seconds for rmr ; delay reciever sleeps for 5 seconds by default
+    max_retries: 5
+    delay_before: 5  # give it a few seconds for rmr ; delay reciever sleeps for 5 seconds by default
     request:
       url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest/status
       method: GET
@@ -222,12 +223,12 @@ test_name: bad_requests
 
 stages:
 
-  - name: bad type get
-    request:
-      url: http://localhost:10000/a1-p/policytypes/20002
-      method: GET
-    response:
-      status_code: 404
+    #- name: bad type get
+    #request:
+    #  url: http://localhost:10000/a1-p/policytypes/20002
+    #  method: GET
+    #response:
+    #  status_code: 404
 
 
   - name: bad instance get

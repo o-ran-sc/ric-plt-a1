@@ -6,6 +6,7 @@ metadata:
 {{ include "a1mediator.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  hostname: {{ .Values.rmrservice.name }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "a1mediator.name" . }}
