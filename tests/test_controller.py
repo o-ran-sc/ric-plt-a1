@@ -23,7 +23,8 @@ import pytest
 
 
 ADM_CTRL = "admission_control_policy"
-ADM_CTRL_INSTANCE = "/a1-p/policytypes/20000/policies/" + ADM_CTRL
+ADM_CTRL_POLICIES = "/a1-p/policytypes/20000/policies"
+ADM_CTRL_INSTANCE = ADM_CTRL_POLICIES + "/" + ADM_CTRL
 ADM_CTRL_INSTANCE_STATUS = ADM_CTRL_INSTANCE + "/status"
 ADM_CTRL_TYPE = "/a1-p/policytypes/20000"
 TEST_TYPE = "/a1-p/policytypes/20001"
@@ -82,14 +83,31 @@ def test_xapp_put_good(client, monkeypatch, adm_type_good, adm_instance_good):
     res = client.get(ADM_CTRL_TYPE)
     assert res.status_code == 404
 
+    # no types at all
+    res = client.get("/a1-p/policytypes")
+    assert res.status_code == 200
+    assert res.json == []
+
+    # instance 404 because type not there yet
+    res = client.get(ADM_CTRL_POLICIES)
+    assert res.status_code == 404
+
     # put the type
     res = client.put(ADM_CTRL_TYPE, json=adm_type_good)
     assert res.status_code == 201
 
-    # there now
+    # type there now
     res = client.get(ADM_CTRL_TYPE)
     assert res.status_code == 200
     assert res.json == adm_type_good
+    res = client.get("/a1-p/policytypes")
+    assert res.status_code == 200
+    assert res.json == [20000]
+
+    # instance 200 but empty list
+    res = client.get(ADM_CTRL_POLICIES)
+    assert res.status_code == 200
+    assert res.json == []
 
     # no instance there yet
     res = client.get(ADM_CTRL_INSTANCE)
@@ -101,6 +119,11 @@ def test_xapp_put_good(client, monkeypatch, adm_type_good, adm_instance_good):
     _test_put_patch(monkeypatch)
     res = client.put(ADM_CTRL_INSTANCE, json=adm_instance_good)
     assert res.status_code == 201
+
+    # instance 200 and in list
+    res = client.get(ADM_CTRL_POLICIES)
+    assert res.status_code == 200
+    assert res.json == [ADM_CTRL]
 
     # get the instance
     res = client.get(ADM_CTRL_INSTANCE)
