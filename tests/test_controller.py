@@ -82,6 +82,11 @@ def test_xapp_put_good(client, monkeypatch, adm_type_good, adm_instance_good):
     res = client.get(ADM_CTRL_TYPE)
     assert res.status_code == 404
 
+    # no types at all
+    res = client.get("/a1-p/policytypes")
+    assert res.status_code == 200
+    assert res.json == []
+
     # put the type
     res = client.put(ADM_CTRL_TYPE, json=adm_type_good)
     assert res.status_code == 201
@@ -90,6 +95,9 @@ def test_xapp_put_good(client, monkeypatch, adm_type_good, adm_instance_good):
     res = client.get(ADM_CTRL_TYPE)
     assert res.status_code == 200
     assert res.json == adm_type_good
+    res = client.get("/a1-p/policytypes")
+    assert res.status_code == 200
+    assert res.json == [20000]
 
     # no instance there yet
     res = client.get(ADM_CTRL_INSTANCE)

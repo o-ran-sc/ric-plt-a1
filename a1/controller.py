@@ -74,7 +74,7 @@ def get_all_policy_types():
     """
     Handles GET /a1-p/policytypes
     """
-    return "", 501
+    return _try_func_return(lambda: data.get_type_list())
 
 
 def create_policy_type(policy_type_id):

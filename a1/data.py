@@ -67,6 +67,13 @@ def get_policy_type(policy_type_id):
     return POLICY_DATA[policy_type_id][D]
 
 
+def get_type_list():
+    """
+    retrieve all type ids
+    """
+    return list(POLICY_DATA.keys())
+
+
 # Instances
 
 
