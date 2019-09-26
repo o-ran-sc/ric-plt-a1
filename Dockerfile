@@ -27,19 +27,18 @@ RUN git clone --branch 1.8.1 https://gerrit.o-ran-sc.org/r/ric-plt/lib/rmr \
 # a1 stage 2
 FROM python:3.7-alpine
 
-# copies
-COPY --from=0 /usr/local/lib64/libnng.so /usr/local/lib64/libnng.so
-COPY --from=0 /usr/local/lib64/librmr_nng.so /usr/local/lib64/librmr_nng.so
-COPY a1/ /tmp/a1
-COPY tests/ /tmp/tests
-COPY setup.py tox.ini /tmp/
-WORKDIR /tmp
-
 # dir that rmr routing file temp goes into
 RUN mkdir -p /opt/route/
 
 # Gevent needs gcc
 RUN apk update && apk add bash gcc musl-dev
+
+# copies
+COPY --from=0 /usr/local/lib64/libnng.so /usr/local/lib64/libnng.so
+COPY --from=0 /usr/local/lib64/librmr_nng.so /usr/local/lib64/librmr_nng.so
+COPY a1/ /tmp/a1
+COPY setup.py tox.ini /tmp/
+WORKDIR /tmp
 
 # do the actual install; this writes into /usr/local, need root
 RUN pip install --upgrade pip && pip install .
@@ -54,7 +53,6 @@ USER $A1USER
 EXPOSE 10000
 ENV LD_LIBRARY_PATH /usr/local/lib/:/usr/local/lib64
 ENV RMR_SEED_RT /opt/route/local.rt
-
 # dont buffer logging
 ENV PYTHONUNBUFFERED 1
 
