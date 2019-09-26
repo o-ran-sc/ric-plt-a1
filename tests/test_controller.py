@@ -136,7 +136,26 @@ def test_xapp_put_good(client, monkeypatch, adm_type_good, adm_instance_good):
     assert res.status_code == 200
     assert res.json == [{"handler_id": "test_receiver", "status": "OK"}]
 
-    # assert that rmr bad states don't cause problems
+    # delete it and make sure we get approp 404s after
+    res = client.delete(ADM_CTRL_INSTANCE)
+    assert res.status_code == 204
+    res = client.delete(ADM_CTRL_INSTANCE)  # cant delete again
+    assert res.status_code == 404
+    res = client.get(ADM_CTRL_INSTANCE_STATUS)  # cant get status
+    assert res.status_code == 404
+    res = client.get(ADM_CTRL_INSTANCE)  # cant get instance
+    assert res.status_code == 404
+    # list still 200 but no instance
+    res = client.get(ADM_CTRL_POLICIES)
+    assert res.status_code == 200
+    assert res.json == []
+
+
+def test_xapp_put_good_bad_rmr(client, monkeypatch, adm_instance_good):
+    """
+    assert that rmr bad states don't cause problems
+    """
+    _test_put_patch(monkeypatch)
     monkeypatch.setattr("rmr.rmr.rmr_send_msg", rmr_mocks.send_mock_generator(10))
     res = client.put(ADM_CTRL_INSTANCE, json=adm_instance_good)
     assert res.status_code == 201

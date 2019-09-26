@@ -99,6 +99,14 @@ def store_policy_instance(policy_type_id, policy_instance_id, instance):
     POLICY_DATA[policy_type_id][I][policy_instance_id][H] = {}
 
 
+def delete_policy_instance(policy_type_id, policy_instance_id):
+    """
+    delete a policy instance
+    """
+    instance_is_valid(policy_type_id, policy_instance_id)
+    del POLICY_DATA[policy_type_id][I][policy_instance_id]
+
+
 def get_policy_instance(policy_type_id, policy_instance_id):
     """
     Retrieve a policy instance

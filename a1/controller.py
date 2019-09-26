@@ -1,3 +1,6 @@
+"""
+Main a1 controller
+"""
 # ==================================================================================
 #       Copyright (c) 2019 Nokia
 #       Copyright (c) 2018-2019 AT&T Intellectual Property.
@@ -17,8 +20,8 @@
 import json
 from flask import Response
 from jsonschema import validate
-import connexion
 from jsonschema.exceptions import ValidationError
+import connexion
 from a1 import get_module_logger
 from a1 import a1rmr, exceptions, data
 
@@ -32,28 +35,28 @@ def _try_func_return(func):
     """
     try:
         return func()
-    except ValidationError as exc:
+    except (ValidationError, exceptions.PolicyTypeAlreadyExists) as exc:
         logger.exception(exc)
         return "", 400
-    except exceptions.PolicyTypeAlreadyExists as exc:
-        logger.exception(exc)
-        return "", 400
-    except exceptions.PolicyTypeNotFound as exc:
+    except (exceptions.PolicyTypeNotFound, exceptions.PolicyInstanceNotFound) as exc:
         logger.exception(exc)
         return "", 404
-    except exceptions.PolicyInstanceNotFound as exc:
-        logger.exception(exc)
-        return "", 404
-    except exceptions.MissingManifest as exc:
-        logger.exception(exc)
-        return "A1 was unable to find the required RIC manifest. report this!", 500
-    except exceptions.MissingRmrString as exc:
-        logger.exception(exc)
-        return "A1 does not have a mapping for the desired rmr string. report this!", 500
     except BaseException as exc:
         # catch all, should never happen...
         logger.exception(exc)
         return Response(status=500)
+
+
+def _gen_body_to_handler(operation, policy_type_id, policy_instance_id, payload=None):
+    """
+    used to create the payloads that get sent to downstream policy handlers
+    """
+    return {
+        "operation": operation,
+        "policy_type_id": policy_type_id,
+        "policy_instance_id": policy_instance_id,
+        "payload": payload,
+    }
 
 
 # Healthcheck
@@ -74,7 +77,7 @@ def get_all_policy_types():
     """
     Handles GET /a1-p/policytypes
     """
-    return _try_func_return(lambda: data.get_type_list())
+    return _try_func_return(data.get_type_list)
 
 
 def create_policy_type(policy_type_id):
@@ -101,6 +104,7 @@ def delete_policy_type(policy_type_id):
     """
     Handles DELETE /a1-p/policytypes/policy_type_id
     """
+    logger.error(policy_type_id)
     return "", 501
 
 
@@ -127,7 +131,7 @@ def get_policy_instance_status(policy_type_id, policy_instance_id):
     Handles GET /a1-p/policytypes/polidyid/policies/policy_instance_id/status
     """
 
-    def _get_status_handler(policy_type_id, policy_instance_id):
+    def get_status_handler(policy_type_id, policy_instance_id):
         """
         Pop trough A1s mailbox, insert the latest status updates into the database, and then return the status vector
 
@@ -136,7 +140,6 @@ def get_policy_instance_status(policy_type_id, policy_instance_id):
         because the rmr mailbox may fill. However, in the near term, we do not expect this to happen.
         """
         # check validity to 404 first:
-        data.type_is_valid(policy_type_id)
         data.instance_is_valid(policy_type_id, policy_instance_id)
 
         # pop a1s mailbox, looking for policy notifications
@@ -158,7 +161,7 @@ def get_policy_instance_status(policy_type_id, policy_instance_id):
         # return the status vector
         return data.get_policy_instance_statuses(policy_type_id, policy_instance_id)
 
-    return _try_func_return(lambda: _get_status_handler(policy_type_id, policy_instance_id))
+    return _try_func_return(lambda: get_status_handler(policy_type_id, policy_instance_id))
 
 
 def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
@@ -166,7 +169,7 @@ def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
     Handles PUT /a1-p/policytypes/polidyid/policies/policy_instance_id
     """
 
-    def _put_instance_handler(policy_type_id, policy_instance_id, instance):
+    def put_instance_handler(policy_type_id, policy_instance_id, instance):
         """
         Handles policy instance put
 
@@ -179,24 +182,30 @@ def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
         # store the instance
         data.store_policy_instance(policy_type_id, policy_instance_id, instance)
 
-        body = {
-            "operation": "CREATE",
-            "policy_type_id": policy_type_id,
-            "policy_instance_id": policy_instance_id,
-            "payload": instance,
-        }
-
         # send rmr (best effort)
+        body = _gen_body_to_handler("CREATE", policy_type_id, policy_instance_id, payload=instance)
         a1rmr.send(json.dumps(body), message_type=policy_type_id)
 
         return "", 201
 
     instance = connexion.request.json
-    return _try_func_return(lambda: _put_instance_handler(policy_type_id, policy_instance_id, instance))
+    return _try_func_return(lambda: put_instance_handler(policy_type_id, policy_instance_id, instance))
 
 
 def delete_policy_instance(policy_type_id, policy_instance_id):
     """
     Handles DELETE /a1-p/policytypes/polidyid/policies/policy_instance_id
     """
-    return "", 501
+
+    def delete_instance_handler(policy_type_id, policy_instance_id):
+        # delete the instance
+        # HOLDUP: do we really want to blow this away? this means you can never get statusus again
+        data.delete_policy_instance(policy_type_id, policy_instance_id)
+
+        # send rmr (best effort)
+        body = _gen_body_to_handler("DELETE", policy_type_id, policy_instance_id)
+        a1rmr.send(json.dumps(body), message_type=policy_type_id)
+
+        return "", 204
+
+    return _try_func_return(lambda: delete_instance_handler(policy_type_id, policy_instance_id))
