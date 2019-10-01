@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6370029c_19459b6e",
+        "filename": "install_deps.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-01T13:35:09Z",
+      "side": 1,
+      "message": "I think you need at least 1.8.2 which corrects the bug when giving 0 to the receive with timeout call.",
+      "revId": "b74fb4d031256b372df089a3c3c22373f2853f09",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
