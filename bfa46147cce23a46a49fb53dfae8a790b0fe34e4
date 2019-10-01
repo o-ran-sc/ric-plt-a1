@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f562093_5a2fdde4",
+        "filename": "Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-10-01T18:00:54Z",
+      "side": 1,
+      "message": "If you\u0027re not compiling gevent anymore, maybe you don\u0027t need to install gcc anymore?",
+      "range": {
+        "startLine": 34,
+        "startChar": 31,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "bfa46147cce23a46a49fb53dfae8a790b0fe34e4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
