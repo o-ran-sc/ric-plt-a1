@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f3d5887_2e13efe6",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-02T15:56:43Z",
+      "side": 1,
+      "message": "This is fine, but if the message isn\u0027t being reused at some point in the future (either in this call, or future calls) it needs to be freed to avoid leaks since the message, and the NNG allocated buffer it references aren\u0027t garbage collected by python. The rmr free function can be called just before return to be safe.  Syntax is simple:  rmr.rmr_free_msg(sbuf)",
+      "revId": "0ad958172e9c761436a65457d37dc98c21d54323",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
