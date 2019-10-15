@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6fc3937_5c2bf6d3",
+        "filename": "a1/data.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-15T15:30:47Z",
+      "side": 1,
+      "message": "Naive question because I don\u0027t usually work in try/catch|except worlds....\n\nGiven your comment above about not wanting to blow up anything, what happens if SDL tosses an exception that you don\u0027t have explicitly listed?  Doesn\u0027t that cause a panic?  If so, would it be better to catch any failure, logging anything that you don\u0027t know about/expect, and then moving on so as not to take the application down?",
+      "revId": "7cec82d95d4b9d18c42b103eb14d39f94fcd0776",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
