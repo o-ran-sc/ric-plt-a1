@@ -15,40 +15,47 @@
 #   limitations under the License.
 # ==================================================================================
 import os
-import gevent
+import queue
+import time
+import json
 from rmr import rmr, helpers
 from a1 import get_module_logger
+from a1 import data
+from a1.exceptions import PolicyTypeNotFound, PolicyInstanceNotFound
 
 logger = get_module_logger(__name__)
 
 
 RETRY_TIMES = int(os.environ.get("RMR_RETRY_TIMES", 4))
-MRC = None
+
+_SEND_QUEUE = queue.Queue()  # thread safe queue https://docs.python.org/3/library/queue.html
 
 
-def init_rmr():
+def _init_rmr():
     """
-    called from run; not called for unit tests
+    init an rmr context
+    This gets monkeypatched out for unit testing
     """
-    global MRC
     # rmr.RMRFL_MTCALL puts RMR into a multithreaded mode, where a receiving thread populates an
     # internal ring of messages, and receive calls read from that
     # currently the size is 2048 messages, so this is fine for the foreseeable future
-    MRC = rmr.rmr_init(b"4562", rmr.RMR_MAX_RCV_BYTES, rmr.RMRFL_MTCALL)
+    mrc = rmr.rmr_init(b"4562", rmr.RMR_MAX_RCV_BYTES, rmr.RMRFL_MTCALL)
 
-    while rmr.rmr_ready(MRC) == 0:
-        gevent.sleep(1)
+    while rmr.rmr_ready(mrc) == 0:
+        time.sleep(0.1)
         logger.debug("not yet ready")
 
+    return mrc
 
-def send(payload, message_type=0):
+
+def _send(mrc, payload, message_type=0):
     """
     Sends a message up to RETRY_TIMES
     If the message is sent successfully, it returns the transactionid
     Does nothing otherwise
     """
     # we may be called many times in asynchronous loops, so for now, it is safer not to share buffers. We can investigate later whether this is really a problem.
-    sbuf = rmr.rmr_alloc_msg(MRC, 4096)
+    sbuf = rmr.rmr_alloc_msg(mrc, 4096)
     payload = payload if isinstance(payload, bytes) else payload.encode("utf-8")
 
     # retry RETRY_TIMES to send the message
@@ -63,7 +70,7 @@ def send(payload, message_type=0):
         transaction_id = pre_send_summary["transaction id"]  # save the transactionid because we need it later
 
         # send
-        sbuf = rmr.rmr_send_msg(MRC, sbuf)
+        sbuf = rmr.rmr_send_msg(mrc, sbuf)
         post_send_summary = rmr.message_summary(sbuf)
         logger.debug("Post message send summary: %s", rmr.message_summary(sbuf))
 
@@ -80,8 +87,67 @@ def send(payload, message_type=0):
     return None
 
 
-def dequeue_all_waiting_messages(filter_type=[]):
+def _dequeue_all_waiting_messages(mrc, filter_type=[]):
     """
     dequeue all waiting rmr messages from rmr
+    this is broken out for purposes of monkeypatching during unit testing
     """
-    return helpers.rmr_rcvall_msgs(MRC, filter_type)
+    return helpers.rmr_rcvall_msgs(mrc, filter_type)
+
+
+def _update_all_statuses(mrc):
+    """
+    get all waiting messages, and try to parse them as status updates
+    (currently, those are the only messages a1 should get, this may have to be revisited later)
+    """
+    for msg in _dequeue_all_waiting_messages(mrc, [21024]):
+        # can't raise an exception here, just drop bad status messages.
+        try:
+            pay = json.loads(msg["payload"])
+            data.set_status(pay["policy_type_id"], pay["policy_instance_id"], pay["handler_id"], pay["status"])
+        except (PolicyTypeNotFound, PolicyInstanceNotFound, KeyError) as e:
+            logger.debug("Dropping malformed or non applicable message")
+            logger.debug(e)
+        except Exception as e:
+            logger.debug("Polling thread encountered an unexpected exception, but it will continue:")
+            logger.exception(e)
+
+
+# Public
+
+
+def queue_work(item):
+    """
+    push an item into the work queue
+    currently the only type of work is to send out messages
+    """
+    _SEND_QUEUE.put(item)
+
+
+def loop():
+    """
+    This loop runs in an a1 thread forever, and has 3 jobs:
+    - send out any messages that have to go out (create instance, delete instance)
+    - read a1s mailbox and update the status of all instances based on acks from downstream policy handlers
+    - clean up the database (eg delete the instance) under certain conditions based on those statuses (NOT DONE YET)
+    """
+    logger.debug("Rmr thread starting")
+
+    # get a context
+    mrc = _init_rmr()
+
+    # loop forever
+    logger.debug("Rmr loop starting")
+    while True:
+
+        # First, send out all messages waiting for us
+        while not _SEND_QUEUE.empty():
+            work_item = _SEND_QUEUE.get(block=False, timeout=None)
+            _send(mrc, payload=work_item["payload"], message_type=work_item["msg type"])
+
+        # Next, update all statuses waiting in a1s mailbox
+        _update_all_statuses(mrc)
+
+        # TODO: next body of work is to try to clean up the database for any updated statuses
+
+        time.sleep(0.1)
