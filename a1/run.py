@@ -16,16 +16,26 @@
 # ==================================================================================
 from gevent.pywsgi import WSGIServer
 from a1 import get_module_logger, app
-from a1.a1rmr import init_rmr
+from a1 import a1rmr
+from threading import Thread
 
 
 logger = get_module_logger(__name__)
 
 
+def start_rmr_thread():
+    """
+    Start a1s rmr thread
+    Also called during unit testing
+    """
+    logger.debug("Initializing rmr thread")
+    thread = Thread(target=a1rmr.loop)
+    thread.start()
+
+
 def main():
     """Entrypoint"""
-    logger.debug("Initializing rmr")
-    init_rmr()
+    start_rmr_thread()
     logger.debug("Starting gevent server")
     http_server = WSGIServer(("", 10000), app)
     http_server.serve_forever()
