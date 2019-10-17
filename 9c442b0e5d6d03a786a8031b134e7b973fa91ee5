@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f759179b_53cc9566",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-17T18:28:46Z",
+      "side": 1,
+      "message": "In the world where the route table comes from routing manger, and it takes several minutes to arrive, this could end up being a lot of messages on stderr.  Maybe limit the still waiting message below to every 20 times through the loop?",
+      "revId": "9c442b0e5d6d03a786a8031b134e7b973fa91ee5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf6f50f_e060ff3d",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-17T18:28:46Z",
+      "side": 1,
+      "message": "Not sure why this didn\u0027t jump out at me before, but it might be better to allocate the message using the size of payload, or slightly larger than payload.  If payload is 100 bytes, that\u0027s a lot of empty bytes that will be sent, but the only harm is the extra bytes on the wire.",
+      "revId": "9c442b0e5d6d03a786a8031b134e7b973fa91ee5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefd10aa_e6e61ff5",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-17T18:28:46Z",
+      "side": 1,
+      "message": "My kind of typo -- now instead of how?",
+      "revId": "9c442b0e5d6d03a786a8031b134e7b973fa91ee5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
