@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "911b8343_934519be",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-18T16:29:16Z",
+      "side": 1,
+      "message": "this whole ordeal was refactored in patch 4",
+      "parentUuid": "f759179b_53cc9566",
+      "revId": "9c442b0e5d6d03a786a8031b134e7b973fa91ee5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbf6f50f_e060ff3d",
         "filename": "a1/a1rmr.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9c442b0e5d6d03a786a8031b134e7b973fa91ee5",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7728a01b_95fccd97",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-18T16:29:16Z",
+      "side": 1,
+      "message": "i added this as a todo",
+      "parentUuid": "bbf6f50f_e060ff3d",
+      "revId": "9c442b0e5d6d03a786a8031b134e7b973fa91ee5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     },
     {
       "key": {
