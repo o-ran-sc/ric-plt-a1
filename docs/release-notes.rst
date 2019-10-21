@@ -29,6 +29,15 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
 
     * Represents a resillent version of 1.0.0 that uses Redis for persistence
 
+[1.0.3] - 10/22/2019
+
+::
+
+    * Move database cleanup (e.g., deleting instances based on statuses) into the polling loop
+    * Rework how unit testing works with the polling loop; prior, exceptions were being thrown silently from the thread but not printed. The polling thread has now been paramaterized with override functions for the purposes of testing
+    * Make type cleanup more efficient since we know exactly what instances were touched, and it's inefficient to iterate over all instances if they were not
+    * Bump rmr-python version, and bump rmr version
+
 [1.0.2] - 10/17/2019
 
 ::

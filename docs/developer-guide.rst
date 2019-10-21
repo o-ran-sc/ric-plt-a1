@@ -43,17 +43,24 @@ This project follows semver. When changes are made, the versions are in:
 
 7) in the it/dep repo that contains a1 helm chart, ``values.yaml``, ``Chart.yml``
 
-Version bumping rmr-python
-==========================
-rmr-python is a critial dependency of A1. Bumping the rmr version dependency requires changes in:
 
-1) ``setup.py``
+Version bumping rmr
+====================
+rmr is a critial dependency of A1. Bumping the rmr version dependency requires changes in:
 
-2) ``Dockerfile``
+1) ``Dockerfile``
+
+2) ``Dockerfile-Unit-Test``
 
 3) ``integration_tests/Dockerfile``
 
 Run the integration tests after attempting this.
+
+Version bumping rmr-python
+==========================
+rmr-python is the python binding to rmr . Installing rmr per the above does not install it.
+rmr-python is installed via ``setup.py``; so the minimum version of rmr-python is specified there.
+
 
 Unit Testing
 ============
