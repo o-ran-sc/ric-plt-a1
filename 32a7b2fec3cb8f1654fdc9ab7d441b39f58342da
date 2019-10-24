@@ -163,6 +163,24 @@
     },
     {
       "key": {
+        "uuid": "4ff2e53a_0db96791",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-24T21:38:11Z",
+      "side": 1,
+      "message": "hmmmmm that didn\u0027t fix it either, but the logs look better.\n\ndoes rts depend on the original sbuf? if so, i\u0027m really not sure how to proceed; allocating a new buffer with proper space for the reply, doesn\u0027t seem to work with rts, and the intial buffer doesn\u0027t have enough space for the reply. suggestions?",
+      "parentUuid": "980f13c4_3ec966a9",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34af3c9d_398b5fe9",
         "filename": "a1/a1rmr.py",
         "patchSetId": 4
