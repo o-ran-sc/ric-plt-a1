@@ -52,6 +52,23 @@
       "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34af3c9d_398b5fe9",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-24T19:55:41Z",
+      "side": 1,
+      "message": "btw, an orthognal code cleanup comment; I alloc and free each time in the loop, because send perverts the buffer; is there a way to do this better?\n\nis it \"functional\" where I can do\n\npost_send_sbuf \u003d send(mrc, sbuf) #does sbuf get mutated here?",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
