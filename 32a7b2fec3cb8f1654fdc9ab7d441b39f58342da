@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "1dcee761_ac6dd5e3",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-24T20:25:14Z",
+      "side": 1,
+      "message": "don\u0027t strain yourself tonight; tomorrow morning ill try to rig my tests with more debugging to try to narrow in on the problem; but, just noting, simply replacing this 4096 with len(pay) deterministically fails the tests. \nill report back tmrw./",
+      "parentUuid": "933cb450_2d77df9a",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34af3c9d_398b5fe9",
         "filename": "a1/a1rmr.py",
         "patchSetId": 4
