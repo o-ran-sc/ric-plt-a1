@@ -29,6 +29,13 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
 
     * Represents a resillent version of 1.0.0 that uses Redis for persistence
 
+[1.0.4]
+
+::
+
+    * Only external change here is to healthcheck the rmr thread as part of a1s healthcheck. k8s will now respin a1 if that is failing.
+    * Refactors (simplifies) how we wait for rmr initialization; it is now called as part of __init__
+
 [1.0.3] - 10/22/2019
 
 ::

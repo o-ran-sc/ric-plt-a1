@@ -29,7 +29,8 @@ logger = get_module_logger(__name__)
 
 RETRY_TIMES = int(os.environ.get("RMR_RETRY_TIMES", 4))
 
-_SEND_QUEUE = queue.Queue()  # thread safe queue https://docs.python.org/3/library/queue.html
+_RMR_LOOP = None
+_RMR_THREAD = None
 
 
 def _init_rmr():
@@ -87,36 +88,34 @@ def _send(mrc, payload, message_type=0):
     return None
 
 
-# Public
-
-
-def queue_work(item):
-    """
-    push an item into the work queue
-    currently the only type of work is to send out messages
-    """
-    _SEND_QUEUE.put(item)
-
-
-class RmrLoop:
+class _RmrLoop:
     """
     class represents an rmr loop meant to be called as a longstanding separate thread
     """
 
-    def __init__(self, _init_func_override=None, rcv_func_override=None):
-        self._rmr_is_ready = False
+    def __init__(self, init_func_override=None, rcv_func_override=None):
         self._keep_going = True
-        self._init_func_override = _init_func_override  # useful for unit testing
-        self._rcv_func_override = rcv_func_override  # useful for unit testing to mock certain recieve scenarios
         self._rcv_func = None
+        self._last_ran = time.time()
+        self._work_queue = queue.Queue()  # thread safe queue https://docs.python.org/3/library/queue.html
 
-    def rmr_is_ready(self):
-        """returns whether rmr has been initialized"""
-        return self._rmr_is_ready
+        # get a context
+        self._mrc = init_func_override() if init_func_override else _init_rmr()
+
+        # set the receive function
+        self._rcv_func = rcv_func_override if rcv_func_override else lambda: helpers.rmr_rcvall_msgs(self._mrc, [21024])
+
+    def last_ran(self):
+        """return the unix time of the last completed work loop"""
+        return self._last_ran
 
     def stop(self):
         """sets a flag for the loop to end"""
         self._keep_going = False
+
+    def queue_work(self, work_item):
+        """adds work for the loop"""
+        self._work_queue.put(work_item)
 
     def loop(self):
         """
@@ -125,24 +124,13 @@ class RmrLoop:
         - read a1s mailbox and update the status of all instances based on acks from downstream policy handlers
         - clean up the database (eg delete the instance) under certain conditions based on those statuses (NOT DONE YET)
         """
-
-        # get a context
-        mrc = self._init_func_override() if self._init_func_override else _init_rmr()
-        self._rmr_is_ready = True
-        logger.debug("Rmr is ready")
-
-        # set the receive function called below
-        self._rcv_func = (
-            self._rcv_func_override if self._rcv_func_override else lambda: helpers.rmr_rcvall_msgs(mrc, [21024])
-        )
-
         # loop forever
         logger.debug("Work loop starting")
         while self._keep_going:
             # send out all messages waiting for us
-            while not _SEND_QUEUE.empty():
-                work_item = _SEND_QUEUE.get(block=False, timeout=None)
-                _send(mrc, payload=work_item["payload"], message_type=work_item["msg type"])
+            while not self._work_queue.empty():
+                work_item = self._work_queue.get(block=False, timeout=None)
+                _send(self._mrc, payload=work_item["payload"], message_type=work_item["msg type"])
 
             # read our mailbox and update statuses
             updated_instances = set()
@@ -162,18 +150,44 @@ class RmrLoop:
             for ut in updated_instances:
                 data.clean_up_instance(ut[0], ut[1])
 
-        # TODO: what's a reasonable sleep time? we don't want to hammer redis too much, and a1 isn't a real time component
-        time.sleep(1)
+            # TODO: what's a reasonable sleep time? we don't want to hammer redis too much, and a1 isn't a real time component
+            self._last_ran = time.time()
+            time.sleep(1)
+
+
+# Public
+
+
+def queue_work(item):
+    """
+    push an item into the work queue
+    currently the only type of work is to send out messages
+    """
+    _RMR_LOOP.queue_work(item)
 
 
 def start_rmr_thread(init_func_override=None, rcv_func_override=None):
     """
     Start a1s rmr thread
-    Also called during unit testing
     """
-    rmr_loop = RmrLoop(init_func_override, rcv_func_override)
-    thread = Thread(target=rmr_loop.loop)
-    thread.start()
-    while not rmr_loop.rmr_is_ready():
-        time.sleep(0.5)
-    return rmr_loop  # return the handle; useful during unit testing
+    global _RMR_LOOP
+    global _RMR_THREAD
+    _RMR_LOOP = _RmrLoop(init_func_override, rcv_func_override)
+    _RMR_THREAD = Thread(target=_RMR_LOOP.loop)
+    _RMR_THREAD.start()
+
+
+def stop_rmr_thread():
+    """
+    stops the rmr thread
+    """
+    _RMR_LOOP.stop()
+
+
+def healthcheck_rmr_thread(seconds=30):
+    """
+    returns a boolean representing whether the rmr loop is healthy, by checking two attributes:
+    1. is it running?,
+    2. is it stuck in a long (> seconds) loop?
+    """
+    return _RMR_THREAD.is_alive() and ((time.time() - _RMR_LOOP.last_ran()) < seconds)
