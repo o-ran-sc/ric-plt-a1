@@ -16,6 +16,24 @@
       "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac55d59_f91ad419",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-24T19:50:49Z",
+      "side": 1,
+      "message": "meaning:\n\nsbuf \u003d rmr.rmr_alloc_msg(self.mrc, len(pay), pay, True, work_item[\"msg type\"])",
+      "parentUuid": "c1d49649_5354d482",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
