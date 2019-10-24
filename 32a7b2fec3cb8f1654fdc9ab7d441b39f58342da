@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "980f13c4_3ec966a9",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-24T21:25:46Z",
+      "side": 1,
+      "message": "I am seeing this log in a1:\n\n2019-10-24 21:20:26,221 [a1.a1rmr    ] DEBUG    (\u0027Dropping malformed or non applicable message\u0027, {\u0027payload\u0027: b\u0027{\"policy_type_id\": 20000, \"policy_instance_id\": \"admission_control_policy\", \"handler_id\": \"test_r\neceiver\", \"status\"\u0027, \u0027payload length\u0027: 115, \u0027message type\u0027: 21024, \u0027subscription id\u0027: -1, \u0027transaction id\u0027: b\u0027182cfc88f6a411e9837a9afe524d51a5\u0027, \u0027message state\u0027: 0, \u0027message status\u0027: \u0027RMR_OK\u0027, \u0027payload max si\nze\u0027: 115, \u0027meid\u0027: b\u0027\u0027, \u0027message source\u0027: \u0027testreceiver-6f7b7f4755-4b8zq:4560\u0027, \u0027errno\u0027: 0})\n\n\nThat payload is seriously bonked; \n\nb\u0027{\"policy_type_id\": 20000, \"policy_instance_id\": \"admission_control_policy\", \"handler_id\": \"test_receiver\", \"status\"\n\nis a JSON that is cut off\n\nmy new theory is that, it\u0027s actually the 10 change I made\n\nthe original buffer of 4096... might be getting reused for the receiver reply, the reciever reply fits in it, and it works.. but when the send buffer is too small, the receiver reply doesn\u0027t fit in it?? let me try that..",
+      "parentUuid": "1dcee761_ac6dd5e3",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34af3c9d_398b5fe9",
         "filename": "a1/a1rmr.py",
         "patchSetId": 4
