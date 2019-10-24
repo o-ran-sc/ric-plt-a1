@@ -34,6 +34,24 @@
       "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a6377c_e4d66657",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-10-24T19:53:25Z",
+      "side": 1,
+      "message": "note, I am using the new fancy alloc from rmr-python 1.0.0",
+      "parentUuid": "8ac55d59_f91ad419",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
