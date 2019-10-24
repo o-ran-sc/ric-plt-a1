@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "4145f00b_0222b242",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-24T20:19:02Z",
+      "side": 1,
+      "message": "what happens if you set gen transaction to false?  Wonder if that is overwriting something.  I just ran the send example in the rmr repo to verify that the payload length was correct that that looks good.  I\u0027ll try the same here.  The gen-and-set xaction function looks ok unless the size constant is wrong.  If I don\u0027t see anything with that, I\u0027ll have to set up a send/receive test to see what\u0027s actually arriving.",
+      "parentUuid": "d1e65cee_033aad25",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34af3c9d_398b5fe9",
         "filename": "a1/a1rmr.py",
         "patchSetId": 4
