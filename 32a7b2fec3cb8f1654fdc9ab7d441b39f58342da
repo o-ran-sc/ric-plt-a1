@@ -199,6 +199,24 @@
     },
     {
       "key": {
+        "uuid": "9bed920e_817579c5",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-10-25T12:53:40Z",
+      "side": 1,
+      "message": "You are correct.\n    \nIf you use the buffer received to reply the reply must fit in the original payload size.  That\u0027s why setting 4K made the difference; the arriving max payload was large enough for the response.\n    \nFor now the sender must create a payload which is large enough to hold a  response.\n    \nI\u0027ll also open a jira ticket on RMR.  RMR should provide a way to reallocate an existing buffer with a larger payload.\n    \nGood sleuthing; that wasn\u0027t something I was considering.",
+      "parentUuid": "6389ed10_6b4dd808",
+      "revId": "32a7b2fec3cb8f1654fdc9ab7d441b39f58342da",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34af3c9d_398b5fe9",
         "filename": "a1/a1rmr.py",
         "patchSetId": 4
