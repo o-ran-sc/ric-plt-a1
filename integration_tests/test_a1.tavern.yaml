@@ -176,7 +176,9 @@ stages:
       method: GET
     response:
       status_code: 200
-      # tavern doesn't yet let you check string statuses!!!
+      body:
+        instance_status: "IN EFFECT"
+        has_been_deleted: False
 
   - name: instance list 200 and contains the instance
     request:
@@ -384,7 +386,9 @@ stages:
       method: GET
     response:
       status_code: 200
-      # tavern doesn't let you check non json yet!
+      body:
+        instance_status: "IN EFFECT"
+        has_been_deleted: False
 
   - name: instance list 200 and there
     request:

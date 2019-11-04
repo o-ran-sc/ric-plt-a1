@@ -23,6 +23,7 @@ Hopefully, the access functions are a good api so nothing else has to change whe
 For now, the database is in memory.
 We use dict data structures (KV) with the expectation of having to move this into Redis
 """
+import time
 import msgpack
 from a1.exceptions import PolicyTypeNotFound, PolicyInstanceNotFound, PolicyTypeAlreadyExists, CantDeleteNonEmptyType
 from a1 import get_module_logger
@@ -65,6 +66,7 @@ SDL = SDLWrapper()
 
 TYPE_PREFIX = "a1.policy_type."
 INSTANCE_PREFIX = "a1.policy_instance."
+METADATA_PREFIX = "a1.policy_inst_metadata."
 HANDLER_PREFIX = "a1.policy_handler."
 
 
@@ -83,6 +85,13 @@ def _generate_instance_key(policy_type_id, policy_instance_id):
     generate a key for a policy instance
     """
     return "{0}{1}.{2}".format(INSTANCE_PREFIX, policy_type_id, policy_instance_id)
+
+
+def _generate_instance_metadata_key(policy_type_id, policy_instance_id):
+    """
+    generate a key for a policy instance metadata
+    """
+    return "{0}{1}.{2}".format(METADATA_PREFIX, policy_type_id, policy_instance_id)
 
 
 def _generate_handler_prefix(policy_type_id, policy_instance_id):
@@ -194,11 +203,17 @@ def store_policy_instance(policy_type_id, policy_instance_id, instance):
     Store a policy instance
     """
     type_is_valid(policy_type_id)
+    creation_timestamp = time.time()
+
+    # store the instance
     key = _generate_instance_key(policy_type_id, policy_instance_id)
     if SDL.get(key) is not None:
         # Reset the statuses because this is a new policy instance, even if it was overwritten
         _clear_handlers(policy_type_id, policy_instance_id)  # delete all the handlers
     SDL.set(key, instance)
+
+    metadata_key = _generate_instance_metadata_key(policy_type_id, policy_instance_id)
+    SDL.set(metadata_key, {"created_at": creation_timestamp, "has_been_deleted": False})
 
 
 def get_policy_instance(policy_type_id, policy_instance_id):
@@ -209,11 +224,24 @@ def get_policy_instance(policy_type_id, policy_instance_id):
     return SDL.get(_generate_instance_key(policy_type_id, policy_instance_id))
 
 
-def get_policy_instance_statuses(policy_type_id, policy_instance_id):
+def get_policy_instance_status(policy_type_id, policy_instance_id):
     """
-    Retrieve the status vector for a policy instance
+    Return the aggregated status. The order of rules is as follows:
+        1. If a1 has received at least one status, and *all* received statuses are "DELETED", we blow away the instance and return a 404
+        2. if a1 has received at least one status and at least one is OK, we return "IN EFFECT"
+        3. "NOT IN EFFECT" otherwise (no statuses, or none are OK but not all are deleted)
     """
-    return _get_statuses(policy_type_id, policy_instance_id)
+    vector = _get_statuses(policy_type_id, policy_instance_id)
+    status = "NOT IN EFFECT"
+    for i in vector:
+        if i == "OK":
+            status = "IN EFFECT"
+            break
+
+    metadata_key = _generate_instance_metadata_key(policy_type_id, policy_instance_id)
+    metadata = SDL.get(metadata_key)
+    metadata["instance_status"] = status
+    return metadata
 
 
 def get_instance_list(policy_type_id):
@@ -221,6 +249,15 @@ def get_instance_list(policy_type_id):
     retrieve all instance ids for a type
     """
     return _get_instance_list(policy_type_id)
+
+
+def set_instance_as_deleted(policy_type_id, policy_instance_id):
+    """
+    called when an instance is deleted to set the deleted status
+    """
+    metadata_key = _generate_instance_metadata_key(policy_type_id, policy_instance_id)
+    existing_metadata = SDL.get(metadata_key)
+    SDL.set(metadata_key, {"created_at": existing_metadata["created_at"], "has_been_deleted": True})
 
 
 # Statuses
