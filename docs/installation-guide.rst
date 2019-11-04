@@ -13,9 +13,11 @@ Optional ENV Variables
 
 You can set the following ENVs to change the A1 behavior:
 
-1. ``RMR_RETRY_TIMES`` the number of times failed rmr operations such as
-timeouts and send failures should be retried before A1 gives up and
-returns a 503. The default is ``4``.
+1. ``RMR_RETRY_TIMES``: the number of times failed rmr operations such as timeouts and send failures should be retried before A1 gives up and returns a 503. The default is ``4``.
+
+2. ``INSTANCE_CREATE_ACK_TIMEOUT``: Please refer to the delete flowchart in docs/; this is ``T1`` there. The default is 5 (seconds).
+
+3. ``INSTANCE_DELETE_ACK_TIMEOUT``: Please refer to the delete flowchart in docs/; this is ``T2`` there. The default is 5 (seconds).
 
 K8S
 ---
