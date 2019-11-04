@@ -168,7 +168,7 @@ def test_workflow(client, monkeypatch, adm_type_good, adm_instance_good):
     assert res.status_code == 200
     assert res.json == [ADM_CTRL]
 
-    def get_instance_good(expected):
+    def get_instance_good(expected, expected_deleted):
         # get the instance
         res = client.get(ADM_CTRL_INSTANCE)
         assert res.status_code == 200
@@ -177,16 +177,17 @@ def test_workflow(client, monkeypatch, adm_type_good, adm_instance_good):
         # get the instance status
         res = client.get(ADM_CTRL_INSTANCE_STATUS)
         assert res.status_code == 200
-        assert res.get_data(as_text=True) == expected
+        assert res.json["instance_status"] == expected
+        assert res.json["has_been_deleted"] == expected_deleted
 
     # try a status get but we didn't get any ACKs yet to test NOT IN EFFECT
     time.sleep(1)  # wait for the rmr thread
-    get_instance_good("NOT IN EFFECT")
+    get_instance_good("NOT IN EFFECT", False)
 
     # now pretend we did get a good ACK
     a1rmr.replace_rcv_func(_fake_dequeue)
     time.sleep(1)  # wait for the rmr thread
-    get_instance_good("IN EFFECT")
+    get_instance_good("IN EFFECT", False)
 
     # cant delete type until there are no instances
     res = client.delete(ADM_CTRL_TYPE)
@@ -200,7 +201,7 @@ def test_workflow(client, monkeypatch, adm_type_good, adm_instance_good):
 
     # status after a delete, but there are no messages yet, should still return
     time.sleep(1)  # wait for the rmr thread
-    get_instance_good("IN EFFECT")
+    get_instance_good("IN EFFECT", True)
 
     # now pretend we deleted successfully
     a1rmr.replace_rcv_func(_fake_dequeue_deleted)
