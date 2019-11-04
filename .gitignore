@@ -1,7 +1,7 @@
 *.log
 NOTES.txt
-docs/*
 rmr/*
+docs_and_diagrams
 
 .pytest_cache/
 xunit-results.xml
