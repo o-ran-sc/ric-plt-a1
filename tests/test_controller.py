@@ -91,6 +91,98 @@ def _test_put_patch(monkeypatch):
     monkeypatch.setattr("rmr.rmr.generate_and_set_transaction_id", fake_set_transactionid)
 
 
+def _verify_instance_and_status(client, expected_instance, expected_status, expected_deleted):
+    # get the instance
+    res = client.get(ADM_CTRL_INSTANCE)
+    assert res.status_code == 200
+    assert res.json == expected_instance
+
+    # get the instance status
+    res = client.get(ADM_CTRL_INSTANCE_STATUS)
+    assert res.status_code == 200
+    assert res.json["instance_status"] == expected_status
+    assert res.json["has_been_deleted"] == expected_deleted
+
+
+def _no_ac(client):
+    # no type there yet
+    res = client.get(ADM_CTRL_TYPE)
+    assert res.status_code == 404
+
+    # no types at all
+    res = client.get("/a1-p/policytypes")
+    assert res.status_code == 200
+    assert res.json == []
+
+    # instance 404 because type not there yet
+    res = client.get(ADM_CTRL_POLICIES)
+    assert res.status_code == 404
+
+
+def _put_ac_type(client, typedef):
+    _no_ac(client)
+
+    # put the type
+    res = client.put(ADM_CTRL_TYPE, json=typedef)
+    assert res.status_code == 201
+
+    # cant replace types
+    res = client.put(ADM_CTRL_TYPE, json=typedef)
+    assert res.status_code == 400
+
+    # type there now
+    res = client.get(ADM_CTRL_TYPE)
+    assert res.status_code == 200
+    assert res.json == typedef
+
+    # type in type list
+    res = client.get("/a1-p/policytypes")
+    assert res.status_code == 200
+    assert res.json == [20000]
+
+    # instance 200 but empty list
+    res = client.get(ADM_CTRL_POLICIES)
+    assert res.status_code == 200
+    assert res.json == []
+
+
+def _delete_ac_type(client):
+    res = client.delete(ADM_CTRL_TYPE)
+    assert res.status_code == 204
+
+    # cant get
+    res = client.get(ADM_CTRL_TYPE)
+    assert res.status_code == 404
+
+    # cant invoke delete on it again
+    res = client.delete(ADM_CTRL_TYPE)
+    assert res.status_code == 404
+
+    _no_ac(client)
+
+
+def _put_ac_instance(client, monkeypatch, instancedef):
+    # no instance there yet
+    res = client.get(ADM_CTRL_INSTANCE)
+    assert res.status_code == 404
+    res = client.get(ADM_CTRL_INSTANCE_STATUS)
+    assert res.status_code == 404
+
+    # create a good instance
+    _test_put_patch(monkeypatch)
+    res = client.put(ADM_CTRL_INSTANCE, json=instancedef)
+    assert res.status_code == 202
+
+    # replace is allowed on instances
+    res = client.put(ADM_CTRL_INSTANCE, json=instancedef)
+    assert res.status_code == 202
+
+    # instance 200 and in list
+    res = client.get(ADM_CTRL_POLICIES)
+    assert res.status_code == 200
+    assert res.json == [ADM_CTRL]
+
+
 # Module level Hack
 
 
@@ -107,86 +199,20 @@ def setup_module():
 # Actual Tests
 
 
-def test_workflow_nothing_there_yet(client):
-    """ test policy put good"""
-    # no type there yet
-    res = client.get(ADM_CTRL_TYPE)
-    assert res.status_code == 404
-
-    # no types at all
-    res = client.get("/a1-p/policytypes")
-    assert res.status_code == 200
-    assert res.json == []
-
-    # instance 404 because type not there yet
-    res = client.get(ADM_CTRL_POLICIES)
-    assert res.status_code == 404
-
-
 def test_workflow(client, monkeypatch, adm_type_good, adm_instance_good):
     """
     test a full A1 workflow
     """
-    # put the type
-    res = client.put(ADM_CTRL_TYPE, json=adm_type_good)
-    assert res.status_code == 201
-
-    # cant replace types
-    res = client.put(ADM_CTRL_TYPE, json=adm_type_good)
-    assert res.status_code == 400
-
-    # type there now
-    res = client.get(ADM_CTRL_TYPE)
-    assert res.status_code == 200
-    assert res.json == adm_type_good
-    res = client.get("/a1-p/policytypes")
-    assert res.status_code == 200
-    assert res.json == [20000]
-
-    # instance 200 but empty list
-    res = client.get(ADM_CTRL_POLICIES)
-    assert res.status_code == 200
-    assert res.json == []
-
-    # no instance there yet
-    res = client.get(ADM_CTRL_INSTANCE)
-    assert res.status_code == 404
-    res = client.get(ADM_CTRL_INSTANCE_STATUS)
-    assert res.status_code == 404
-
-    # create a good instance
-    _test_put_patch(monkeypatch)
-    res = client.put(ADM_CTRL_INSTANCE, json=adm_instance_good)
-    assert res.status_code == 202
-
-    # replace is allowed on instances
-    res = client.put(ADM_CTRL_INSTANCE, json=adm_instance_good)
-    assert res.status_code == 202
-
-    # instance 200 and in list
-    res = client.get(ADM_CTRL_POLICIES)
-    assert res.status_code == 200
-    assert res.json == [ADM_CTRL]
-
-    def get_instance_good(expected):
-        # get the instance
-        res = client.get(ADM_CTRL_INSTANCE)
-        assert res.status_code == 200
-        assert res.json == adm_instance_good
-
-        # get the instance status
-        res = client.get(ADM_CTRL_INSTANCE_STATUS)
-        assert res.status_code == 200
-        assert res.get_data(as_text=True) == expected
+    _put_ac_type(client, adm_type_good)
+    _put_ac_instance(client, monkeypatch, adm_instance_good)
 
     # try a status get but we didn't get any ACKs yet to test NOT IN EFFECT
-    time.sleep(1)  # wait for the rmr thread
-    get_instance_good("NOT IN EFFECT")
+    _verify_instance_and_status(client, adm_instance_good, "NOT IN EFFECT", False)
 
     # now pretend we did get a good ACK
     a1rmr.replace_rcv_func(_fake_dequeue)
     time.sleep(1)  # wait for the rmr thread
-    get_instance_good("IN EFFECT")
+    _verify_instance_and_status(client, adm_instance_good, "IN EFFECT", False)
 
     # cant delete type until there are no instances
     res = client.delete(ADM_CTRL_TYPE)
@@ -199,30 +225,58 @@ def test_workflow(client, monkeypatch, adm_type_good, adm_instance_good):
     assert res.status_code == 202
 
     # status after a delete, but there are no messages yet, should still return
-    time.sleep(1)  # wait for the rmr thread
-    get_instance_good("IN EFFECT")
+    _verify_instance_and_status(client, adm_instance_good, "IN EFFECT", True)
 
     # now pretend we deleted successfully
     a1rmr.replace_rcv_func(_fake_dequeue_deleted)
     time.sleep(1)  # wait for the rmr thread
+
+    # 1 second later, status should be reflected, but under 5 second t1/t2, not deleted yet
+    _verify_instance_and_status(client, adm_instance_good, "NOT IN EFFECT", True)
+
+    # wait 5 seconds, then delete should really trigger
+    time.sleep(5)
+
+    # cant get status
+    res = client.get(ADM_CTRL_INSTANCE_STATUS)
+    assert res.status_code == 404
+
     # list still 200 but no instance
     res = client.get(ADM_CTRL_POLICIES)
     assert res.status_code == 200
     assert res.json == []
-    res = client.get(ADM_CTRL_INSTANCE_STATUS)  # cant get status
-    assert res.status_code == 404
     res = client.get(ADM_CTRL_INSTANCE)  # cant get instance
     assert res.status_code == 404
 
-    # delete the type
-    res = client.delete(ADM_CTRL_TYPE)
-    assert res.status_code == 204
+    _delete_ac_type(client)
 
-    # cant touch this
-    res = client.get(ADM_CTRL_TYPE)
+
+def test_cleanup_via_t1(client, monkeypatch, adm_type_good, adm_instance_good):
+    """
+    create a type, create an instance, but no acks ever come in, delete instance
+    """
+    _put_ac_type(client, adm_type_good)
+
+    a1rmr.replace_rcv_func(_fake_dequeue_none)
+
+    _put_ac_instance(client, monkeypatch, adm_instance_good)
+
+    _verify_instance_and_status(client, adm_instance_good, "NOT IN EFFECT", False)
+
+    # delete it
+    res = client.delete(ADM_CTRL_INSTANCE)
+    assert res.status_code == 202
+
+    _verify_instance_and_status(client, adm_instance_good, "NOT IN EFFECT", True)
+
+    # wait for t1
+    time.sleep(5)
+
+    # cant get status
+    res = client.get(ADM_CTRL_INSTANCE_STATUS)
     assert res.status_code == 404
-    res = client.delete(ADM_CTRL_TYPE)
-    assert res.status_code == 404
+
+    _delete_ac_type(client)
 
 
 def test_bad_instances(client, monkeypatch, adm_type_good):
@@ -248,7 +302,6 @@ def test_bad_instances(client, monkeypatch, adm_type_good):
 
     # get a non existent instance
     a1rmr.replace_rcv_func(_fake_dequeue)
-    time.sleep(1)
     res = client.get(ADM_CTRL_INSTANCE + "DARKNESS")
     assert res.status_code == 404
 

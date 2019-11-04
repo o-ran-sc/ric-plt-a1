@@ -23,11 +23,21 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__
 and this project adheres to `Semantic Versioning <http://semver.org/>`__.
 
-[1.x.x] - TBD
+[x.x.x] - TBD
 
 ::
 
     * Represents a resillent version of 1.0.0 that uses Redis for persistence
+
+[x.x.x] - TBD
+
+::
+
+    * Implements new logic around when instances can be deleted. See flowcharts in docs/
+    * Eliminates the barrier to deleting an instance when no xapp evdr replied (via timeouts)
+    * Add two new ENV variables that control timeouts
+    * Add timeout logic to docs folder
+    * Changes the API for ../status to return a richer structure
 
 [1.0.4]
 
