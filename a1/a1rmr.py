@@ -97,22 +97,15 @@ class _RmrLoop:
                         break
 
             # read our mailbox and update statuses
-            updated_instances = set()
             for msg in self.rcv_func():
                 try:
                     pay = json.loads(msg["payload"])
                     pti = pay["policy_type_id"]
                     pii = pay["policy_instance_id"]
-                    data.set_status(pti, pii, pay["handler_id"], pay["status"])
-                    updated_instances.add((pti, pii))
+                    data.set_policy_instance_status(pti, pii, pay["handler_id"], pay["status"])
                 except (PolicyTypeNotFound, PolicyInstanceNotFound, KeyError, json.decoder.JSONDecodeError):
                     # TODO: in the future we may also have to catch SDL errors
                     logger.debug(("Dropping malformed or non applicable message", msg))
-
-            # for all updated instances, see if we can trigger a delete
-            # should be no catch needed here, since the status update would have failed if it was a bad pair
-            for ut in updated_instances:
-                data.clean_up_instance(ut[0], ut[1])
 
             # TODO: what's a reasonable sleep time? we don't want to hammer redis too much, and a1 isn't a real time component
             self.last_ran = time.time()

@@ -32,6 +32,10 @@ spec:
             value: "1"
           - name: RMR_RETRY_TIMES
             value: "{{ .Values.rmr_timeout_config.rcv_retry_times }}"
+          - name: INSTANCE_DELETE_NO_RESP_TTL
+            value: "5"
+          - name: INSTANCE_DELETE_RESP_TTL
+            value: "10"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

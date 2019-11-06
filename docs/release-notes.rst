@@ -13,12 +13,21 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
    :depth: 3
    :local:
 
-
-[1.x.x] - TBD
+[x.x.x] - TBD
 
 ::
 
     * Represents a resillent version of 1.0.0 that uses Redis for persistence
+
+[x.x.x] - TBD
+
+::
+
+    * Implements new logic around when instances are deleted. See flowcharts in docs/. Basically timeouts now trigger to actually delete instances from a1s database, and these timeouts are configurable.
+    * Eliminates the barrier to deleting an instance when no xapp evdr replied (via timeouts)
+    * Add two new ENV variables that control timeouts
+    * Make unit tests more modular so new workflows can be tested easily
+    * Changes the API for ../status to return a richer structure
 
 [1.0.4]
 
