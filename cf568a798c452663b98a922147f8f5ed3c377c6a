@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "c0084e32_83587e4f",
+        "filename": "docs/installation-guide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-11-08T15:04:42Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "6edf25b4_73749e0e",
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d0fb05f_26d3b7b8",
         "filename": "docs/release-notes.rst",
         "patchSetId": 5
