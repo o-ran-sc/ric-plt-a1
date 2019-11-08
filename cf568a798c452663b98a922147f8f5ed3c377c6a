@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6edf25b4_73749e0e",
+        "filename": "docs/installation-guide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-11-08T14:39:14Z",
+      "side": 1,
+      "message": "Not sure why I didn\u0027t notice this before, but there is a possible collision with RMR environment variables which all have the prefix RMR_.   Not enough to -1 you, but be advised that RMR contributors won\u0027t be checking outside of the RMR repo to ensure unique environment variable names that start with RMR_.",
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
