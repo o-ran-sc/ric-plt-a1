@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "07ff4ac7_9d08f0ea",
+        "filename": ".gitignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-08T14:51:02Z",
+      "side": 1,
+      "message": "some people are really allergic to whitespace-only changes like this.",
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3421131d_7ac500fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-08T14:51:02Z",
+      "side": 1,
+      "message": "Some places limit git commit message lines to 72 characters, please consider wrapping lines",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532ee075_8383ff43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-08T14:51:02Z",
+      "side": 1,
+      "message": "Do not use RanCoDev issues in public LF commits.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a894a272_80eebf1e",
+        "filename": "docs/installation-guide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-08T14:51:02Z",
+      "side": 1,
+      "message": "Please add AT\u0026T copyright line, something like this:\n\n    .. Copyright (C) 2019 AT\u0026T Intellectual Property",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6edf25b4_73749e0e",
         "filename": "docs/installation-guide.rst",
         "patchSetId": 5
@@ -13,6 +99,29 @@
       "writtenOn": "2019-11-08T14:39:14Z",
       "side": 1,
       "message": "Not sure why I didn\u0027t notice this before, but there is a possible collision with RMR environment variables which all have the prefix RMR_.   Not enough to -1 you, but be advised that RMR contributors won\u0027t be checking outside of the RMR repo to ensure unique environment variable names that start with RMR_.",
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0fb05f_26d3b7b8",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-08T14:51:02Z",
+      "side": 1,
+      "message": "Also needs a copyright line please",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
       "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
