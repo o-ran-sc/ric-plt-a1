@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e769034_79a18daf",
+        "filename": ".gitignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2019-11-08T15:02:03Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "07ff4ac7_9d08f0ea",
+      "revId": "cf568a798c452663b98a922147f8f5ed3c377c6a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3421131d_7ac500fe",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
