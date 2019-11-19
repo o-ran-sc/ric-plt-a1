@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0910fc4e_a7537c9c",
+        "filename": "docs/overview.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-11-19T15:05:40Z",
+      "side": 1,
+      "message": "sent rather than send",
+      "range": {
+        "startLine": 19,
+        "startChar": 204,
+        "endLine": 19,
+        "endChar": 208
+      },
+      "revId": "5902d731341f8ebfd74a164a4aa5d1f61785360a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d901d26_917e0e94",
+        "filename": "docs/overview.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-11-19T15:05:40Z",
+      "side": 1,
+      "message": "Is this link available to everybody who can see the repo?  I thought the codev stuff was only available to codev \"partners.\" and not the general public.",
+      "revId": "5902d731341f8ebfd74a164a4aa5d1f61785360a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
