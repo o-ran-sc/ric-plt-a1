@@ -30,6 +30,7 @@ ADM_CTRL_POLICIES = "/a1-p/policytypes/{0}/policies".format(ADM_CRTL_TID)
 ADM_CTRL_INSTANCE = ADM_CTRL_POLICIES + "/" + ADM_CTRL_IID
 ADM_CTRL_INSTANCE_STATUS = ADM_CTRL_INSTANCE + "/status"
 ADM_CTRL_TYPE = "/a1-p/policytypes/{0}".format(ADM_CRTL_TID)
+ACK_MT = 20011
 
 
 def _fake_dequeue():
@@ -37,7 +38,7 @@ def _fake_dequeue():
     pay = json.dumps(
         {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "OK"}
     ).encode()
-    fake_msg = {"payload": pay}
+    fake_msg = {"payload": pay, "message type": ACK_MT}
     return [fake_msg]
 
 
@@ -49,30 +50,36 @@ def _fake_dequeue_none():
 def _fake_dequeue_deleted():
     """for monkeypatching  with a DELETED status"""
     new_msgs = []
+    good_pay = json.dumps(
+        {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "DELETED"}
+    ).encode()
 
-    # non existent type
+    # non existent type id
     pay = json.dumps(
         {"policy_type_id": 911, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "DELETED"}
     ).encode()
-    fake_msg = {"payload": pay}
+    fake_msg = {"payload": pay, "message type": ACK_MT}
     new_msgs.append(fake_msg)
 
+    # bad instance id
     pay = json.dumps(
         {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": "darkness", "handler_id": RCV_ID, "status": "DELETED"}
     ).encode()
-    fake_msg = {"payload": pay}
+    fake_msg = {"payload": pay, "message type": ACK_MT}
+    new_msgs.append(fake_msg)
+
+    # good body but bad message type
+    fake_msg = {"payload": good_pay, "message type": ACK_MT * 3}
     new_msgs.append(fake_msg)
 
     # insert a bad one with a malformed body to make sure we keep going
-    new_msgs.append({"payload": "asdf"})
+    new_msgs.append({"payload": "asdf", "message type": ACK_MT})
 
     # not even a json
     new_msgs.append("asdf")
 
-    pay = json.dumps(
-        {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "DELETED"}
-    ).encode()
-    fake_msg = {"payload": pay}
+    # good
+    fake_msg = {"payload": good_pay, "message type": ACK_MT}
     new_msgs.append(fake_msg)
 
     return new_msgs
