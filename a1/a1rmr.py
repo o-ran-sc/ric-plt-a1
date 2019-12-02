@@ -68,9 +68,10 @@ class _RmrLoop:
                 time.sleep(0.5)
 
         # set the receive function
-        # TODO: when policy query is implemented, add A1_POLICY_QUERY
         self.rcv_func = (
-            rcv_func_override if rcv_func_override else lambda: helpers.rmr_rcvall_msgs(self.mrc, [A1_POLICY_RESPONSE])
+            rcv_func_override
+            if rcv_func_override
+            else lambda: helpers.rmr_rcvall_msgs(self.mrc, [A1_POLICY_RESPONSE, A1_POLICY_QUERY])
         )
 
         # start the work loop
@@ -109,18 +110,24 @@ class _RmrLoop:
                         mdc_logger.debug("Message sent successfully!")
                         break
 
-            # read our mailbox and update statuses
+            # read our mailbox
             for msg in self.rcv_func():
+                mtype = msg["message type"]
                 try:
-                    pay = json.loads(msg["payload"])
-                    pti = pay["policy_type_id"]
-                    pii = pay["policy_instance_id"]
-                    data.set_policy_instance_status(pti, pii, pay["handler_id"], pay["status"])
+                    if mtype == A1_POLICY_RESPONSE:
+                        pay = json.loads(msg["payload"])
+                        pti = pay["policy_type_id"]
+                        pii = pay["policy_instance_id"]
+                        data.set_policy_instance_status(pti, pii, pay["handler_id"], pay["status"])
+                    elif mtype == A1_POLICY_QUERY:
+                        pti = json.loads(msg["payload"])["policy_type_id"]
+                        mdc_logger.debug("got query for {0}".format(pti))
+                    else:
+                        mdc_logger.debug("Received message type {0} but A1 does not handle this".format(mtype))
                 except (PolicyTypeNotFound, PolicyInstanceNotFound, KeyError, TypeError, json.decoder.JSONDecodeError):
                     # TODO: in the future we may also have to catch SDL errors
-                    mdc_logger.debug("Dropping malformed or non applicable message: {0}".format(msg))
+                    mdc_logger.debug("Dropping malformed or otherwise problematic policy ack/query message: {0}".format(msg))
 
-            # TODO: what's a reasonable sleep time? we don't want to hammer redis too much, and a1 isn't a real time component
             self.last_ran = time.time()
             time.sleep(1)
 
