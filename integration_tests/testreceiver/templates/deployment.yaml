@@ -17,6 +17,18 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
+        #query receiver
+        - name: queryreceiver
+          image: queryreceiver:latest
+          imagePullPolicy: Never
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: queryreceiverconf
+              mountPath: /opt/route/local.rt
+              subPath: local.rt
+
+        # test receiver
         - name: testreceiver
           image: testreceiver:latest
           imagePullPolicy: Never
@@ -26,6 +38,8 @@ spec:
             - name: testreceiverconf
               mountPath: /opt/route/local.rt
               subPath: local.rt
+
+        # test receiver that delays until sending
         - name: delayreceiver
           image: testreceiver:latest
           imagePullPolicy: Never
@@ -50,3 +64,6 @@ spec:
         - name: "delayreceiverconf"
           configMap:
             name: "delayreceiverconf"
+        - name: "queryreceiverconf"
+          configMap:
+            name: "queryreceiverconf"
