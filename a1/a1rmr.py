@@ -68,14 +68,33 @@ class _RmrLoop:
                 time.sleep(0.5)
 
         # set the receive function
-        # TODO: when policy query is implemented, add A1_POLICY_QUERY
         self.rcv_func = (
-            rcv_func_override if rcv_func_override else lambda: helpers.rmr_rcvall_msgs(self.mrc, [A1_POLICY_RESPONSE])
+            rcv_func_override
+            if rcv_func_override
+            else lambda: helpers.rmr_rcvall_msgs(self.mrc, [A1_POLICY_RESPONSE, A1_POLICY_QUERY])
         )
 
         # start the work loop
         self.thread = Thread(target=self.loop)
         self.thread.start()
+
+    def _send_msg(self, pay, mtype, subid):
+        """
+        sends a msg
+        """
+        # Waiting on an rmr bugfix regarding the over-allocation: https://rancodev.atlassian.net/browse/RICPLT-2490
+        for _ in range(0, RETRY_TIMES):
+            sbuf = rmr.rmr_alloc_msg(self.mrc, 4096, pay, True, mtype)
+            # TODO: after next rmr is released, this can be done in the alloc call. but that's not avail in pypi yet
+            sbuf.contents.sub_id = subid
+            pre_send_summary = rmr.message_summary(sbuf)
+            sbuf = rmr.rmr_send_msg(self.mrc, sbuf)  # send
+            post_send_summary = rmr.message_summary(sbuf)
+            rmr.rmr_free_msg(sbuf)  # free
+            if post_send_summary["message state"] == 0 and post_send_summary["message status"] == "RMR_OK":
+                break
+            mdc_logger.debug("Message NOT sent!")
+            mdc_logger.debug("Pre-send summary: {0}, Post-send summary: {1}".format(pre_send_summary, post_send_summary))
 
     def loop(self):
         """
@@ -91,36 +110,30 @@ class _RmrLoop:
             # send out all messages waiting for us
             while not self.work_queue.empty():
                 work_item = self.work_queue.get(block=False, timeout=None)
+                self._send_msg(work_item["payload"].encode("utf-8"), A1_POLICY_REQUEST, work_item["ptid"])
 
-                pay = work_item["payload"].encode("utf-8")
-                for _ in range(0, RETRY_TIMES):
-                    # Waiting on an rmr bugfix regarding the over-allocation: https://rancodev.atlassian.net/browse/RICPLT-2490
-                    sbuf = rmr.rmr_alloc_msg(self.mrc, 4096, pay, True, A1_POLICY_REQUEST)
-                    # TODO: after next rmr is released, this can be done in the alloc call. but that's not avail in pypi yet
-                    sbuf.contents.sub_id = work_item["ptid"]
-                    pre_send_summary = rmr.message_summary(sbuf)
-                    sbuf = rmr.rmr_send_msg(self.mrc, sbuf)  # send
-                    post_send_summary = rmr.message_summary(sbuf)
-                    mdc_logger.debug(
-                        "Pre-send summary: {0}, Post-send summary: {1}".format(pre_send_summary, post_send_summary)
-                    )
-                    rmr.rmr_free_msg(sbuf)  # free
-                    if post_send_summary["message state"] == 0 and post_send_summary["message status"] == "RMR_OK":
-                        mdc_logger.debug("Message sent successfully!")
-                        break
-
-            # read our mailbox and update statuses
+            # read our mailbox
             for msg in self.rcv_func():
                 try:
-                    pay = json.loads(msg["payload"])
-                    pti = pay["policy_type_id"]
-                    pii = pay["policy_instance_id"]
-                    data.set_policy_instance_status(pti, pii, pay["handler_id"], pay["status"])
-                except (PolicyTypeNotFound, PolicyInstanceNotFound, KeyError, TypeError, json.decoder.JSONDecodeError):
+                    mtype = msg["message type"]
+                    if mtype == A1_POLICY_RESPONSE:
+                        # got a policy response, update status
+                        pay = json.loads(msg["payload"])
+                        data.set_policy_instance_status(
+                            pay["policy_type_id"], pay["policy_instance_id"], pay["handler_id"], pay["status"]
+                        )
+                    elif mtype == A1_POLICY_QUERY:
+                        # got a query, do a lookup and send out all instances
+                        pti = json.loads(msg["payload"])["policy_type_id"]
+                        instance_ids = data.get_instance_list(pti)
+                        mdc_logger.debug("TODO")
+                        mdc_logger.debug(instance_ids)
+                    else:
+                        mdc_logger.debug("Received message type {0} but A1 does not handle this".format(mtype))
+                except (PolicyTypeNotFound, PolicyInstanceNotFound, KeyError, TypeError, json.decoder.JSONDecodeError) as e:
                     # TODO: in the future we may also have to catch SDL errors
-                    mdc_logger.debug("Dropping malformed or non applicable message: {0}".format(msg))
+                    mdc_logger.debug("Dropping malformed or otherwise problematic policy ack/query message: {0}".format(msg))
 
-            # TODO: what's a reasonable sleep time? we don't want to hammer redis too much, and a1 isn't a real time component
             self.last_ran = time.time()
             time.sleep(1)
 
