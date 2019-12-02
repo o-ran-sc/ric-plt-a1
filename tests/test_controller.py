@@ -30,6 +30,7 @@ ADM_CTRL_POLICIES = "/a1-p/policytypes/{0}/policies".format(ADM_CRTL_TID)
 ADM_CTRL_INSTANCE = ADM_CTRL_POLICIES + "/" + ADM_CTRL_IID
 ADM_CTRL_INSTANCE_STATUS = ADM_CTRL_INSTANCE + "/status"
 ADM_CTRL_TYPE = "/a1-p/policytypes/{0}".format(ADM_CRTL_TID)
+ACK_MT = 20011
 
 
 def _fake_dequeue():
@@ -37,8 +38,8 @@ def _fake_dequeue():
     pay = json.dumps(
         {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "OK"}
     ).encode()
-    fake_msg = {"payload": pay}
-    return [fake_msg]
+    fake_msg = {"payload": pay, "message type": ACK_MT}
+    return [(fake_msg, None)]
 
 
 def _fake_dequeue_none():
@@ -49,31 +50,37 @@ def _fake_dequeue_none():
 def _fake_dequeue_deleted():
     """for monkeypatching  with a DELETED status"""
     new_msgs = []
+    good_pay = json.dumps(
+        {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "DELETED"}
+    ).encode()
 
-    # non existent type
+    # non existent type id
     pay = json.dumps(
         {"policy_type_id": 911, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "DELETED"}
     ).encode()
-    fake_msg = {"payload": pay}
-    new_msgs.append(fake_msg)
+    fake_msg = {"payload": pay, "message type": ACK_MT}
+    new_msgs.append((fake_msg, None))
 
+    # bad instance id
     pay = json.dumps(
         {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": "darkness", "handler_id": RCV_ID, "status": "DELETED"}
     ).encode()
-    fake_msg = {"payload": pay}
-    new_msgs.append(fake_msg)
+    fake_msg = {"payload": pay, "message type": ACK_MT}
+    new_msgs.append((fake_msg, None))
+
+    # good body but bad message type
+    fake_msg = {"payload": good_pay, "message type": ACK_MT * 3}
+    new_msgs.append((fake_msg, None))
 
     # insert a bad one with a malformed body to make sure we keep going
-    new_msgs.append({"payload": "asdf"})
+    new_msgs.append(({"payload": "asdf", "message type": ACK_MT}, None))
 
     # not even a json
-    new_msgs.append("asdf")
+    new_msgs.append(("asdf", None))
 
-    pay = json.dumps(
-        {"policy_type_id": ADM_CRTL_TID, "policy_instance_id": ADM_CTRL_IID, "handler_id": RCV_ID, "status": "DELETED"}
-    ).encode()
-    fake_msg = {"payload": pay}
-    new_msgs.append(fake_msg)
+    # good
+    fake_msg = {"payload": good_pay, "message type": ACK_MT}
+    new_msgs.append((fake_msg, None))
 
     return new_msgs
 
@@ -83,17 +90,14 @@ def _test_put_patch(monkeypatch):
     # assert that rmr bad states don't cause problems
     monkeypatch.setattr("rmr.rmr.rmr_send_msg", rmr_mocks.send_mock_generator(10))
 
-    # we need this because free expects a real sbuf
-    # TODO: move this into rmr_mocks
-    def noop(_sbuf):
-        pass
-
-    monkeypatch.setattr("rmr.rmr.rmr_free_msg", noop)
-
-    # we need to repatch alloc (already patched in patch_rmr) to fix the transactionid, alloc is called in send and recieve
-    def fake_alloc(_unused1, _unused2, _unused3, _unused4, _unused5):
+    # TODO: this functionality is being added into rmr, use it when done
+    # temporary reasoning: we need to repatch alloc (already patched in patch_rmr) to fix the transactionid, alloc is called in send and recieve
+    def fake_alloc(_unused1, _unused2, payload, gen_transaction_id, mtype, sub_id):
         sbuf = rmr_mocks.Rmr_mbuf_t()
         sbuf.contents.xaction = b"d49b53e478b711e9a1130242ac110002"
+        sbuf.contents.payload = payload
+        sbuf.contents.mtype = mtype
+        sbuf.contents.subid = sub_id
         return sbuf
 
     # we also need to repatch set, since in the send function, we alloc, then set a new transid
