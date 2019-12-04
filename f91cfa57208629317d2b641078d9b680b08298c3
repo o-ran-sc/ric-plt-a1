@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a24466d8_344d0dde",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-12-04T16:53:45Z",
+      "side": 1,
+      "message": "Before break/exit, you need to free mbuf if you are not going to pass it back to RMR.",
+      "revId": "f91cfa57208629317d2b641078d9b680b08298c3",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7d3274_9e517fbd",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2019-12-04T16:53:45Z",
+      "side": 1,
+      "message": "While unlikely, it is possible for rmr_rts_msg() to return a deifferent sbuf pointer.  It is probably wise to make sbuf_rts a return value of this function as if it is changed, the calling function will have the old pointer which might result in a seg-fault if used.",
+      "revId": "f91cfa57208629317d2b641078d9b680b08298c3",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
