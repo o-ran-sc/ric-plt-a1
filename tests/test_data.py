@@ -15,13 +15,18 @@
 #   limitations under the License.
 # ==================================================================================
 from a1 import data
+from .a1test_helpers import MockSDLWrapper
+
+
+def setup_module():
+    """module level setup"""
+    data.SDL = MockSDLWrapper()  # patch SDL
 
 
 def test_sdl_raw():
     """
     test raw sdl functions
     """
-    data.SDL = data.SDLWrapper()
     data.SDL.set("as.df1", "data")
     data.SDL.set("as.df2", "data2")
     assert data.SDL.get("as.df1") == "data"
