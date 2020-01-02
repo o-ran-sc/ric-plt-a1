@@ -27,6 +27,9 @@ import time
 from threading import Thread
 import msgpack
 from mdclogpy import Logger
+
+from ricsdl.syncstorage import SyncStorage
+
 from a1.exceptions import PolicyTypeNotFound, PolicyInstanceNotFound, PolicyTypeAlreadyExists, CantDeleteNonEmptyType
 
 mdc_logger = Logger(name=__name__)
@@ -34,6 +37,8 @@ mdc_logger = Logger(name=__name__)
 
 INSTANCE_DELETE_NO_RESP_TTL = int(os.environ.get("INSTANCE_DELETE_NO_RESP_TTL", 5))
 INSTANCE_DELETE_RESP_TTL = int(os.environ.get("INSTANCE_DELETE_RESP_TTL", 5))
+
+A1NS = "A1m_ns"
 
 
 class SDLWrapper:
@@ -46,25 +51,31 @@ class SDLWrapper:
     """
 
     def __init__(self):
-        self.POLICY_DATA = {}
+        self.sdl = SyncStorage()
 
     def set(self, key, value):
         """set a key"""
-        self.POLICY_DATA[key] = msgpack.packb(value, use_bin_type=True)
+        self.sdl.set(A1NS, {key: msgpack.packb(value, use_bin_type=True)})
 
     def get(self, key):
         """get a key"""
-        if key in self.POLICY_DATA:
-            return msgpack.unpackb(self.POLICY_DATA[key], raw=False)
+        ret_dict = self.sdl.get(A1NS, {key})
+        if key in ret_dict:
+            return msgpack.unpackb(ret_dict[key], raw=False)
+
         return None
 
     def find_and_get(self, prefix):
         """get all k v pairs that start with prefix"""
-        return {k: msgpack.unpackb(v, raw=False) for k, v in self.POLICY_DATA.items() if k.startswith(prefix)}
+        ret_dict = self.sdl.find_and_get(A1NS, "{0}".format(prefix), atomic=True)
+        found = {k: msgpack.unpackb(v, raw=False) for k, v in ret_dict.items()}
+        # RE sorting, it is very useful for integration testing to define well known test cases, see: https://github.com/taverntesting/tavern/issues/504
+        # SDL does not impose a sort order so we impose one here. We can remove this fr save a tiny efficient gain if needed, provided test issues are resolved.
+        return {k: found[k] for k in sorted(found)}
 
     def delete(self, key):
         """ delete a key"""
-        del self.POLICY_DATA[key]
+        self.sdl.remove(A1NS, {key})
 
 
 SDL = SDLWrapper()
