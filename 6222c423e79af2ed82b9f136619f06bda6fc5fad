@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e8aaa2_572df944",
+        "filename": "tests/a1test_helpers.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2020-01-03T15:26:43Z",
+      "side": 1,
+      "message": "suggestion for Timo: It would be REALLLY helpful if pysdl came with a \"standalone\" backend that uses a dict like this, for the purposes of testing. That would help all clients patch SDL in their unit tests, rather than having to re-invent the wheel like this. \n\nIt could be instantiated like SyncStorage(backend\u003dstandalonetest) or something like that. \n\nJust a suggestion for SDL itself.",
+      "revId": "6222c423e79af2ed82b9f136619f06bda6fc5fad",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
