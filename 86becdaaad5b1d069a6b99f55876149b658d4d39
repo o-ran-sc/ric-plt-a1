@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4a8ad110_e0ec3b45",
+        "filename": "a1/data.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2020-01-03T16:34:40Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "cd490020_87ca62ba",
+      "revId": "86becdaaad5b1d069a6b99f55876149b658d4d39",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "add8182d_f2d8637a",
         "filename": "integration_tests/dbaas-service/Chart.yaml",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "86becdaaad5b1d069a6b99f55876149b658d4d39",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be679f09_eac8265b",
+        "filename": "integration_tests/dbaas-service/Chart.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2020-01-03T16:34:40Z",
+      "side": 1,
+      "message": "I do not not any strong opinions on this, either way is ok for me..",
+      "parentUuid": "71d9dd57_14ada69f",
+      "revId": "86becdaaad5b1d069a6b99f55876149b658d4d39",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     }
   ]
 }
