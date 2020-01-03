@@ -16,6 +16,24 @@
       "revId": "6222c423e79af2ed82b9f136619f06bda6fc5fad",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73486a4f_563ea634",
+        "filename": "tests/a1test_helpers.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2020-01-03T16:34:40Z",
+      "side": 1,
+      "message": "OK, I can try to implement in SDL stub class what implements abstract SyncLockAbc class\u0027 methods without need to have any real DB backend. This stub could be then used in the unittest of A1.",
+      "parentUuid": "a2e8aaa2_572df944",
+      "revId": "6222c423e79af2ed82b9f136619f06bda6fc5fad",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
