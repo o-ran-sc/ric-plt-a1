@@ -51,6 +51,24 @@
       "revId": "86becdaaad5b1d069a6b99f55876149b658d4d39",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d9dd57_14ada69f",
+        "filename": "integration_tests/dbaas-service/Chart.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2020-01-03T15:30:22Z",
+      "side": 1,
+      "message": "Probably an argument could be made either way here.\n\nTraditionally, we have bumped the dates when a file was editied. But here, this file wasn\u0027t actually edited in 2020, It was copied from the dbaas repo.\n\nOne could also argue that the copy instantiates a new file.\n\nI\u0027m happy to make the change either way.",
+      "parentUuid": "add8182d_f2d8637a",
+      "revId": "86becdaaad5b1d069a6b99f55876149b658d4d39",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
