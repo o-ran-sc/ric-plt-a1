@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6734a691_04d18fc1",
+        "filename": "a1/data.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2020-01-08T17:05:31Z",
+      "side": 1,
+      "message": "ricsdl 2.0.0 should have a fix for find_and_get()to sort the results. So sorting is not anymore needed here...",
+      "revId": "16991aba6ef3960560c57ad9a351454406d5b78b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
