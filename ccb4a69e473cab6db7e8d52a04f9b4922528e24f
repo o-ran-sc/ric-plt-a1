@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76d39e12_7fa2eaa8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-01-08T21:58:06Z",
+      "side": 1,
+      "message": "Please add footer line:\n\n    Issue-Id: RIC-44, RIC-45",
+      "range": {
+        "startLine": 12,
+        "startChar": 107,
+        "endLine": 12,
+        "endChar": 113
+      },
+      "revId": "ccb4a69e473cab6db7e8d52a04f9b4922528e24f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca557b1a_1c7e3fa6",
+        "filename": "a1/controller.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-01-08T21:58:06Z",
+      "side": 1,
+      "message": "personally I feel this flagellation of updating copyright dates on OPEN SOURCE code is the purest example of a waste of time anyone will ever see, but hey I\u0027m not a lawyer and I don\u0027t play one on tv either.",
+      "range": {
+        "startLine": 6,
+        "startChar": 27,
+        "endLine": 6,
+        "endChar": 31
+      },
+      "revId": "ccb4a69e473cab6db7e8d52a04f9b4922528e24f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9a22d5_c05ee373",
+        "filename": "a1/controller.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-01-08T21:58:06Z",
+      "side": 1,
+      "message": "I supposed you are not interested in hearing comments about removing code, instead of commenting it out?",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "ccb4a69e473cab6db7e8d52a04f9b4922528e24f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1eb75ab_6dacc5db",
+        "filename": "integration_tests/dbaas-service/README",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-01-08T21:58:06Z",
+      "side": 1,
+      "message": "instead of replicating copies, would you consider using a git submodule?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "ccb4a69e473cab6db7e8d52a04f9b4922528e24f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
