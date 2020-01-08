@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "015e6de3_f5eda8d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2020-01-08T22:16:19Z",
+      "side": 1,
+      "message": "what, no this pr is not in reference to 44 or 45. I was simply pointing out that more changes will come later after those (orthognal to this repo) are done.",
+      "parentUuid": "76d39e12_7fa2eaa8",
+      "range": {
+        "startLine": 12,
+        "startChar": 107,
+        "endLine": 12,
+        "endChar": 113
+      },
+      "revId": "ccb4a69e473cab6db7e8d52a04f9b4922528e24f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca557b1a_1c7e3fa6",
         "filename": "a1/controller.py",
         "patchSetId": 10
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7f5d7b65_88e001e5",
+        "filename": "a1/controller.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2020-01-08T22:16:19Z",
+      "side": 1,
+      "message": "not in this case because I want this uncommented ASAP. I need this to work.\nFor code that should actually be deleted, I agree.",
+      "parentUuid": "3a9a22d5_c05ee373",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "ccb4a69e473cab6db7e8d52a04f9b4922528e24f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1eb75ab_6dacc5db",
         "filename": "integration_tests/dbaas-service/README",
         "patchSetId": 10
@@ -82,6 +130,30 @@
       "writtenOn": "2020-01-08T21:58:06Z",
       "side": 1,
       "message": "instead of replicating copies, would you consider using a git submodule?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "ccb4a69e473cab6db7e8d52a04f9b4922528e24f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43ca449_95340a1b",
+        "filename": "integration_tests/dbaas-service/README",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2020-01-08T22:16:19Z",
+      "side": 1,
+      "message": "this is temporary per ric 45 or 44; so rather than going down that path now, I\u0027d prefer to just delete this when I can. Let\u0027s readdress later.",
+      "parentUuid": "d1eb75ab_6dacc5db",
       "range": {
         "startLine": 1,
         "startChar": 0,
