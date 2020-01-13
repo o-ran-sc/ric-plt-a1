@@ -33,7 +33,7 @@ setup(
         "msgpack",
         "rmr>=2.2.0",
         "mdclogpy",
-        "ricsdl>=1.0.2,<2.0.0",
+        "ricsdl>=2.0.0,<3.0.0",
     ],
     package_data={"a1": ["openapi.yaml"]},
 )
