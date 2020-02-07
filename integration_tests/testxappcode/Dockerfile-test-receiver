@@ -1,0 +1,55 @@
+# ==================================================================================
+#       Copyright (c) 2020 Nokia
+#       Copyright (c) 2020 AT&T Intellectual Property.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#          http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+# ==================================================================================
+
+# This Dockerfile uses a two stage Docker build
+
+# install a well known working rmr
+FROM golang:1.13.7-alpine3.11
+RUN apk update && apk add autoconf automake build-base cmake libtool ninja pkgconfig git
+RUN git clone --branch 1.13.1 https://gerrit.oran-osc.org/r/ric-plt/lib/rmr \
+    && cd rmr \
+    && mkdir .build; cd .build \
+    && echo "<<<installing rmr devel headers>>>" \
+    && cmake .. -DDEV_PKG=1; make install \
+    && echo "<<< installing rmr .so>>>" \
+    && cmake .. -DPACK_EXTERNALS=1; make install
+
+# go will complain if there is a go.mod at the root of the GOPATH so we can't.
+RUN mkdir myxapp
+COPY example-xapp.go myxapp/example-xapp.go
+COPY go.mod myxapp/go.mod
+
+# do the build
+WORKDIR myxapp
+ENV GO111MODULE on
+ENV GO_ENABLED 0
+ENV GOOS linux
+RUN go build -a -installsuffix cgo -o example-xapp example-xapp.go
+
+# 2nd stage
+FROM alpine:3.11
+COPY --from=0 /usr/local/lib64/libnng.so* /usr/local/lib64/
+COPY --from=0 /usr/local/lib64/librmr_nng* /usr/local/lib64/
+COPY --from=0 /go/myxapp/example-xapp .
+COPY test-config-file.yaml .
+
+# rmr setup
+RUN mkdir -p /opt/route/
+ENV LD_LIBRARY_PATH /usr/local/lib:/usr/local/lib64
+ENV RMR_SEED_RT /opt/route/local.rt
+
+CMD ["./example-xapp", "-f", "test-config-file.yaml"]
