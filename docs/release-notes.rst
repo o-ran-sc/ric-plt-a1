@@ -14,6 +14,14 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
    :depth: 3
    :local:
 
+[2.1.3] - xxx
+-------------
+
+::
+
+    * This is a pretty big amount of work/changes, however no APIs were changed hence the semver patch
+    * Uses a much fancier 2 stage (possibly seen as 3 with the COPY from builder) build to reduce the size of a1's image. The python:3.7-alpine image itself is 98MB and A1 is now only ~116MB, so we're done optimizing A1's container size.
+
 [2.1.2] - 1/22/2020
 -------------------
 
