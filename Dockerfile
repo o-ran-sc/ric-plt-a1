@@ -17,10 +17,9 @@
 
 # This container uses a 2 stage build!
 # Tips and tricks were learned from: https://pythonspeed.com/articles/multi-stage-docker-python/
-FROM python:3.7-alpine AS compile-image
+FROM python:3.8-alpine AS compile-image
 # Gevent needs gcc
 RUN apk update && apk add gcc musl-dev
-# do the install of a1
 
 # Switch to a non-root user for security reasons
 # This is only really needed in stage 2 however this makes the copying easier and straitforward! --user doesn't do the same thing if run as root!
@@ -35,7 +34,7 @@ RUN pip install --user /home/a1user
 
 ###########
 # 2nd stage
-FROM python:3.7-alpine
+FROM python:3.8-alpine
 # dir that rmr routing file temp goes into
 RUN mkdir -p /opt/route/
 # python copy; this basically makes the 2 stage python build work

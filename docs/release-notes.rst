@@ -14,6 +14,16 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
    :depth: 3
    :local:
 
+
+[2.1.5] - 3/19/2020
+-------------------
+::
+
+    * Switch to python3.8
+    * Switch to SI95 from NNG (rmr v3 vs rmr v1)
+    * Bump version of xapp frame (SDL only)
+
+
 [2.1.4] - 3/6/2020
 -------------------
 ::
