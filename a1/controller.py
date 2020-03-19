@@ -86,6 +86,7 @@ def create_policy_type(policy_type_id):
 
     def put_type_handler():
         data.store_policy_type(policy_type_id, body)
+        mdc_logger.debug("Policy type {} created.".format(policy_type_id))
         return "", 201
 
     body = connexion.request.json
@@ -106,6 +107,7 @@ def delete_policy_type(policy_type_id):
 
     def delete_policy_type_handler():
         data.delete_policy_type(policy_type_id)
+        mdc_logger.debug("Policy type {} deleted.".format(policy_type_id))
         return "", 204
 
     return _try_func_return(delete_policy_type_handler)
