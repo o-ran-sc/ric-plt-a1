@@ -156,12 +156,13 @@ class _RmrLoop:
                     try:
                         # got a query, do a lookup and send out all instances
                         pti = json.loads(msg["payload"])["policy_type_id"]
-                        mdc_logger.debug("Received query for: {0}".format(pti))
-                        for pii in data.get_instance_list(pti):
+                        instance_list = data.get_instance_list(pti)  # will raise if a bad type
+                        mdc_logger.debug("Received a query for a good type: {0}".format(msg))
+                        for pii in instance_list:
                             instance = data.get_policy_instance(pti, pii)
                             payload = json.dumps(messages.a1_to_handler("CREATE", pti, pii, instance)).encode("utf-8")
                             sbuf = self._rts_msg(payload, sbuf, A1_POLICY_REQUEST)
-                    except (PolicyTypeNotFound, PolicyInstanceNotFound):
+                    except (PolicyTypeNotFound):
                         mdc_logger.debug("Received a query for a non-existent type: {0}".format(msg))
                     except (KeyError, TypeError, json.decoder.JSONDecodeError):
                         mdc_logger.debug("Dropping malformed policy query message: {0}".format(msg))
