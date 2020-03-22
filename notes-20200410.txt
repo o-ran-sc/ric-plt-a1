@@ -1,0 +1,179 @@
+notes from a1 walkthru, 10 Apr 2020
+
+tommy carpenter, david korman
+
+req'ts review
+
+23 page word document defines requirements (stored ?)
+
+why things are complicated
+
+gap between what RIC clients want, and what RIC provides
+
+asserts that RMR is the wrong messaging semantics for A1
+
+SMO caller wants to install policies in RIC and know it succeeded,
+policy is in effect; at delete, know the policy is gone
+
+many-to-many policy-xapp relationship
+
+SMO has no notion of xapps, bcos written by Ericsson
+
+RIC has notion of xapps
+
+what does it mean, a policy is in effect?  implemented by every xapp,
+by some xapps, by no xapps?
+
+a1 does not know how many xapps are deployed, or how many are supposed
+to receive a policy instance message
+
+RMR accepts messages for transport, that's all A1 can know
+
+A1 has some timeouts
+
+lack of reliable message bus
+
+if A1 takes instance but nobody replies, eventually it deletes the
+instance
+
+match delete acks with put acks?  yes that's done
+
+A1 is trying to be reliable in an unreliable environment
+
+dave suggests extending the messaging to know what's in effect
+
+code review
+
+open API spec document defines URLs
+
+python methods are linked by method IDs in the open API spec doc
+
+exceptions generally bubble up and are mapped to HTTP responses
+
+rmr is constantly reading
+
+may receive ACKs from xapps
+
+queue is shared between threads
+
+policy instance request is enqueued, eventually read by other thread
+
+http server thread is never blocked by RMR
+
+loop runs until it's told to stop
+
+loop reads mailbox each time
+
+xapps can query on start all the instances of the types they want,
+tells A1 to respond directly
+
+every function is try-catch-return
+
+replace handled by put
+
+not too much in the server
+
+custom exceptions are used, more meaningful than error
+
+all data functions in one module, much SDL as the persistent store
+
+SDL team agreed, but did not yet implement, job queue like REDIS
+
+chance for data loss on A1 crash
+
+should be able to stop/restart A1 without loss, but not in all cases
+
+uses RIC xapp framework SDL wrapper
+
+disagreement about encoding for SDL.  A1 uses messagepack.  other
+teams favor protobuf.
+
+delete policy instance function is complex, maybe most complex, wait
+for deletes to come back
+
+testing
+
+unit testing, integration testing
+
+lots going on - xapps communicate via RMR, SDL
+
+test framework starts a web server and sends requests
+
+dropped messages are difficult to simulate
+
+integration suite uses python tool tavern for testing a REST server
+
+helm charts for a1, database, xapps
+
+uses tox, large testing script starts containers, then tavern
+
+tavern-driven scripts establish state, test responses
+
+three xapps receive requests from the tavern tests
+
+critical that "get" on a1 happens after ack
+
+test reveals many problems, for example found SI95 behavior that
+differed from NNG
+
+demonstrated test, which requires kubernetes
+
+like pytests - launches tests against A1
+
+then uses Apache bench tool to load-test A1, measure response time
+
+tests are not run in LF Jenkins verify job
+
+is Nokia taking over the RIC?
+
+spec team puts work in via WG2
+
+A1 is not in the PIZ
+
+A1 is part of ORAN "B" use case traffic steering and health check
+
+four xapps used for traffic steering use case talk to A1
+
+what will be required to pass a use case, at release time?
+
+comparisons with ONAP use cases, release requirements
+
+review of traffic steering use case - qpdriver, qp, sdl, ts
+
+shraboni is building something that talks to A1
+
+Ron S. is working on TS
+
+still waiting for Samsung to give us real data
+
+many questions in last two weeks about A1
+
+Ericsson wrote the requirements document, applies to their gNodeBs,
+all work by A1 and O1
+
+questions about A1 have been arriving in private email, not by email
+list, jira, wiki or other mechanism
+
+sonar for a1 should be done
+
+A1 docs are fairly complete, published to ReadTheDocs
+
+speculation about future of a1 mediator
+
+will it go away?  nokia does not use it today, their xapps all have
+HTTP interfaces.
+
+some features may go thru O1, config.
+
+what about shared policies?
+
+many xapps can implement the same policies, but don't have good
+examples
+
+who will make the management dashboards for the custom APIs?
+
+ericsson loves A1
+
+unclear how AT&T will reconcile, control network via A1 (Ericsson) or
+not (Nokia)?
+
