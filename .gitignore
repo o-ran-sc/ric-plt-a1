@@ -111,3 +111,6 @@ ENV/
 # Test report
 xunit-reports
 coverage-reports
+
+# CLM dependency report
+requirements.txt
