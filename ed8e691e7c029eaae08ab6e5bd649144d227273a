@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a10e1335_075acbc3",
+        "filename": "tox.ini",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2020-03-23T11:24:40Z",
+      "side": 1,
+      "message": "make this part of another test environment please. Do not merge this into the code. Just like flake8 is seperate.\nThis will require changing the cicd yaml, maybe call it [testenv:clm]\n\nAlso, is the name requirements.txt required for clm or can that file be named something else? If it can be renamed please rename it because requirements.txt has a specific meaning but that meaning is not correct here. \n\nFinally, is the goal of clm to analyze infinite transitive dependencies? Pip freeze doesn\u0027t stop at the first level, this may be fine, I don\u0027t know what the goal is.",
+      "revId": "ed8e691e7c029eaae08ab6e5bd649144d227273a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
