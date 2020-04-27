@@ -16,6 +16,24 @@
       "revId": "14d016e5551fdc203770dd8f4eac4724152e4848",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45d222c_432ca22f",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-04-27T15:21:26Z",
+      "side": 1,
+      "message": "A fair question. I have not released 2.1.7 :) As far as the world is concerned, 2.1.6 is the latest.  After you all merge both today\u0027s change sets, then it\u0027s probably worth declaring a release.",
+      "parentUuid": "878756d1_816db4e3",
+      "revId": "14d016e5551fdc203770dd8f4eac4724152e4848",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
