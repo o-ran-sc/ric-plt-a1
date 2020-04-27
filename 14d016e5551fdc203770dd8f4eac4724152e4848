@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878756d1_816db4e3",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2020-04-27T15:16:42Z",
+      "side": 1,
+      "message": "Maybe this is just a gerrit presentation issue, but it appears that version 2.1.7 was released with two changes, and three changes are being added in this set, but the version number isn\u0027t going to .8.    I\u0027m a bit confused.",
+      "revId": "14d016e5551fdc203770dd8f4eac4724152e4848",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
