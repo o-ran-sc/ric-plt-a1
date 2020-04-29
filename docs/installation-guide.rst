@@ -27,18 +27,26 @@ The "real" helm chart for A1 is in the LF it/dep repo. That repo holds all of th
 Local Docker
 -------------
 
-building
-~~~~~~~~
+Build the image
+~~~~~~~~~~~~~~~
 ::
 
-   docker build --no-cache -t a1:X.Y.Z .
+   docker build --no-cache -t a1:latest .
 
 .. _running-1:
 
-running
-~~~~~~~
+Start the container
+~~~~~~~~~~~~~~~~~~~
+
+A sample RMR routing table is supplied here in file `local.rt` for mounting as a volume:
 
 ::
 
-   docker run -dt -p 10000:10000 -v /path/to/localrt:/opt/route/local.rt a1:X.Y.Z -v
+   docker run -p 10000:10000 -v /path/to/local.rt:/opt/route/local.rt a1:latest
 
+Check container health
+~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    curl localhost:10000/a1-p/healthcheck
