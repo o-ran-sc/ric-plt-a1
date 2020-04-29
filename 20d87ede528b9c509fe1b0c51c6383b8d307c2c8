@@ -16,6 +16,24 @@
       "revId": "20d87ede528b9c509fe1b0c51c6383b8d307c2c8",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c652babd_a109a5a7",
+        "filename": "a1/data.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-04-29T23:55:52Z",
+      "side": 1,
+      "message": "The solution over in qp-d is less verbose, less ugly than this I agree.  But in A1 to make things crystal clear I added the USE_FAKE_SDL environment variable to the Dockerfile with value False. This lets a user set a variable on the command line using docker run\u0027s -e option.  The qpd code (repeated below) will evaluate the presence of the env var and set True.\n\n\n    fake_sdl \u003d getenv(\"USE_FAKE_SDL\", None)\n    rmr_xapp \u003d RMRXapp(default_handler, post_init\u003dpost_init, use_fake_sdl\u003dTrue if fake_sdl else False)",
+      "parentUuid": "accf0f7e_8902aaa2",
+      "revId": "20d87ede528b9c509fe1b0c51c6383b8d307c2c8",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
