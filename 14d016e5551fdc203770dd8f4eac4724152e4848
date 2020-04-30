@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b60fd26_f2d25063",
+        "filename": "a1/controller.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000074
+      },
+      "writtenOn": "2020-04-30T11:48:40Z",
+      "side": 1,
+      "message": "you could have cleaned this up by making another helper function since you do the same 3 things in a row\n\nlike\n\ndef lott(code, msg, exc):\n    msg \u003d \n    logger..\n    return msg, code",
+      "revId": "14d016e5551fdc203770dd8f4eac4724152e4848",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07e58e83_201e1750",
         "filename": "a1/data.py",
         "patchSetId": 3
