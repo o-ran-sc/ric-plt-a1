@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c0d9c0c_b5108408",
+        "filename": "integration_tests/portforward.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2020-04-30T16:44:46Z",
+      "side": 1,
+      "message": "If your goal is to redirect stderr to the same forward.log the 2\u003e\u00261 should be after the \u003eforward.log redirect.\n\nIn some shells, redirecting 2 to \u00261 before setting \u00261 to a different file redirects 2 to the current value of 1 (tty in this case) and not to the target assigned to 1 further on the command line. \n\nSee the difference with:\nbash -c \u0027ls foobarsoo \u003e\u00261 \u003e/dev/null \u0027\nvs\nbash -c \u0027ls foobarsoo \u003e/dev/null 2\u003e\u00261\u0027\n\nAssuming foobarsoo doesn\u0027t exist, the error from the first is still printed on the tty, but with the second the error goes to the redirected target.",
+      "revId": "fbcd84ce4101a9a73e9f194c922abdc9aa42e78b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
