@@ -14,6 +14,15 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
    :depth: 3
    :local:
 
+
+[2.1.9] - 2020-05-26
+--------------------
+* Fix _send_msg method to free allocated RMR message buffers
+* Adjust send-message methods to retry only on RMR_ERR_RETRY
+* Use constants from ricxappframe.rmr instead of hardcoded strings
+* Upgrade RMR to version 4.0.5
+* Upgrade tavern to version 1.2.2
+
 [2.1.8] - 2020-04-30
 --------------------
 
