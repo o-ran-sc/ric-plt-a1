@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10437000_62e62d80",
+        "filename": "a1/__init__.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2020-05-27T21:00:40Z",
+      "side": 1,
+      "message": "Any @crap in any language always seemed a grand hack to me, but my small experience with them and some python REST function driver was enough to put my dog off coding python too :)",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "8c589d084a73e4d666ddfa03cff00722349c88df",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
