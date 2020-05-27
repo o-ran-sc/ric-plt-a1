@@ -18,6 +18,8 @@ depends on these third-party packages and technologies:
 - Connexion
 - Flask with Gevent serving
 - Swagger
+- Prometheus
+
 
 Version bumping A1
 ------------------
@@ -61,6 +63,7 @@ In addition these items in this repo must be kept in sync:
 #. ``integration_tests/install_rmr.sh`` is a useful script for a
    variety of local testing.
 
+
 Version bumping Python
 ----------------------
 
@@ -70,6 +73,22 @@ recently done to move from 3.7 to 3.8, update these files:
 #. ``Dockerfile``
 #. ``Dockerfile-Unit-Test``
 #. ``tox.ini``
+
+
+Running A1 Standalone
+---------------------
+
+The A1 container can be run as a standalone Docker container, which
+means using an in-memory mock version of SDL and using a static route
+table mounted as a file from the git repository.  The following invocation
+does both, and also exposes the server's HTTP port on the host::
+
+    docker run -e USE_FAKE_SDL=True -p 10000:10000 -v `pwd`:/opt/route [DOCKER_IMAGE_ID_HERE]
+
+Then test the server with an invocation such as this::
+
+    curl localhost:10000/a1-p/healthcheck
+
 
 Unit Testing
 ------------
@@ -93,6 +112,7 @@ less nice because you don't get the pretty HTML)
 ::
 
    docker build  --no-cache -f Dockerfile-Unit-Test .
+
 
 Integration testing
 -------------------

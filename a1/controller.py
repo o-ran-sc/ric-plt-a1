@@ -20,12 +20,16 @@ Main a1 controller
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 import connexion
+from prometheus_client import Counter, Gauge
 from mdclogpy import Logger
 from ricsdl.exceptions import RejectedByBackend, NotConnected, BackendError
 from a1 import a1rmr, exceptions, data
 
 
 mdc_logger = Logger(name=__name__)
+request_counter = Counter('requests', 'HTTP Requests')
+policy_type_gauge = Gauge('policy_types', 'Count of active policy types', ['policy_id'])
+policy_instance_gauge = Gauge('policy_instances', 'Count of active policy instances', ['policy_id'])
 
 
 def _log_build_http_resp(exception, http_resp_code):
@@ -41,6 +45,7 @@ def _try_func_return(func):
     """
     helper method that runs the function and returns a detailed http response if an exception is raised.
     """
+    request_counter.inc()
     try:
         return func()
     except (ValidationError, exceptions.PolicyTypeAlreadyExists, exceptions.PolicyTypeIdMismatch, exceptions.CantDeleteNonEmptyType) as exc:
@@ -72,6 +77,7 @@ def get_healthcheck():
     2. checks whether the rmr thread is running and has completed a loop recently
     3. checks that our SDL connection is healthy
     """
+    request_counter.inc()
     if not a1rmr.healthcheck_rmr_thread():
         mdc_logger.debug("A1 is not healthy due to the rmr thread")
         return "rmr thread is unhealthy", 500
@@ -95,6 +101,7 @@ def create_policy_type(policy_type_id):
     """
     Handles PUT /a1-p/policytypes/policy_type_id
     """
+    policy_type_gauge.labels(policy_id=policy_type_id).inc()
 
     def put_type_handler():
         data.store_policy_type(policy_type_id, body)
@@ -116,6 +123,7 @@ def delete_policy_type(policy_type_id):
     """
     Handles DELETE /a1-p/policytypes/policy_type_id
     """
+    policy_type_gauge.labels(policy_id=policy_type_id).dec()
 
     def delete_policy_type_handler():
         data.delete_policy_type(policy_type_id)
@@ -158,6 +166,7 @@ def create_or_replace_policy_instance(policy_type_id, policy_instance_id):
     """
     Handles PUT /a1-p/policytypes/polidyid/policies/policy_instance_id
     """
+    policy_instance_gauge.labels(policy_id=policy_type_id).inc()
     instance = connexion.request.json
 
     def put_instance_handler():
@@ -185,6 +194,7 @@ def delete_policy_instance(policy_type_id, policy_instance_id):
     """
     Handles DELETE /a1-p/policytypes/polidyid/policies/policy_instance_id
     """
+    policy_instance_gauge.labels(policy_id=policy_type_id).dec()
 
     def delete_instance_handler():
         data.delete_policy_instance(policy_type_id, policy_instance_id)

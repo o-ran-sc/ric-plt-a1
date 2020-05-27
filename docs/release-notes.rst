@@ -11,6 +11,13 @@ The format is based on `Keep a Changelog <http://keepachangelog.com/>`__
 and this project adheres to `Semantic Versioning <http://semver.org/>`__.
 
 
+[2.2.0] - 2020-05-27
+--------------------
+
+* Add Prometheus /metrics endpoint
+* Extend controller with counters and gauges to measure activity
+
+
 [2.1.9] - 2020-05-26
 --------------------
 
