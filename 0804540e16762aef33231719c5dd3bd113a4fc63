@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1c71552_df928cba",
+        "filename": "docs/conf.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-05-27T14:17:55Z",
+      "side": 1,
+      "message": "This is the text that appears top-left in the RTD page.",
+      "parentUuid": "e9e37fa1_b5696352",
+      "revId": "0804540e16762aef33231719c5dd3bd113a4fc63",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f3bc4f8_f05aff4c",
         "filename": "docs/overview.rst",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "0804540e16762aef33231719c5dd3bd113a4fc63",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e22349b_04837747",
+        "filename": "docs/overview.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-05-27T14:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f3bc4f8_f05aff4c",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 7
+      },
+      "revId": "0804540e16762aef33231719c5dd3bd113a4fc63",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5e9fb0b7_6ffa17f9",
+        "filename": "docs/overview.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-05-27T14:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f44bd38_7ad000a9",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "0804540e16762aef33231719c5dd3bd113a4fc63",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "771dd1e6_66a9f89f",
         "filename": "docs/user-guide-api.rst",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2020-05-27T14:10:05Z",
       "side": 1,
       "message": "Should message types be referenced by a constant and/or string rather than the hard value?  I guess I\u0027d be afraid that if these change a value might be missed in a doc update.    I don\u0027t know if the constants are available; this might be more of a future improvement to the doc.",
+      "range": {
+        "startLine": 57,
+        "startChar": 45,
+        "endLine": 57,
+        "endChar": 50
+      },
+      "revId": "0804540e16762aef33231719c5dd3bd113a4fc63",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a1333b_4e93a401",
+        "filename": "docs/user-guide-api.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-05-27T14:17:55Z",
+      "side": 1,
+      "message": "I totally agree, but I know of no way to grab a constant from Python and show in RST.",
+      "parentUuid": "771dd1e6_66a9f89f",
       "range": {
         "startLine": 57,
         "startChar": 45,
