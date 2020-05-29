@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d410aa_0e3e2f9e",
+        "filename": "a1/__init__.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2020-05-29T12:20:12Z",
+      "side": 1,
+      "message": "Should this be mentioned in the installation guide?  I see optional environment variables, but if this is required it should be mentioned somewhere.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 60
+      },
+      "revId": "1b3e84888d31d088c7a554ad006a003424743166",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
