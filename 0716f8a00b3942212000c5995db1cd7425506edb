@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a910e662_fe8a58a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2021-05-13T14:18:54Z",
+      "side": 1,
+      "message": "Please review this change and merge if acceptable. The use of alpine as an image base is no longer supported by the dev team (no build environments are generated) so the need to switch to a ubuntu base to pick up the latest RMR is required.    Thanks in advance!",
+      "revId": "0716f8a00b3942212000c5995db1cd7425506edb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
