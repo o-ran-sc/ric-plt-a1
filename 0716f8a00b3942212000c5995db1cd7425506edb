@@ -33,6 +33,24 @@
       "message": "Hello @Scott,\n\nThank you for the contribution.\nI tried building image and included it in deployment but I see a1-mediotor pod is failing to launch :\n\n# kubectl logs deployment-ricplt-a1mediator-5b74979cc6-9ghdl -n ricplt\n/bin/sh: 1: run-a1: not found\n\nPlease let me know if modification is needed.\n",
       "revId": "0716f8a00b3942212000c5995db1cd7425506edb",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4bdb766_0ea9e838",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000037
+      },
+      "writtenOn": "2021-05-17T17:37:04Z",
+      "side": 1,
+      "message": "Well it turns out that there are a few things missing and/or different in the ubuntu world.  Specifically, A1 requires a component which forces 3.8, and the default \u0027python\u0027 is 2.x.\n\nSo, I\u0027ve uploaded a patch set that ensures 3.8 is installed, along with a component which is missing with the base install, and hard reference python in the command string rather than relying on the #! that pip adds to the a1-run wrapper.  \n\nSorry that I missed this; not a python programmer and just assumed python was python.",
+      "parentUuid": "4ad0ee65_b2609ea3",
+      "revId": "0716f8a00b3942212000c5995db1cd7425506edb",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
