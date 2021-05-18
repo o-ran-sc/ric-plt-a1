@@ -16,6 +16,23 @@
       "message": "With luck the tweaks will load and run now.",
       "revId": "06a1a14f49cd65f6836fb3bb6d772c076b8f9f11",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3aa1656_6acd559f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2021-05-18T15:45:33Z",
+      "side": 1,
+      "message": "Verified new patch set by deploying it.\nIt looks okay to me.\n\nThank you for the contribution.",
+      "revId": "06a1a14f49cd65f6836fb3bb6d772c076b8f9f11",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
