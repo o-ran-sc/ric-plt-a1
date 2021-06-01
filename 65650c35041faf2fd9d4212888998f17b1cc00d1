@@ -22,6 +22,30 @@
       },
       "revId": "65650c35041faf2fd9d4212888998f17b1cc00d1",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16199d5f_4eb4f91b",
+        "filename": "a1/a1rmr.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000108
+      },
+      "writtenOn": "2021-06-01T16:33:54Z",
+      "side": 1,
+      "message": "this will be address later by https://jira.o-ran-sc.org/browse/RIC-793",
+      "parentUuid": "2ad2b218_33e47166",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 53
+      },
+      "revId": "65650c35041faf2fd9d4212888998f17b1cc00d1",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
