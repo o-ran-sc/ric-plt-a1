@@ -16,6 +16,24 @@
       "message": "This patch should not have been approved and merged. The vote for these committer changes were not approved via the list or a TOC vote.\n\nhttps://lists.o-ran-sc.org/g/toc/message/435\n\nPlease update this patch with the necessary approvals and remerge.",
       "revId": "7f64be0fde75858b41905cb35d49c23b571b48c1",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f708d1c5_6ffa645e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000108
+      },
+      "writtenOn": "2021-06-11T07:32:26Z",
+      "side": 1,
+      "message": "there\u0027s a problem with the mailing lists. I create a request to LF support for this now: IT-22226. At least one additional approval is now visible in the mail thread above. The other one is not visible, but it\u0027s in IT-22226.\n\nThe 3rd approval mail now also made it into the mailing list: https://lists.o-ran-sc.org/g/toc/message/462",
+      "parentUuid": "ceb02866_c334655b",
+      "revId": "7f64be0fde75858b41905cb35d49c23b571b48c1",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
