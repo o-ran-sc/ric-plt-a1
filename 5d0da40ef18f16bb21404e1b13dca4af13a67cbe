@@ -33,6 +33,23 @@
       "message": "Looks okay to me.",
       "revId": "5d0da40ef18f16bb21404e1b13dca4af13a67cbe",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a22743c3_d6126b23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-06-16T06:54:16Z",
+      "side": 1,
+      "message": "Can you do the merge if the change looks okay?",
+      "revId": "5d0da40ef18f16bb21404e1b13dca4af13a67cbe",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
