@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18707db9_7fce8aac",
+        "filename": "a1/controller.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2021-08-19T20:20:59Z",
+      "side": 1,
+      "message": "Do you think name this label value as \"CreateOrReplacePolicyInstanceReqs\" to maintain naming convention.",
+      "range": {
+        "startLine": 166,
+        "startChar": 32,
+        "endLine": 166,
+        "endChar": 56
+      },
+      "revId": "f6de4e8e179d8435f6b8d324bd6bc0135f1dae56",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
