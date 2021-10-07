@@ -21,7 +21,7 @@
 package main
 
 import (
-	"subh.com/a1-go/pkg/restful"
+       "gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restful"
 )
 
 func main() {
@@ -34,4 +34,5 @@ func main() {
 	// start restful service to handle a1 api's
 	restful := restful.NewRestful()
 	restful.Run()
+       t
 }
