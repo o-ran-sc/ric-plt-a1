@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23858ff0_417b7b24",
+        "filename": "a1-go/a1-entrypoint.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2021-12-04T13:37:19Z",
+      "side": 1,
+      "message": "this file already present in master branch",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "096001e78ca064fc2a07a262e00bd05164eef6b9",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc02d2d_f76d13a2",
+        "filename": "a1-go/cmd/a1.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2021-12-04T13:37:19Z",
+      "side": 1,
+      "message": "this change is already there in master branch. please let me know if I am missing anything.",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "096001e78ca064fc2a07a262e00bd05164eef6b9",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
