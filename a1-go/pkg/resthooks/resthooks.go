@@ -24,9 +24,14 @@ import (
 	"strconv"
 	"strings"
 
-       "gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
-       "gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
+)
+
+const (
+	a1policyprefix = "a1.policy_type."
+	a1MediatorNs   = "A1m_ns"
 )
 
 func NewResthook() *Resthook {
@@ -46,10 +51,10 @@ func (rh *Resthook) GetAllPolicyType() []models.PolicyTypeID {
 	keys, err := rh.db.GetAll("A1m_ns")
 
 	if err != nil {
-               a1.Logger.Error("error in retrieving policy. err: %v", err)
+		a1.Logger.Error("error in retrieving policy. err: %v", err)
 		return policyTypeIDs
 	}
-       a1.Logger.Debug("keys : %+v", keys)
+	a1.Logger.Debug("keys : %+v", keys)
 
 	for _, key := range keys {
 		if strings.HasPrefix(strings.TrimLeft(key, " "), "a1.policy_type.") {
@@ -59,6 +64,28 @@ func (rh *Resthook) GetAllPolicyType() []models.PolicyTypeID {
 		}
 	}
 
-       a1.Logger.Debug("return : %+v", policyTypeIDs)
+	a1.Logger.Debug("return : %+v", policyTypeIDs)
 	return policyTypeIDs
+}
+
+func (rh *Resthook) CreatePolicyType(policyTypeId models.PolicyTypeID, httprequest models.PolicyTypeSchema) bool {
+	a1.Logger.Debug("CreatePolicyType function")
+	if policyTypeId != models.PolicyTypeID(*httprequest.PolicyTypeID) {
+		//error message
+		a1.Logger.Debug("Policytype Mismatch")
+		return false
+	}
+	key := a1policyprefix + strconv.FormatInt((int64(policyTypeId)), 10)
+	a1.Logger.Debug("key %+v ", key)
+	if data, err := httprequest.MarshalBinary(); err == nil {
+		a1.Logger.Debug("Mrshaled String : %+v", string(data))
+		success, err1 := rh.db.SetIfNotExists(a1MediatorNs, key, string(data))
+		a1.Logger.Error("success:%+v", success)
+		if err1 != nil {
+			a1.Logger.Error("error :%+v", err1)
+			return false
+		}
+		return success
+	}
+	return false
 }
