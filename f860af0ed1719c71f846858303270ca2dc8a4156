@@ -16,6 +16,167 @@
       "message": "Kindly review and merge.",
       "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ef8460e_b951f53b",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-02-21T06:29:16Z",
+      "side": 1,
+      "message": "all repeated twice",
+      "range": {
+        "startLine": 53,
+        "startChar": 35,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecffd42b_212349bc",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-02-21T06:29:16Z",
+      "side": 1,
+      "message": "Any specific thing for prometheus need to be done here ?",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56644b24_e7b92fe9",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-02-21T06:29:16Z",
+      "side": 1,
+      "message": "can be replaced with constant",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 67
+      },
+      "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea903950_5c9ce9ef",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-02-21T06:29:16Z",
+      "side": 1,
+      "message": "can be replaced with constant",
+      "range": {
+        "startLine": 61,
+        "startChar": 49,
+        "endLine": 61,
+        "endChar": 64
+      },
+      "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7efe31f3_a1ac1619",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-02-21T06:29:16Z",
+      "side": 1,
+      "message": "Instead of bool return I would suggest err return.",
+      "range": {
+        "startLine": 71,
+        "startChar": 108,
+        "endLine": 71,
+        "endChar": 113
+      },
+      "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d4710ac_8a0129c1",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-02-21T06:29:16Z",
+      "side": 1,
+      "message": "error log should not be given as part of success",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 41
+      },
+      "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a98694e_55d61220",
+        "filename": "a1-go/pkg/resthooks/resthooks_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-02-21T06:29:16Z",
+      "side": 1,
+      "message": "This should come along with test cases.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "f860af0ed1719c71f846858303270ca2dc8a4156",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
