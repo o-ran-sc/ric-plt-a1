@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a4996c4_84cfc35f",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-02-22T12:27:38Z",
+      "side": 1,
+      "message": "the error could be error from DB also like connection error which does not come under the case of bad request but rather under service unavailable.",
+      "parentUuid": "a391d73c_6a9dd7bf",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 56
+      },
+      "revId": "196ce062807c8b406f38296a2a3b809ad7a6f4d6",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e8218f56_1ac6d7b0",
         "filename": "a1-go/pkg/resthooks/resthooks.go",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2022-02-22T09:14:32Z",
       "side": 1,
       "message": "constant should be in capital and \"_\" separated",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "196ce062807c8b406f38296a2a3b809ad7a6f4d6",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ec6de69_adefa140",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-02-22T12:27:38Z",
+      "side": 1,
+      "message": "Its all private const used in the same package so kept lower case only",
+      "parentUuid": "e8218f56_1ac6d7b0",
       "range": {
         "startLine": 34,
         "startChar": 1,
