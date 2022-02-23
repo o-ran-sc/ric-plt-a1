@@ -22,9 +22,11 @@ package resthooks
 
 import (
 	"os"
+	"strconv"
 	"testing"
 
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -41,6 +43,21 @@ func TestMain(m *testing.M) {
 		"a1.policy_inst_metadata.1006001.qos",
 	}, nil)
 
+	var policyTypeSchema models.PolicyTypeSchema
+	name := "admission_control_policy_mine"
+	policyTypeSchema.Name = &name
+	policytypeid := int64(20001)
+	policyTypeSchema.PolicyTypeID = &policytypeid
+	description := "various parameters to control admission of dual connection"
+	policyTypeSchema.Description = &description
+	policyTypeSchema.CreateSchema = `{"$schema": "http://json-schema.org/draft-07/schema#","type":"object","properties": {"enforce": {"type":"boolean","default":"true",},"window_length": {"type":        "integer","default":1,"minimum":1,"maximum":60,"description": "Sliding window length (in minutes)",},
+"blocking_rate": {"type":"number","default":10,"minimum":1,"maximum":100,"description": "% Connections to block",},"additionalProperties": false,},}`
+	data, err := policyTypeSchema.MarshalBinary()
+	println(err)
+	println(data)
+	key := "a1.policy_type." + strconv.FormatInt(20001, 10)
+	sdlInst.On("SetIfNotExists", "A1m_ns", key, string(data)).Return(true, nil)
+
 	a1.Init()
 	rh = createResthook(sdlInst)
 	code := m.Run()
@@ -50,6 +67,23 @@ func TestMain(m *testing.M) {
 func TestGetAllPolicyType(t *testing.T) {
 	resp := rh.GetAllPolicyType()
 	assert.Equal(t, 2, len(resp))
+}
+
+func TestCreatePolicyType(t *testing.T) {
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20001
+	var policyTypeSchema models.PolicyTypeSchema
+	name := "admission_control_policy_mine"
+	policyTypeSchema.Name = &name
+	policytypeid := int64(20001)
+	policyTypeSchema.PolicyTypeID = &policytypeid
+	description := "various parameters to control admission of dual connection"
+	policyTypeSchema.Description = &description
+	policyTypeSchema.CreateSchema = `{"$schema": "http://json-schema.org/draft-07/schema#","type":"object","properties": {"enforce": {"type":"boolean","default":"true",},"window_length": {"type":        "integer","default":1,"minimum":1,"maximum":60,"description": "Sliding window length (in minutes)",},
+"blocking_rate": {"type":"number","default":10,"minimum":1,"maximum":100,"description": "% Connections to block",},"additionalProperties": false,},}`
+
+	errresp := rh.CreatePolicyType(policyTypeId, policyTypeSchema)
+	assert.Nil(t, errresp)
 }
 
 type SdlMock struct {
@@ -62,5 +96,6 @@ func (s *SdlMock) GetAll(ns string) ([]string, error) {
 }
 
 func (s *SdlMock) SetIfNotExists(ns string, key string, data interface{}) (bool, error) {
-	return true, nil
+	args := s.MethodCalled("SetIfNotExists", ns, key, data)
+	return args.Bool(0), nil
 }
