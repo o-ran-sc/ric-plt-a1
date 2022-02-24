@@ -21,6 +21,7 @@
 package resthooks
 
 import (
+	"encoding/json"
 	"errors"
 	"strconv"
 	"strings"
@@ -76,6 +77,46 @@ func (rh *Resthook) GetAllPolicyType() []models.PolicyTypeID {
 
 	a1.Logger.Debug("return : %+v", policyTypeIDs)
 	return policyTypeIDs
+}
+
+func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.PolicyTypeSchema {
+	a1.Logger.Debug("GetPolicyType1")
+
+	var policytypeschema *models.PolicyTypeSchema
+	var keys [1]string
+
+	key := "a1.policy_type." + strconv.FormatInt((int64(policyTypeId)), 10)
+	keys[0] = key
+
+	a1.Logger.Debug("key : %+v", key)
+
+	valmap, err := rh.db.Get("A1m_ns", keys[:])
+
+	a1.Logger.Debug("policytype map : ", valmap)
+
+	if len(valmap) == 0 {
+		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
+		return policytypeschema
+	}
+
+	if err != nil {
+		a1.Logger.Error("error in retrieving policy type. err: %v", err)
+		return policytypeschema
+	}
+
+	a1.Logger.Debug("keysmap : %+v", valmap[key])
+
+	var item models.PolicyTypeSchema
+	var val []byte = []byte(valmap[key].(string))
+
+	a1.Logger.Debug("Policy type for %+v :  %+v", key, string(val))
+
+	line := json.Unmarshal((val), &item)
+
+	a1.Logger.Debug(" Unmarshalled json : %+v", (line))
+	a1.Logger.Debug("Policy type Name :  %v", (item.Name))
+
+	return &item
 }
 
 func (rh *Resthook) CreatePolicyType(policyTypeId models.PolicyTypeID, httprequest models.PolicyTypeSchema) error {
