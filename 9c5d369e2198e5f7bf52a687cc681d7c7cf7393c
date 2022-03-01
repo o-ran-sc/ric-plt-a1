@@ -16,6 +16,52 @@
       "message": "Kindly Review and Merge.",
       "revId": "9c5d369e2198e5f7bf52a687cc681d7c7cf7393c",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "332640ca_440067f5",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-03-01T13:59:24Z",
+      "side": 1,
+      "message": "Constant should be used",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "9c5d369e2198e5f7bf52a687cc681d7c7cf7393c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb6b31ab_ac702852",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-03-01T13:59:24Z",
+      "side": 1,
+      "message": "constant should be used",
+      "range": {
+        "startLine": 93,
+        "startChar": 27,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "9c5d369e2198e5f7bf52a687cc681d7c7cf7393c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
