@@ -21,6 +21,7 @@
 package resthooks
 
 import (
+	"encoding/json"
 	"os"
 	"strconv"
 	"testing"
@@ -109,6 +110,30 @@ func TestCreatePolicyType(t *testing.T) {
 	sdlInst.AssertExpectations(t)
 }
 
+func TestCreatePolicyTypeInstance(t *testing.T) {
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20001
+	var policyInstanceID models.PolicyInstanceID
+	policyInstanceID = "123456"
+	httpBody := `{
+		"enforce":true,
+		"window_length":20,
+	   "blocking_rate":20,
+		"trigger_threshold":10
+		}`
+	instancekey := a1PolicyPrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	data, _ := json.Marshal(httpBody)
+	a1.Logger.Debug("Marshaled String : %+v", string(data))
+	a1.Logger.Debug("key   : %+v", instancekey)
+
+	instancearr := []interface{}{instancekey, string(data)}
+	sdlInst.On("Set", "A1m_ns", instancearr).Return("CREATE", nil)
+	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, httpBody)
+
+	assert.Nil(t, errresp)
+	sdlInst.AssertExpectations(t)
+}
+
 type SdlMock struct {
 	mock.Mock
 }
@@ -118,27 +143,38 @@ func (s *SdlMock) GetAll(ns string) ([]string, error) {
 	return args.Get(0).([]string), nil
 }
 
-func (s *SdlMock) SetIfNotExists(ns string, key string, data interface{}) (bool, error) {
-	a1.Logger.Debug("SetIfNotExists mock called")
-	args := s.MethodCalled("SetIfNotExists", ns, key, data)
-	return args.Bool(0), nil
-}
-
 func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) {
 	a1.Logger.Debug("Get Called ")
 	args := s.MethodCalled("Get", ns, keys)
 	a1.Logger.Debug("keys :%+v", args.Get(1))
-	var policyTypeSchema models.PolicyTypeSchema
-	name := "admission_control_policy_mine"
-	policyTypeSchema.Name = &name
 	policytypeid := int64(20001)
-	policyTypeSchema.PolicyTypeID = &policytypeid
-	description := "various parameters to control admission of dual connection"
-	policyTypeSchema.Description = &description
-	policyTypeSchema.CreateSchema = `{"$schema": "http://json-schema.org/draft-07/schema#","type":"object","properties": {"enforce": {"type":"boolean","default":"true",},"window_length": {"type":        "integer","default":1,"minimum":1,"maximum":60,"description": "Sliding window length (in minutes)",},
-"blocking_rate": {"type":"number","default":10,"minimum":1,"maximum":100,"description": "% Connections to block",},"additionalProperties": false,},}`
+
+	policyTypeSchemaString := `{"name":"admission_control_policy_mine","description":"various parameters to control admission of dual connection","policy_type_id": 20001,"create_schema":{"$schema": "http://json-schema.org/draft-07/schema#","type":    "object","properties": {"enforce": {"type":    "boolean","default": "true"},"window_length": {"type":"integer","default":     1,"minimum":     1,"maximum":     60,"description": "Sliding window length (in minutes)"},"blocking_rate": {"type":        "number","default":     10,"minimum":     1,"maximum":     1001,"description": "% Connections to block"},"additionalProperties": false}}}`
+
+	a1.Logger.Error(" policyTypeSchemaString %+v", policyTypeSchemaString)
+	policyTypeSchema, _ := json.Marshal((policyTypeSchemaString))
+	// a1.Logger.Error(" policyTypeSchema error %+v",  err)
+	a1.Logger.Error(" policyTypeSchema %+v", string(policyTypeSchema))
+	var p models.PolicyTypeSchema
+	_ = json.Unmarshal([]byte(string(policyTypeSchemaString)), &p)
+	a1.Logger.Error("unmarshalled  policyTypeSchema %+v", p.CreateSchema)
 	key := a1PolicyPrefix + strconv.FormatInt((policytypeid), 10)
-	mp := map[string]interface{}{key: policyTypeSchema}
-	a1.Logger.Debug("Get Called and mp return %+v ", mp)
+	a1.Logger.Error(" key for policy type %+v", key)
+	mp := map[string]interface{}{key: string(policyTypeSchema)}
+	a1.Logger.Error("Get Called and mp return %+v ", mp)
 	return mp, nil
+}
+
+func (s *SdlMock) SetIfNotExists(ns string, key string, data interface{}) (bool, error) {
+	args := s.MethodCalled("SetIfNotExists", ns, key, data)
+	return args.Bool(0), args.Error(1)
+}
+
+func (s *SdlMock) Set(ns string, pairs ...interface{}) error {
+	args := s.MethodCalled("Set", ns, pairs)
+	return args.Error(1)
+}
+func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bool, error) {
+	args := s.MethodCalled("SetIfNotExists", ns, key, oldData, newData)
+	return args.Bool(0), args.Error(1)
 }
