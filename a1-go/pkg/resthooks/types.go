@@ -28,4 +28,6 @@ type iSdl interface {
 	GetAll(string) ([]string, error)
 	SetIfNotExists(ns string, key string, data interface{}) (bool, error)
 	Get(string, []string) (map[string]interface{}, error)
+	SetIf(ns string, key string, oldData, newData interface{}) (bool, error)
+	Set(ns string, pairs ...interface{}) error
 }

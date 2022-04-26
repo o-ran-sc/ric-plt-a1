@@ -72,6 +72,19 @@ func (r *Restful) setupHandler() *operations.A1API {
 		return a1_mediator.NewA1ControllerGetPolicyTypeOK().WithPayload(r.rh.GetPolicyType(models.PolicyTypeID(params.PolicyTypeID)))
 	})
 
+	api.A1MediatorA1ControllerCreateOrReplacePolicyInstanceHandler = a1_mediator.A1ControllerCreateOrReplacePolicyInstanceHandlerFunc(func(params a1_mediator.A1ControllerCreateOrReplacePolicyInstanceParams) middleware.Responder {
+		a1.Logger.Error("handler for create policy type instance ")
+		if err = r.rh.CreatePolicyInstance(models.PolicyTypeID(params.PolicyTypeID), models.PolicyInstanceID(params.PolicyInstanceID), params.Body); err == nil {
+			//Increase prometheus counter
+			return a1_mediator.NewA1ControllerCreateOrReplacePolicyInstanceAccepted()
+		}
+		if r.rh.IsValidJson(err) {
+			return a1_mediator.NewA1ControllerCreateOrReplacePolicyInstanceBadRequest()
+		}
+		return a1_mediator.NewA1ControllerCreateOrReplacePolicyInstanceServiceUnavailable()
+
+	})
+
 	return api
 
 }
