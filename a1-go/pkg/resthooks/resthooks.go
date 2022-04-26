@@ -30,21 +30,43 @@ import (
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
+	"github.com/santhosh-tekuri/jsonschema/v5"
+	"gopkg.in/yaml.v2"
 )
 
 const (
-	a1PolicyPrefix = "a1.policy_type."
-	a1MediatorNs   = "A1m_ns"
+	a1PolicyPrefix   = "a1.policy_type."
+	a1MediatorNs     = "A1m_ns"
+	a1InstancePrefix = "a1.policy_instance."
 )
 
 var typeAlreadyError = errors.New("Policy Type already exists")
+var InstanceAlreadyError = errors.New("Policy Instance already exists")
 var typeMismatchError = errors.New("Policytype Mismatch")
+var invalidJsonSchema = errors.New("Invalid Json ")
+var policyInstanceNotFoundError = errors.New("Policy Instance Not Found")
+var policyTypeNotFoundError = errors.New("Policy Type Not Found")
+
+func (rh *Resthook) IsPolicyTypePresent(err error) bool {
+	return err == policyTypeNotFoundError
+}
+
+func (rh *Resthook) IsPolicyInstanceNotFound(err error) bool {
+	return err == policyInstanceNotFoundError
+}
 
 func (rh *Resthook) IsTypeAlready(err error) bool {
 	return err == typeAlreadyError
 }
+func (rh *Resthook) IsInstanceAlready(err error) bool {
+	return err == InstanceAlreadyError
+}
 func (rh *Resthook) IsTypeMismatch(err error) bool {
 	return err == typeMismatchError
+}
+
+func (rh *Resthook) IsValidJson(err error) bool {
+	return err == invalidJsonSchema
 }
 func NewResthook() *Resthook {
 	return createResthook(sdlgo.NewSyncStorage())
@@ -102,7 +124,7 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy type. err: %v", err)
-		return policytypeschema
+		return nil
 	}
 
 	if valmap[key] == nil {
@@ -119,10 +141,12 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 	valkey := "`" + valStr + "`"
 	valToUnmarshall, err := strconv.Unquote(valkey)
 	if err != nil {
-		panic(err)
+		a1.Logger.Error("unquote error : %+v", err)
+		return nil
 	}
 
-	a1.Logger.Debug("Policy type for %+v :  %+v", key, string(b))
+	a1.Logger.Debug("Policy type for %+v :  %+v", key, string(valToUnmarshall))
+
 	errunm := json.Unmarshal([]byte(valToUnmarshall), &item)
 
 	a1.Logger.Debug(" Unmarshalled json : %+v", (errunm))
@@ -153,5 +177,156 @@ func (rh *Resthook) CreatePolicyType(policyTypeId models.PolicyTypeID, httpreque
 			return typeAlreadyError
 		}
 	}
+	return nil
+}
+
+func toStringKeys(val interface{}) (interface{}, error) {
+	var err error
+	switch val := val.(type) {
+	case map[interface{}]interface{}:
+		m := make(map[string]interface{})
+		for k, v := range val {
+			k, ok := k.(string)
+			if !ok {
+				return nil, errors.New("found non-string key")
+			}
+			m[k], err = toStringKeys(v)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return m, nil
+	case []interface{}:
+		var l = make([]interface{}, len(val))
+		for i, v := range val {
+			l[i], err = toStringKeys(v)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return l, nil
+	default:
+		return val, nil
+	}
+}
+
+func validate(httpBodyString string, schemaString string) bool {
+	var m interface{}
+	err := yaml.Unmarshal([]byte(httpBodyString), &m)
+	if err != nil {
+		a1.Logger.Error("Unmarshal error : %+v", err)
+	}
+	m, err = toStringKeys(m)
+	if err != nil {
+		a1.Logger.Error("Conversion to string error : %+v", err)
+		return false
+	}
+	compiler := jsonschema.NewCompiler()
+	if err := compiler.AddResource("schema.json", strings.NewReader(schemaString)); err != nil {
+		a1.Logger.Error("string reader error : %+v", err)
+		return false
+	}
+	schema, err := compiler.Compile("schema.json")
+	if err != nil {
+		a1.Logger.Error("schema json compile error : %+v", err)
+		return false
+	}
+	if err := schema.Validate(m); err != nil {
+		a1.Logger.Error("schema validation error : %+v", err)
+		return false
+	}
+	a1.Logger.Debug("validation successfull")
+	return true
+}
+
+func (rh *Resthook) StorePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) (string, error) {
+	var keys [1]string
+	operation := "CREATE"
+	typekey := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
+	keys[0] = typekey
+
+	a1.Logger.Debug("key1 : %+v", typekey)
+
+	valmap, err := rh.db.Get(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("policy type error : %+v", err)
+	}
+	a1.Logger.Debug("policytype map : %+v", valmap)
+	if valmap[typekey] == nil {
+		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
+		return operation, policyTypeNotFoundError
+	}
+	// TODO : rmr creation_timestamp := time.Now() // will be needed for rmr to notify the creation of instance
+
+	instancekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	keys[0] = typekey
+	instanceMap, err := rh.db.Get(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("policy type error : %v", err)
+	}
+	a1.Logger.Debug("policyinstancetype map : %+v", instanceMap)
+
+	if instanceMap[instancekey] != nil {
+		operation = "UPDATE"
+		a1.Logger.Debug("UPDATE")
+		data, _ := json.Marshal(httpBody)
+		a1.Logger.Debug("Marshaled String : %+v", string(data))
+		a1.Logger.Debug("key   : %+v", instancekey)
+		success, err1 := rh.db.SetIf(a1MediatorNs, instancekey, instanceMap[instancekey], string(data))
+		if err1 != nil {
+			a1.Logger.Error("error2 :%+v", err1)
+			return operation, err1
+		}
+		if !success {
+			a1.Logger.Debug("Policy instance %+v already exist", policyInstanceID)
+			return operation, InstanceAlreadyError
+		}
+	} else {
+		data, _ := json.Marshal(httpBody)
+		a1.Logger.Debug("Marshaled String : %+v", string(data))
+		a1.Logger.Debug("key   : %+v", instancekey)
+
+		var instance_map []interface{}
+		instance_map = append(instance_map, instancekey, string(data))
+		a1.Logger.Debug("policyinstancetype map : %+v", instance_map[1])
+		a1.Logger.Debug("policyinstancetype to create : %+v", instance_map)
+
+		err1 := rh.db.Set(a1MediatorNs, instancekey, string(data))
+		if err1 != nil {
+			a1.Logger.Error("error1 :%+v", err1)
+			return operation, err1
+		}
+	}
+	a1.Logger.Debug("Policy Instance created ")
+	return operation, nil
+}
+
+func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) error {
+	a1.Logger.Debug("CreatePolicyInstance function")
+	//  validate the PUT against the schema
+	var policyTypeSchema *models.PolicyTypeSchema
+	policyTypeSchema = rh.GetPolicyType(policyTypeId)
+	schemaStr, err := json.Marshal(policyTypeSchema.CreateSchema)
+	if err != nil {
+		a1.Logger.Error("Json Marshal error : %+v", err)
+		return err
+	}
+	a1.Logger.Debug("schema to validate %+v", string(schemaStr))
+	a1.Logger.Debug("httpbody to validate %+v", httpBody)
+	schemaString := fmt.Sprint(string(schemaStr))
+	httpBodyString := fmt.Sprint((httpBody))
+	isvalid := validate(httpBodyString, schemaString)
+	if isvalid {
+		operation, err := rh.StorePolicyInstance(policyTypeId, policyInstanceID, httpBody)
+		if err != nil {
+			a1.Logger.Error("error :%+v", err)
+			return err
+		}
+		a1.Logger.Debug("policy instance :%+v", operation)
+	} else {
+		a1.Logger.Error("%+v", invalidJsonSchema)
+		return invalidJsonSchema
+	}
+
 	return nil
 }
