@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f25e4835_3c274cd9",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-04-28T15:45:23Z",
+      "side": 1,
+      "message": "should we have function for each error type.\nAs it is one liner.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 1
+      },
+      "revId": "2b664d2cd4ebb9ee9dce426024f0ea4f1aea072d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce064154_9b60094b",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-04-28T15:45:23Z",
+      "side": 1,
+      "message": "should we stop processing the request as we got the err.",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 45
+      },
+      "revId": "2b664d2cd4ebb9ee9dce426024f0ea4f1aea072d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fafa6c14_76cbb322",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-04-28T15:45:23Z",
+      "side": 1,
+      "message": "remove commented lines",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 97
+      },
+      "revId": "2b664d2cd4ebb9ee9dce426024f0ea4f1aea072d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85d8f4f8_8b280c0b",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-04-28T15:45:23Z",
+      "side": 1,
+      "message": "Could you rename it to schemaStr or something relevant name.",
+      "range": {
+        "startLine": 308,
+        "startChar": 1,
+        "endLine": 308,
+        "endChar": 4
+      },
+      "revId": "2b664d2cd4ebb9ee9dce426024f0ea4f1aea072d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9da1d9ad_ea1c75c6",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-04-28T15:45:23Z",
+      "side": 1,
+      "message": "should we stop processing the request as we got the err.",
+      "range": {
+        "startLine": 310,
+        "startChar": 2,
+        "endLine": 310,
+        "endChar": 50
+      },
+      "revId": "2b664d2cd4ebb9ee9dce426024f0ea4f1aea072d",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
