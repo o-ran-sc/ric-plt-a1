@@ -134,6 +134,33 @@ func TestCreatePolicyTypeInstance(t *testing.T) {
 	sdlInst.AssertExpectations(t)
 }
 
+func TestGetPolicyInstance(t *testing.T) {
+
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20001
+	var policyInstanceID models.PolicyInstanceID
+	policyInstanceID = "123456"
+	httpBody := `{
+		"enforce":true,
+		"window_length":20,
+	   "blocking_rate":20,
+		"trigger_threshold":10
+		}`
+	instancekey := a1PolicyPrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	a1.Logger.Debug("httpBody String : %+v", httpBody)
+	a1.Logger.Debug("key   : %+v", instancekey)
+	var keys [1]string
+	keys[0] = instancekey
+	//Setup Expectations
+	sdlInst.On("Get", a1MediatorNs, keys[:]).Return(httpBody, nil)
+
+	resp := rh.GetPolicyInstance(policyTypeId, policyInstanceID)
+	a1.Logger.Error("resp : %+v", resp)
+	assert.NotNil(t, resp)
+
+	sdlInst.AssertExpectations(t)
+}
+
 type SdlMock struct {
 	mock.Mock
 }

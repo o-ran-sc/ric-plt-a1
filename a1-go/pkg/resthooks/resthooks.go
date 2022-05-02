@@ -330,3 +330,49 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 
 	return nil
 }
+
+func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (interface{}, error) {
+	a1.Logger.Debug("GetPolicyInstance1")
+
+	var keys [1]string
+
+	typekey := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
+	keys[0] = typekey
+
+	a1.Logger.Debug("key1 : %+v", typekey)
+
+	valmap, err := rh.db.Get(a1MediatorNs, keys[:])
+	if len(valmap) == 0 {
+		a1.Logger.Debug("policy type Not Present for policyid : %v", policyTypeId)
+		return "{}", policyTypeNotFoundError
+	}
+
+	if err != nil {
+		a1.Logger.Error("error in retrieving policy type. err: %v", err)
+		return "{}", err
+	}
+
+	if valmap[typekey] == nil {
+		a1.Logger.Debug("policy type Not Present for policyid : %v", policyTypeId)
+		return "{}", policyTypeNotFoundError
+	}
+
+	a1.Logger.Debug("keysmap : %+v", valmap[typekey])
+
+	instancekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	a1.Logger.Debug("key2 : %+v", instancekey)
+	keys[0] = instancekey
+	instanceMap, err := rh.db.Get(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("policy instance error : %v", err)
+	}
+	a1.Logger.Debug("policyinstancetype map : %+v", instanceMap)
+
+	if instanceMap[instancekey] == nil {
+		a1.Logger.Debug("policy instance Not Present for policyinstaneid : %v", policyInstanceID)
+		return "{}", policyInstanceNotFoundError
+	}
+
+	valStr := fmt.Sprint(instanceMap[instancekey])
+	return valStr, nil
+}
