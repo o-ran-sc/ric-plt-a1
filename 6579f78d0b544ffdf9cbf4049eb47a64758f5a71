@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5b1aad1_6ed54f2c",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-02T11:39:46Z",
+      "side": 1,
+      "message": "Why it is interface{} type, I think we should return some struct to depict our response.",
+      "range": {
+        "startLine": 334,
+        "startChar": 115,
+        "endLine": 334,
+        "endChar": 126
+      },
+      "revId": "6579f78d0b544ffdf9cbf4049eb47a64758f5a71",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb552674_87362441",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-02T11:39:46Z",
+      "side": 1,
+      "message": "We should return some structure instead of forming string.",
+      "range": {
+        "startLine": 376,
+        "startChar": 1,
+        "endLine": 376,
+        "endChar": 47
+      },
+      "revId": "6579f78d0b544ffdf9cbf4049eb47a64758f5a71",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
