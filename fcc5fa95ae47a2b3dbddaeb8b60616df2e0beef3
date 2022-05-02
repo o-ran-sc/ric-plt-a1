@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f435d745_1744b473",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-02T05:29:14Z",
+      "side": 1,
+      "message": "It should return nil, Here return is reference for un-initialized models.PolicyTypeSchema.",
+      "range": {
+        "startLine": 145,
+        "startChar": 10,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "fcc5fa95ae47a2b3dbddaeb8b60616df2e0beef3",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62f9307f_a23dba88",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-02T05:29:14Z",
+      "side": 1,
+      "message": "mentions TODO as \n\ne.g.\n// TODO :",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 106
+      },
+      "revId": "fcc5fa95ae47a2b3dbddaeb8b60616df2e0beef3",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
