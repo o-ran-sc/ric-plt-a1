@@ -39,6 +39,8 @@ func TestMain(m *testing.M) {
 	sdlInst = new(SdlMock)
 
 	sdlInst.On("GetAll", "A1m_ns").Return([]string{"a1.policy_instance.1006001.qos",
+		"a1.policy_instance.20005.123456",
+		"a1.policy_instance.20005.234567",
 		"a1.policy_type.1006001",
 		"a1.policy_type.20000",
 		"a1.policy_inst_metadata.1006001.qos",
@@ -159,6 +161,13 @@ func TestGetPolicyInstance(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	sdlInst.AssertExpectations(t)
+}
+
+func TestGetAllPolicyIntances(t *testing.T) {
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20005
+	resp := rh.GetAllPolicyInstance(policyTypeId)
+	assert.Equal(t, 2, len(resp))
 }
 
 type SdlMock struct {
