@@ -16,6 +16,98 @@
       "message": "Kindly review and merge",
       "revId": "5d20965503364b28a94a8e3990a0e7d55396c190",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2115c363_d7ccb466",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-05T11:26:37Z",
+      "side": 1,
+      "message": "I would suggest to use debug log",
+      "range": {
+        "startLine": 381,
+        "startChar": 1,
+        "endLine": 381,
+        "endChar": 40
+      },
+      "revId": "5d20965503364b28a94a8e3990a0e7d55396c190",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87a83741_37cc0045",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-05T11:26:37Z",
+      "side": 1,
+      "message": "use of error log ?",
+      "range": {
+        "startLine": 390,
+        "startChar": 1,
+        "endLine": 390,
+        "endChar": 36
+      },
+      "revId": "5d20965503364b28a94a8e3990a0e7d55396c190",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7d74e0f_bee6f959",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-05T11:26:37Z",
+      "side": 1,
+      "message": "use of error log ?",
+      "range": {
+        "startLine": 395,
+        "startChar": 3,
+        "endLine": 395,
+        "endChar": 34
+      },
+      "revId": "5d20965503364b28a94a8e3990a0e7d55396c190",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c95b1c3b_404ba7e4",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-05T11:26:37Z",
+      "side": 1,
+      "message": "use of error log ?",
+      "range": {
+        "startLine": 400,
+        "startChar": 1,
+        "endLine": 400,
+        "endChar": 53
+      },
+      "revId": "5d20965503364b28a94a8e3990a0e7d55396c190",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
