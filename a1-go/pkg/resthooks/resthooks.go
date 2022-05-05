@@ -376,3 +376,27 @@ func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyIn
 	valStr := fmt.Sprint(instanceMap[instancekey])
 	return valStr, nil
 }
+
+func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) []models.PolicyInstanceID {
+	a1.Logger.Error("GetAllPolicyInstance")
+	var policyTypeInstances []models.PolicyInstanceID
+
+	keys, err := rh.db.GetAll("A1m_ns")
+
+	if err != nil {
+		a1.Logger.Error("error in retrieving policy. err: %v", err)
+		return policyTypeInstances
+	}
+	a1.Logger.Error("keys : %+v", keys)
+	typekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "."
+	for _, key := range keys {
+		if strings.HasPrefix(strings.TrimLeft(key, " "), typekey) {
+			pti := strings.Split(strings.Trim(key, " "), typekey)[1]
+			a1.Logger.Error("pti %+v", pti)
+			policyTypeInstances = append(policyTypeInstances, models.PolicyInstanceID(pti))
+		}
+	}
+
+	a1.Logger.Error("return : %+v", policyTypeInstances)
+	return policyTypeInstances
+}
