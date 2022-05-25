@@ -97,7 +97,16 @@ func (r *Restful) setupHandler() *operations.A1API {
 
 	api.A1MediatorA1ControllerGetAllInstancesForTypeHandler = a1_mediator.A1ControllerGetAllInstancesForTypeHandlerFunc(func(params a1_mediator.A1ControllerGetAllInstancesForTypeParams) middleware.Responder {
 		a1.Logger.Debug("handler for get all policy instance")
-		return a1_mediator.NewA1ControllerGetPolicyInstanceOK().WithPayload(r.rh.GetAllPolicyInstance(models.PolicyTypeID(params.PolicyTypeID)))
+		if resp, err := r.rh.GetAllPolicyInstance(models.PolicyTypeID(params.PolicyTypeID)); err == nil {
+			if resp != nil {
+				return a1_mediator.NewA1ControllerGetAllInstancesForTypeOK().WithPayload(resp)
+			}
+		}
+		if r.rh.IsPolicyInstanceNotFound(err) {
+			return a1_mediator.NewA1ControllerGetPolicyInstanceNotFound()
+		}
+		return a1_mediator.NewA1ControllerGetAllInstancesForTypeServiceUnavailable()
+
 	})
 
 	return api
