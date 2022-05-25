@@ -30,6 +30,7 @@ import (
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
+
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"gopkg.in/yaml.v2"
 )
@@ -301,6 +302,7 @@ func (rh *Resthook) StorePolicyInstance(policyTypeId models.PolicyTypeID, policy
 	return operation, nil
 }
 
+
 func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) error {
 	a1.Logger.Debug("CreatePolicyInstance function")
 	//  validate the PUT against the schema
@@ -317,7 +319,8 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	httpBodyString := fmt.Sprint((httpBody))
 	isvalid := validate(httpBodyString, schemaString)
 	if isvalid {
-		operation, err := rh.StorePolicyInstance(policyTypeId, policyInstanceID, httpBody)
+		var operation string
+		operation, err = rh.StorePolicyInstance(policyTypeId, policyInstanceID, httpBody)
 		if err != nil {
 			a1.Logger.Error("error :%+v", err)
 			return err
@@ -377,18 +380,19 @@ func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyIn
 	return valStr, nil
 }
 
-func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) []models.PolicyInstanceID {
+func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) []models.PolicyInstanceID ,error {
 	a1.Logger.Debug("GetAllPolicyInstance")
-	var policyTypeInstances []models.PolicyInstanceID
+	var policyTypeInstances =  []models.PolicyInstanceID{} 
 
 	keys, err := rh.db.GetAll("A1m_ns")
 
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy. err: %v", err)
-		return policyTypeInstances
+		return policyTypeInstances ,err
 	}
 	a1.Logger.Debug("keys : %+v", keys)
 	typekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "."
+
 	for _, key := range keys {
 		if strings.HasPrefix(strings.TrimLeft(key, " "), typekey) {
 			pti := strings.Split(strings.Trim(key, " "), typekey)[1]
@@ -397,6 +401,10 @@ func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) []mod
 		}
 	}
 
+	if len(policyTypeInstances)==0{
+		a1.Logger.Debug("policy instance Not Present  ")
+	}
+
 	a1.Logger.Debug("return : %+v", policyTypeInstances)
-	return policyTypeInstances
+	return policyTypeInstances ,nil
 }
