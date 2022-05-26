@@ -16,6 +16,92 @@
       "message": "Kindly Review and merge",
       "revId": "53b6e955d99318062ad615f0b3d18357db7cd891",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0971c206_518d4b4e",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-26T11:36:03Z",
+      "side": 1,
+      "message": "This two return statement should be combined and empty policy instance can be handled using empty slice without providing explicit array here.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 103
+      },
+      "revId": "53b6e955d99318062ad615f0b3d18357db7cd891",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "954b1349_5902edea",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-26T11:36:03Z",
+      "side": 1,
+      "message": "should we directly compare error instead of invoking methods.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 39
+      },
+      "revId": "53b6e955d99318062ad615f0b3d18357db7cd891",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "580005ad_cd0cc53c",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-26T11:36:03Z",
+      "side": 1,
+      "message": "Sentence is not complete for debug log.",
+      "revId": "53b6e955d99318062ad615f0b3d18357db7cd891",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e7ead81_165c890d",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-05-26T11:36:03Z",
+      "side": 1,
+      "message": "In both the cases return is same, so why if condition is introduced.",
+      "range": {
+        "startLine": 404,
+        "startChar": 1,
+        "endLine": 410,
+        "endChar": 32
+      },
+      "revId": "53b6e955d99318062ad615f0b3d18357db7cd891",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
