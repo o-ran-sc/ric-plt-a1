@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49830df0_7474790f",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-06-13T12:37:52Z",
+      "side": 1,
+      "message": "but it can see operation is not used out of the following if scope.",
+      "parentUuid": "2f0a74eb_98692ab4",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 21
+      },
+      "revId": "3b79113b9acfc0d13b558a235d146058659703e7",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fe3ae326_8a81d51b",
         "filename": "a1-go/pkg/resthooks/resthooks.go",
         "patchSetId": 2
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "its empty list only , error is nil here",
       "parentUuid": "fe3ae326_8a81d51b",
+      "range": {
+        "startLine": 409,
+        "startChar": 1,
+        "endLine": 409,
+        "endChar": 32
+      },
+      "revId": "3b79113b9acfc0d13b558a235d146058659703e7",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11366593_dbb28956",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-06-13T12:37:52Z",
+      "side": 1,
+      "message": "Could you confirm if the policyTypeInstances  serializes to [] as it is uninitialized.",
+      "parentUuid": "dd9df2c4_e00f94d9",
       "range": {
         "startLine": 409,
         "startChar": 1,
