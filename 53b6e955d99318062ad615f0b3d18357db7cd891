@@ -81,6 +81,24 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c81eaf40_58b20c77",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-06-13T12:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "580005ad_cd0cc53c",
+      "revId": "53b6e955d99318062ad615f0b3d18357db7cd891",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e7ead81_165c890d",
@@ -94,6 +112,30 @@
       "writtenOn": "2022-05-26T11:36:03Z",
       "side": 1,
       "message": "In both the cases return is same, so why if condition is introduced.",
+      "range": {
+        "startLine": 404,
+        "startChar": 1,
+        "endLine": 410,
+        "endChar": 32
+      },
+      "revId": "53b6e955d99318062ad615f0b3d18357db7cd891",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41bcf9cd_8f439ff6",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-06-13T12:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7ead81_165c890d",
       "range": {
         "startLine": 404,
         "startChar": 1,

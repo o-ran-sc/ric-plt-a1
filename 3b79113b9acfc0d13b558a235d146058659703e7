@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a253e74_9ea25c99",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-06-13T12:18:32Z",
+      "side": 1,
+      "message": "why operation is moved outside.",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 21
+      },
+      "revId": "3b79113b9acfc0d13b558a235d146058659703e7",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe3ae326_8a81d51b",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-06-13T12:18:32Z",
+      "side": 1,
+      "message": "In case of if there is not key for policyinstance then we should return empty list not the nil.",
+      "range": {
+        "startLine": 409,
+        "startChar": 1,
+        "endLine": 409,
+        "endChar": 32
+      },
+      "revId": "3b79113b9acfc0d13b558a235d146058659703e7",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
