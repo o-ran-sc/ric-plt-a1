@@ -16,6 +16,92 @@
       "message": "Kindly Review and merge.",
       "revId": "a93964a6b898f62aa314d4dc0019a25e37e659b6",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edf0ffc1_d2ab764f",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-08-03T12:46:27Z",
+      "side": 1,
+      "message": "I would suggest to not export this method as public.",
+      "range": {
+        "startLine": 309,
+        "startChar": 20,
+        "endLine": 309,
+        "endChar": 47
+      },
+      "revId": "a93964a6b898f62aa314d4dc0019a25e37e659b6",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81bbd2d0_c0ae03c1",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-08-03T12:46:27Z",
+      "side": 1,
+      "message": "extra , provided but we have only two parameter in our method definition.",
+      "range": {
+        "startLine": 357,
+        "startChar": 88,
+        "endLine": 357,
+        "endChar": 91
+      },
+      "revId": "a93964a6b898f62aa314d4dc0019a25e37e659b6",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "863baf2d_70d84090",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-08-03T12:46:27Z",
+      "side": 1,
+      "message": "It should be errmetadata",
+      "revId": "a93964a6b898f62aa314d4dc0019a25e37e659b6",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca934753_d07d6ff5",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-08-03T12:46:27Z",
+      "side": 1,
+      "message": "code is not reachable as err is already checked at L352.",
+      "range": {
+        "startLine": 359,
+        "startChar": 3,
+        "endLine": 360,
+        "endChar": 21
+      },
+      "revId": "a93964a6b898f62aa314d4dc0019a25e37e659b6",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
