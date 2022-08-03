@@ -39,6 +39,8 @@ const (
 	a1PolicyPrefix   = "a1.policy_type."
 	a1MediatorNs     = "A1m_ns"
 	a1InstancePrefix = "a1.policy_instance."
+	a1InstanceMetadataPrefix = "a1.policy_inst_metadata."
+	a1HandlerPrefix = "a1.policy_handler."
 )
 
 var typeAlreadyError = errors.New("Policy Type already exists")
@@ -181,6 +183,8 @@ func (rh *Resthook) CreatePolicyType(policyTypeId models.PolicyTypeID, httpreque
 	return nil
 }
 
+
+
 func toStringKeys(val interface{}) (interface{}, error) {
 	var err error
 	switch val := val.(type) {
@@ -302,6 +306,30 @@ func (rh *Resthook) StorePolicyInstance(policyTypeId models.PolicyTypeID, policy
 	return operation, nil
 }
 
+func (rh *Resthook) StorePolicyInstanceMetadata(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (bool, error) {
+
+	creation_timestamp := time.Now()
+	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+
+	a1.Logger.Debug("key : %+v", instanceMetadataKey)
+
+	var metadatajson []interface{}
+	metadatajson = append(metadatajson, map[string]string{"created_at": creation_timestamp.Format("2006-01-02 15:04:05"), "has_been_deleted": "False"})
+	metadata, _ := json.Marshal(metadatajson)
+
+	a1.Logger.Debug("policyinstanceMetaData to create : %+v", string(metadata))
+
+	err := rh.db.Set(a1MediatorNs, instanceMetadataKey, string(metadata))
+
+	if err != nil {
+		a1.Logger.Error("error :%+v", err)
+		return false, err
+	}
+
+	a1.Logger.Debug("Policy Instance Meta Data created at :%+v", creation_timestamp)
+
+	return true, nil
+}
 
 func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) error {
 	a1.Logger.Debug("CreatePolicyInstance function")
@@ -326,6 +354,14 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 			return err
 		}
 		a1.Logger.Debug("policy instance :%+v", operation)
+		iscreated,errmetadata := rh.StorePolicyInstanceMetadata(policyTypeId, policyInstanceID, )
+		if err != nil {
+			a1.Logger.Error("error :%+v", errmetadata)
+			return errmetadata
+		}
+		if iscreated {
+		a1.Logger.Debug("policy instance metadata created")
+		}
 	} else {
 		a1.Logger.Error("%+v", invalidJsonSchema)
 		return invalidJsonSchema
