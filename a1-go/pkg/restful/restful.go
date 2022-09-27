@@ -90,9 +90,9 @@ func (r *Restful) setupHandler() *operations.A1API {
 			return a1_mediator.NewA1ControllerGetPolicyInstanceOK().WithPayload(resp)
 		}
 		if r.rh.IsPolicyInstanceNotFound(err) {
-			return a1_mediator.NewA1ControllerGetPolicyInstanceNotFound
+			return a1_mediator.NewA1ControllerGetPolicyInstanceNotFound()
 		}
-		return a1_mediator.NewA1ControllerGetPolicyInstanceServiceUnavailable
+		return a1_mediator.NewA1ControllerGetPolicyInstanceServiceUnavailable()
 	})
 
 	api.A1MediatorA1ControllerGetAllInstancesForTypeHandler = a1_mediator.A1ControllerGetAllInstancesForTypeHandlerFunc(func(params a1_mediator.A1ControllerGetAllInstancesForTypeParams) middleware.Responder {
