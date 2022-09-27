@@ -25,6 +25,7 @@ import (
 	"os"
 	"strconv"
 	"testing"
+	"time"
 
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
@@ -61,8 +62,6 @@ func TestGetPolicyType(t *testing.T) {
 
 	policyTypeId := models.PolicyTypeID(20001)
 
-	resp := rh.GetPolicyType(policyTypeId)
-
 	var policyTypeSchema models.PolicyTypeSchema
 	name := "admission_control_policy_mine"
 	policyTypeSchema.Name = &name
@@ -74,10 +73,11 @@ func TestGetPolicyType(t *testing.T) {
 "blocking_rate": {"type":"number","default":10,"minimum":1,"maximum":100,"description": "% Connections to block",},"additionalProperties": false,},}`
 	policyTypeSchema.CreateSchema = schema
 	key := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
-
+	var keys [1]string
+	keys[0] = key
 	//Setup Expectations
-	sdlInst.On("Get", a1MediatorNs, policyTypeId).Return(map[string]interface{}{key: policyTypeSchema}, nil)
-
+	sdlInst.On("Get", a1MediatorNs, keys[:]).Return(map[string]interface{}{key: policyTypeSchema}, nil)
+	resp := rh.GetPolicyType(policyTypeId)
 	assert.NotNil(t, resp)
 
 	sdlInst.AssertExpectations(t)
@@ -113,24 +113,35 @@ func TestCreatePolicyType(t *testing.T) {
 }
 
 func TestCreatePolicyTypeInstance(t *testing.T) {
-	var policyTypeId models.PolicyTypeID
-	policyTypeId = 20001
 	var policyInstanceID models.PolicyInstanceID
 	policyInstanceID = "123456"
-	httpBody := `{
-		"enforce":true,
-		"window_length":20,
-	   "blocking_rate":20,
-		"trigger_threshold":10
-		}`
-	instancekey := a1PolicyPrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
-	data, _ := json.Marshal(httpBody)
-	a1.Logger.Debug("Marshaled String : %+v", string(data))
-	a1.Logger.Debug("key   : %+v", instancekey)
+	var httpBody = `{"enforce":true,"window_length":20,"blocking_rate":20,"trigger_threshold":10}`
+	instancekey := a1InstancePrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20001
 
+	var instancedata map[string]interface{}
+
+	// Unmarshal or Decode the JSON to the interface.
+	json.Unmarshal([]byte(httpBody), &instancedata)
+
+	data, _ := json.Marshal(instancedata)
+	a1.Logger.Debug("Marshaled data : %+v", string(data))
+	a1.Logger.Debug("instancekey   : %+v", instancekey)
 	instancearr := []interface{}{instancekey, string(data)}
-	sdlInst.On("Set", "A1m_ns", instancearr).Return("CREATE", nil)
-	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, httpBody)
+	sdlInst.On("Set", "A1m_ns", instancearr).Return(nil)
+
+	metadatainstancekey := a1InstanceMetadataPrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	creation_timestamp := time.Now()
+	var metadatajson []interface{}
+	metadatajson = append(metadatajson, map[string]string{"created_at": creation_timestamp.Format("2006-01-02 15:04:05"), "has_been_deleted": "False"})
+	metadata, _ := json.Marshal(metadatajson)
+	a1.Logger.Debug("Marshaled Metadata : %+v", string(metadata))
+	a1.Logger.Debug("metadatainstancekey   : %+v", metadatainstancekey)
+	metadatainstancearr := []interface{}{metadatainstancekey, string(metadata)}
+	sdlInst.On("Set", "A1m_ns", metadatainstancearr).Return(nil)
+
+	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata)
 
 	assert.Nil(t, errresp)
 	sdlInst.AssertExpectations(t)
@@ -156,8 +167,8 @@ func TestGetPolicyInstance(t *testing.T) {
 	//Setup Expectations
 	sdlInst.On("Get", a1MediatorNs, keys[:]).Return(httpBody, nil)
 
-	resp := rh.GetPolicyInstance(policyTypeId, policyInstanceID)
-	a1.Logger.Error("resp : %+v", resp)
+	resp, err := rh.GetPolicyInstance(policyTypeId, policyInstanceID)
+	a1.Logger.Error("err : %+v", err)
 	assert.NotNil(t, resp)
 
 	sdlInst.AssertExpectations(t)
@@ -166,7 +177,8 @@ func TestGetPolicyInstance(t *testing.T) {
 func TestGetAllPolicyIntances(t *testing.T) {
 	var policyTypeId models.PolicyTypeID
 	policyTypeId = 20005
-	resp := rh.GetAllPolicyInstance(policyTypeId)
+	resp, err := rh.GetAllPolicyInstance(policyTypeId)
+	a1.Logger.Error("err : %+v", err)
 	assert.Equal(t, 2, len(resp))
 }
 
@@ -184,17 +196,33 @@ func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) 
 	args := s.MethodCalled("Get", ns, keys)
 	a1.Logger.Debug("keys :%+v", args.Get(1))
 	policytypeid := int64(20001)
-
-	policyTypeSchemaString := `{"name":"admission_control_policy_mine","description":"various parameters to control admission of dual connection","policy_type_id": 20001,"create_schema":{"$schema": "http://json-schema.org/draft-07/schema#","type":    "object","properties": {"enforce": {"type":    "boolean","default": "true"},"window_length": {"type":"integer","default":     1,"minimum":     1,"maximum":     60,"description": "Sliding window length (in minutes)"},"blocking_rate": {"type":        "number","default":     10,"minimum":     1,"maximum":     1001,"description": "% Connections to block"},"additionalProperties": false}}}`
-
-	a1.Logger.Error(" policyTypeSchemaString %+v", policyTypeSchemaString)
-	policyTypeSchema, _ := json.Marshal((policyTypeSchemaString))
-	// a1.Logger.Error(" policyTypeSchema error %+v",  err)
+	policyInstanceID := "123456"
+	var policySchemaString string
+	var key string
+	if keys[0] == "a1.policy_instance.20001.123456" {
+		policySchemaString = `{
+			"enforce":true,
+			"window_length":20,
+		   "blocking_rate":20,
+			"trigger_threshold":10
+			}`
+		key = a1InstancePrefix + strconv.FormatInt(policytypeid, 10) + "." + string(policyInstanceID)
+	} else if keys[0] == "a1.policy_type.20001" {
+		policySchemaString = `{"name":"admission_control_policy_mine",
+		"description":"various parameters to control admission of dual connection",
+		"policy_type_id": 20001,
+		"create_schema":{"$schema": "http://json-schema.org/draft-07/schema#","type":    "object",
+		"properties": {"enforce": {"type":    "boolean","default": "true"},
+		"window_length": {"type":"integer","default":     1,"minimum":     1,"maximum":     60,
+		"description": "Sliding window length (in minutes)"},
+		"blocking_rate": {"type":        "number","default":     10,"minimum":     1,"maximum":     1001,
+		"description": "% Connections to block"},
+		"additionalProperties": false}}}`
+		key = a1PolicyPrefix + strconv.FormatInt((policytypeid), 10)
+	}
+	a1.Logger.Error(" policy SchemaString %+v", policySchemaString)
+	policyTypeSchema, _ := json.Marshal((policySchemaString))
 	a1.Logger.Error(" policyTypeSchema %+v", string(policyTypeSchema))
-	var p models.PolicyTypeSchema
-	_ = json.Unmarshal([]byte(string(policyTypeSchemaString)), &p)
-	a1.Logger.Error("unmarshalled  policyTypeSchema %+v", p.CreateSchema)
-	key := a1PolicyPrefix + strconv.FormatInt((policytypeid), 10)
 	a1.Logger.Error(" key for policy type %+v", key)
 	mp := map[string]interface{}{key: string(policyTypeSchema)}
 	a1.Logger.Error("Get Called and mp return %+v ", mp)
@@ -208,7 +236,7 @@ func (s *SdlMock) SetIfNotExists(ns string, key string, data interface{}) (bool,
 
 func (s *SdlMock) Set(ns string, pairs ...interface{}) error {
 	args := s.MethodCalled("Set", ns, pairs)
-	return args.Error(1)
+	return args.Error(0)
 }
 func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bool, error) {
 	args := s.MethodCalled("SetIfNotExists", ns, key, oldData, newData)

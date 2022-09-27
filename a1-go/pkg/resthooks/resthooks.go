@@ -26,21 +26,21 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
-
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"gopkg.in/yaml.v2"
 )
 
 const (
-	a1PolicyPrefix   = "a1.policy_type."
-	a1MediatorNs     = "A1m_ns"
-	a1InstancePrefix = "a1.policy_instance."
+	a1PolicyPrefix           = "a1.policy_type."
+	a1MediatorNs             = "A1m_ns"
+	a1InstancePrefix         = "a1.policy_instance."
 	a1InstanceMetadataPrefix = "a1.policy_inst_metadata."
-	a1HandlerPrefix = "a1.policy_handler."
+	a1HandlerPrefix          = "a1.policy_handler."
 )
 
 var typeAlreadyError = errors.New("Policy Type already exists")
@@ -118,7 +118,7 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 
 	valmap, err := rh.db.Get(a1MediatorNs, keys[:])
 
-	a1.Logger.Debug("policytype map : ", valmap)
+	a1.Logger.Debug("policytype map : %+v", valmap)
 
 	if len(valmap) == 0 {
 		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
@@ -183,8 +183,6 @@ func (rh *Resthook) CreatePolicyType(policyTypeId models.PolicyTypeID, httpreque
 	return nil
 }
 
-
-
 func toStringKeys(val interface{}) (interface{}, error) {
 	var err error
 	switch val := val.(type) {
@@ -215,7 +213,7 @@ func toStringKeys(val interface{}) (interface{}, error) {
 	}
 }
 
-func validate(httpBodyString string, schemaString string) bool {
+var validate = func(httpBodyString string, schemaString string) bool {
 	var m interface{}
 	err := yaml.Unmarshal([]byte(httpBodyString), &m)
 	if err != nil {
@@ -244,7 +242,7 @@ func validate(httpBodyString string, schemaString string) bool {
 	return true
 }
 
-func (rh *Resthook) StorePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) (string, error) {
+func (rh *Resthook) storePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) (string, error) {
 	var keys [1]string
 	operation := "CREATE"
 	typekey := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
@@ -344,23 +342,26 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	a1.Logger.Debug("schema to validate %+v", string(schemaStr))
 	a1.Logger.Debug("httpbody to validate %+v", httpBody)
 	schemaString := fmt.Sprint(string(schemaStr))
-	httpBodyString := fmt.Sprint((httpBody))
+	httpBodyMarshal, err := json.Marshal(httpBody)
+	httpBodyString := string((httpBodyMarshal))
+	a1.Logger.Debug("schema to validate sprint  %+v", (schemaString))
+	a1.Logger.Debug("httpbody to validate sprint %+v", httpBodyString)
 	isvalid := validate(httpBodyString, schemaString)
 	if isvalid {
 		var operation string
-		operation, err = rh.StorePolicyInstance(policyTypeId, policyInstanceID, httpBody)
+		operation, err = rh.storePolicyInstance(policyTypeId, policyInstanceID, httpBody)
 		if err != nil {
 			a1.Logger.Error("error :%+v", err)
 			return err
 		}
 		a1.Logger.Debug("policy instance :%+v", operation)
-		iscreated,errmetadata := rh.StorePolicyInstanceMetadata(policyTypeId, policyInstanceID)
+		iscreated, errmetadata := rh.storePolicyInstanceMetadata(policyTypeId, policyInstanceID)
 		if errmetadata != nil {
 			a1.Logger.Error("error :%+v", errmetadata)
 			return errmetadata
 		}
 		if iscreated {
-		a1.Logger.Debug("policy instance metadata created")
+			a1.Logger.Debug("policy instance metadata created")
 		}
 	} else {
 		a1.Logger.Error("%+v", invalidJsonSchema)
@@ -416,15 +417,15 @@ func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyIn
 	return valStr, nil
 }
 
-func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) []models.PolicyInstanceID ,error {
+func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) ([]models.PolicyInstanceID, error) {
 	a1.Logger.Debug("GetAllPolicyInstance")
-	var policyTypeInstances =  []models.PolicyInstanceID{} 
+	var policyTypeInstances = []models.PolicyInstanceID{}
 
 	keys, err := rh.db.GetAll("A1m_ns")
 
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy. err: %v", err)
-		return policyTypeInstances ,err
+		return policyTypeInstances, err
 	}
 	a1.Logger.Debug("keys : %+v", keys)
 	typekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "."
@@ -437,10 +438,10 @@ func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) []mod
 		}
 	}
 
-	if len(policyTypeInstances)==0{
+	if len(policyTypeInstances) == 0 {
 		a1.Logger.Debug("policy instance Not Present  ")
 	}
 
 	a1.Logger.Debug("return : %+v", policyTypeInstances)
-	return policyTypeInstances ,nil
+	return policyTypeInstances, nil
 }
