@@ -95,6 +95,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84180421_b985421b",
+        "filename": "a1-go/pkg/resthooks/resthooks_test.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-09-30T09:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5284601_88359d9b",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "c0be6ccfd6d1a4322606d0796fe69437d370ff83",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "150bf1ac_8a8ce740",
