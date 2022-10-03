@@ -158,7 +158,7 @@ func TestGetPolicyInstance(t *testing.T) {
 	   "blocking_rate":20,
 		"trigger_threshold":10
 		}`
-	instancekey := a1PolicyPrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	instancekey := a1InstancePrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
 	a1.Logger.Debug("httpBody String : %+v", httpBody)
 	a1.Logger.Debug("key   : %+v", instancekey)
 	var keys [1]string
@@ -196,34 +196,27 @@ func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) 
 	a1.Logger.Debug("keys :%+v", args.Get(1))
 	policytypeid := int64(20001)
 	policyInstanceID := "123456"
-	var policySchemaString string
+	var policySchemaString	 string
 	var key string
-	if keys[0] == "a1.policy_instance.20001.123456" {
-		policySchemaString = `{
+	if keys[0]=="a1.policy_instance.20001.123456"{
+		policySchemaString =`{
 			"enforce":true,
 			"window_length":20,
 		   "blocking_rate":20,
 			"trigger_threshold":10
 			}`
 		key = a1InstancePrefix + strconv.FormatInt(policytypeid, 10) + "." + string(policyInstanceID)
-	} else if keys[0] == "a1.policy_type.20001" {
-		policySchemaString = `{"name":"admission_control_policy_mine",
-		"description":"various parameters to control admission of dual connection",
-		"policy_type_id": 20001,
-		"create_schema":{"$schema": "http://json-schema.org/draft-07/schema#","type":    "object",
-		"properties": {"enforce": {"type":    "boolean","default": "true"},
-		"window_length": {"type":"integer","default":     1,"minimum":     1,"maximum":     60,
-		"description": "Sliding window length (in minutes)"},
-		"blocking_rate": {"type":        "number","default":     10,"minimum":     1,"maximum":     1001,
-		"description": "% Connections to block"},
-		"additionalProperties": false}}}`
+	}else if keys[0]=="a1.policy_type.20001" {
+		policySchemaString =`{"create_schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"additionalProperties":false,"blocking_rate":{"default":10,"description":"% Connections to block","maximum":1001,"minimum":1,"type":"number"},"enforce":{"default":"true","type":"boolean"},"window_length":{"default":1,"description":"Sliding window length (in minutes)","maximum":60,"minimum":1,"type":"integer"}},"type":"object"},"description":"various parameters to control admission of dual connection","name":"admission_control_policy_mine","policy_type_id":20001}`
 		key = a1PolicyPrefix + strconv.FormatInt((policytypeid), 10)
 	}
 	a1.Logger.Error(" policy SchemaString %+v", policySchemaString)
 	policyTypeSchema, _ := json.Marshal((policySchemaString))
 	a1.Logger.Error(" policyTypeSchema %+v", string(policyTypeSchema))
+
+	
 	a1.Logger.Error(" key for policy type %+v", key)
-	mp := map[string]interface{}{key: string(policyTypeSchema)}
+	mp := map[string]interface{}{key: string(policySchemaString)}
 	a1.Logger.Error("Get Called and mp return %+v ", mp)
 	return mp, nil
 }
