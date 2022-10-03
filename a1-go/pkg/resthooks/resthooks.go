@@ -213,7 +213,7 @@ func toStringKeys(val interface{}) (interface{}, error) {
 	}
 }
 
-var validate(httpBodyString string, schemaString string) bool {
+func validate(httpBodyString string, schemaString string) bool {
 	var m interface{}
 	err := yaml.Unmarshal([]byte(httpBodyString), &m)
 	if err != nil {
