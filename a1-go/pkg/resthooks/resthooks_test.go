@@ -33,8 +33,13 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+type RmrSenderMock struct {
+	mock.Mock
+}
+
 var rh *Resthook
 var sdlInst *SdlMock
+var rmrSenderInst *RmrSenderMock
 
 func TestMain(m *testing.M) {
 	sdlInst = new(SdlMock)
@@ -46,9 +51,9 @@ func TestMain(m *testing.M) {
 		"a1.policy_type.20000",
 		"a1.policy_inst_metadata.1006001.qos",
 	}, nil)
-
+	RMRclient = new(RMRClientMock)
 	a1.Init()
-	rh = createResthook(sdlInst)
+	rh = createResthook(sdlInst, RMRclient)
 	code := m.Run()
 	os.Exit(code)
 }
@@ -139,6 +144,7 @@ func TestCreatePolicyTypeInstance(t *testing.T) {
 	a1.Logger.Debug("metadatainstancekey   : %+v", metadatainstancekey)
 	metadatainstancearr := []interface{}{metadatainstancekey, string(metadata)}
 	sdlInst.On("Set", "A1m_ns", metadatainstancearr).Return(nil)
+	rmrSenderInst.On("RmrSendToXapp", "httpBodyString").Return(true)
 
 	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata)
 
@@ -210,13 +216,14 @@ func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) 
 		policySchemaString = `{"create_schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"additionalProperties":false,"blocking_rate":{"default":10,"description":"% Connections to block","maximum":1001,"minimum":1,"type":"number"},"enforce":{"default":"true","type":"boolean"},"window_length":{"default":1,"description":"Sliding window length (in minutes)","maximum":60,"minimum":1,"type":"integer"}},"type":"object"},"description":"various parameters to control admission of dual connection","name":"admission_control_policy_mine","policy_type_id":20001}`
 		key = a1PolicyPrefix + strconv.FormatInt((policytypeid), 10)
 	}
-	a1.Logger.Error(" policy SchemaString %+v", policySchemaString)
+	a1.Logger.Debug(" policy SchemaString %+v", policySchemaString)
 	policyTypeSchema, _ := json.Marshal((policySchemaString))
-	a1.Logger.Error(" policyTypeSchema %+v", string(policyTypeSchema))
+	a1.Logger.Debug(" policyTypeSchema %+v", string(policyTypeSchema))
 
-	a1.Logger.Error(" key for policy type %+v", key)
+	a1.Logger.Debug(" key for policy type %+v", key)
 	mp := map[string]interface{}{key: string(policySchemaString)}
-	a1.Logger.Error("Get Called and mp return %+v ", mp)
+	a1.Logger.Debug("Get Called and mp return %+v ", mp)
+
 	return mp, nil
 }
 
@@ -232,4 +239,9 @@ func (s *SdlMock) Set(ns string, pairs ...interface{}) error {
 func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bool, error) {
 	args := s.MethodCalled("SetIfNotExists", ns, key, oldData, newData)
 	return args.Bool(0), args.Error(1)
+}
+
+func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string) bool {
+	args := rmr.MethodCalled("RmrSendToXapp", httpBodyString)
+	return args.Bool(0)
 }

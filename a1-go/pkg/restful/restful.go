@@ -117,7 +117,7 @@ func (r *Restful) Run() {
 
 	server := restapi.NewServer(r.api)
 	defer server.Shutdown()
-	server.Port = 8080
+	server.Port = 10000
 	server.Host = "0.0.0.0"
 	if err := server.Serve(); err != nil {
 		log.Fatal(err.Error())
