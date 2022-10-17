@@ -34,6 +34,7 @@ type iSdl interface {
 	Get(string, []string) (map[string]interface{}, error)
 	SetIf(ns string, key string, oldData, newData interface{}) (bool, error)
 	Set(ns string, pairs ...interface{}) error
+	Remove(ns string, keys []string) error
 }
 
 type iRMRClient interface {
