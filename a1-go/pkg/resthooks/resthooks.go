@@ -31,6 +31,7 @@ import (
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
+	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"gopkg.in/yaml.v2"
 )
@@ -72,12 +73,24 @@ func (rh *Resthook) IsValidJson(err error) bool {
 	return err == invalidJsonSchema
 }
 func NewResthook() *Resthook {
-	return createResthook(sdlgo.NewSyncStorage())
+	RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
+		StatDesc: "",
+		RmrData: xapp.PortData{
+			Name:              "",
+			MaxSize:           65534,
+			ThreadType:        0,
+			LowLatency:        false,
+			FastAck:           false,
+			MaxRetryOnFailure: 1,
+		},
+	})
+	return createResthook(sdlgo.NewSyncStorage(), RMRclient)
 }
 
-func createResthook(sdlInst iSdl) *Resthook {
+func createResthook(sdlInst iSdl, RMRclient iRMRClient) *Resthook {
 	return &Resthook{
-		db: sdlInst,
+		db:        sdlInst,
+		rmrclient: RMRclient,
 	}
 }
 
@@ -329,6 +342,23 @@ func (rh *Resthook) storePolicyInstanceMetadata(policyTypeId models.PolicyTypeID
 	return true, nil
 }
 
+func (rh *Resthook) rmrSendToXapp(httpBodyString string) bool {
+
+	params := &xapp.RMRParams{}
+	params.Mtype = 20010
+	params.SubId = -1
+	params.Xid = ""
+	params.Meid = &xapp.RMRMeid{}
+	params.Src = "service-ricplt-a1mediator-http"
+	params.PayloadLen = len([]byte(httpBodyString))
+	params.Payload = []byte(httpBodyString)
+	a1.Logger.Debug("MSG to XAPP: %s ", params.String())
+	a1.Logger.Debug("len payload %+v", len(params.Payload))
+	s := rh.rmrclient.SendMsg(params)
+	a1.Logger.Debug("rmrSendToXapp: sending: %+v", s)
+	return s
+}
+
 func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) error {
 	a1.Logger.Debug("CreatePolicyInstance function")
 	//  validate the PUT against the schema
@@ -363,6 +393,8 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 		if iscreated {
 			a1.Logger.Debug("policy instance metadata created")
 		}
+		s := rh.rmrSendToXapp(httpBodyString)
+		a1.Logger.Error("rmrSendToXapp return %+v", s)
 	} else {
 		a1.Logger.Error("%+v", invalidJsonSchema)
 		return invalidJsonSchema

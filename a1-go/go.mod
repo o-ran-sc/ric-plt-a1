@@ -26,6 +26,8 @@ replace gerrit.o-ran-sc.org/r/ric-plt/sdlgo => gerrit.o-ran-sc.org/r/ric-plt/sdl
 
 replace gerrit.o-ran-sc.org/r/com/golog => gerrit.o-ran-sc.org/r/com/golog.git v0.0.2
 
+replace gerrit.o-ran-sc.org/r/ric-plt/xapp-frame => gerrit.o-ran-sc.org/r/ric-plt/xapp-frame.git v0.9.3
+
 require (
 	gerrit.o-ran-sc.org/r/com/golog v0.0.2
 	gerrit.o-ran-sc.org/r/ric-plt/sdlgo v0.7.0
@@ -41,4 +43,5 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
 	k8s.io/utils v0.0.0-20210930125809-cb0fa318a74b // indirect
+	gerrit.o-ran-sc.org/r/ric-plt/xapp-frame v0.0.0-00010101000000-000000000000
 )

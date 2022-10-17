@@ -29,12 +29,18 @@ import (
 
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
+	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
 
+type RMRClientMock struct {
+	mock.Mock
+}
+
 var rh *Resthook
 var sdlInst *SdlMock
+var RMRclient *RMRClientMock
 
 func TestMain(m *testing.M) {
 	sdlInst = new(SdlMock)
@@ -46,9 +52,9 @@ func TestMain(m *testing.M) {
 		"a1.policy_type.20000",
 		"a1.policy_inst_metadata.1006001.qos",
 	}, nil)
-
+	RMRclient = new(RMRClientMock)
 	a1.Init()
-	rh = createResthook(sdlInst)
+	rh = createResthook(sdlInst, RMRclient)
 	code := m.Run()
 	os.Exit(code)
 }
@@ -139,6 +145,15 @@ func TestCreatePolicyTypeInstance(t *testing.T) {
 	a1.Logger.Debug("metadatainstancekey   : %+v", metadatainstancekey)
 	metadatainstancearr := []interface{}{metadatainstancekey, string(metadata)}
 	sdlInst.On("Set", "A1m_ns", metadatainstancearr).Return(nil)
+	params := &xapp.RMRParams{}
+	params.Mtype = 20010
+	params.SubId = -1
+	params.Xid = ""
+	params.Meid = &xapp.RMRMeid{}
+	params.Src = "service-ricplt-a1mediator-http"
+	params.PayloadLen = len([]byte("httpBodyString"))
+	params.Payload = []byte("httpBodyString")
+	RMRclient.On("SendMsg", params).Return(true)
 
 	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata)
 
@@ -232,4 +247,9 @@ func (s *SdlMock) Set(ns string, pairs ...interface{}) error {
 func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bool, error) {
 	args := s.MethodCalled("SetIfNotExists", ns, key, oldData, newData)
 	return args.Bool(0), args.Error(1)
+}
+
+func (rmr *RMRClientMock) SendMsg(params *xapp.RMRParams) bool {
+	args := rmr.MethodCalled("SendMsg", params)
+	return args.Bool(0)
 }

@@ -20,8 +20,13 @@
 */
 package resthooks
 
+import (
+	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
+)
+
 type Resthook struct {
-	db iSdl
+	db        iSdl
+	rmrclient iRMRClient
 }
 
 type iSdl interface {
@@ -30,4 +35,8 @@ type iSdl interface {
 	Get(string, []string) (map[string]interface{}, error)
 	SetIf(ns string, key string, oldData, newData interface{}) (bool, error)
 	Set(ns string, pairs ...interface{}) error
+}
+
+type iRMRClient interface {
+	SendMsg(params *xapp.RMRParams) bool
 }
