@@ -50,6 +50,11 @@ var typeMismatchError = errors.New("Policytype Mismatch")
 var invalidJsonSchema = errors.New("Invalid Json ")
 var policyInstanceNotFoundError = errors.New("Policy Instance Not Found")
 var policyTypeNotFoundError = errors.New("Policy Type Not Found")
+var policyTypeCanNotBeDeletedError = errors.New("tried to delete a type that isn't empty")
+
+func (rh *Resthook) CanPolicyTypeBeDeleted(err error) bool {
+	return err == policyTypeCanNotBeDeletedError
+}
 
 func (rh *Resthook) IsPolicyTypePresent(err error) bool {
 	return err == policyTypeNotFoundError
@@ -476,4 +481,25 @@ func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) ([]mo
 
 	a1.Logger.Debug("return : %+v", policyTypeInstances)
 	return policyTypeInstances, nil
+}
+
+func (rh *Resthook) DeletePolicyType(policyTypeId models.PolicyTypeID) error {
+	a1.Logger.Debug("DeletePolicyType")
+	//var policyinstances []models.PolicyInstanceID
+	policyinstances, _ := rh.GetAllPolicyInstance(policyTypeId)
+	var keys [1]string
+
+	key := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
+	keys[0] = key
+	if len(policyinstances) == 0 {
+		err := rh.db.Remove(a1MediatorNs, keys[:])
+		if err != nil {
+			a1.Logger.Error("error in deleting policy type err: %v", err)
+			return err
+		}
+	} else {
+		a1.Logger.Error("tried to delete a type that isn't empty")
+		return policyTypeCanNotBeDeletedError
+	}
+	return nil
 }

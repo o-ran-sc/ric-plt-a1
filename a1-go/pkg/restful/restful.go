@@ -109,6 +109,19 @@ func (r *Restful) setupHandler() *operations.A1API {
 
 	})
 
+	api.A1MediatorA1ControllerDeletePolicyTypeHandler = a1_mediator.A1ControllerDeletePolicyTypeHandlerFunc(func(params a1_mediator.A1ControllerDeletePolicyTypeParams) middleware.Responder {
+		a1.Logger.Debug("handler for delete policy type")
+		if err := r.rh.DeletePolicyType(models.PolicyTypeID(params.PolicyTypeID)); err != nil {
+			if r.rh.CanPolicyTypeBeDeleted(err) {
+				return a1_mediator.NewA1ControllerDeletePolicyTypeBadRequest()
+			}
+			return a1_mediator.NewA1ControllerDeletePolicyTypeServiceUnavailable()
+		}
+
+		return a1_mediator.NewA1ControllerDeletePolicyTypeNoContent()
+
+	})
+
 	return api
 
 }
