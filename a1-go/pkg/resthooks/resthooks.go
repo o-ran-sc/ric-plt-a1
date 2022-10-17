@@ -31,6 +31,7 @@ import (
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
+	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"gopkg.in/yaml.v2"
 )
@@ -72,12 +73,13 @@ func (rh *Resthook) IsValidJson(err error) bool {
 	return err == invalidJsonSchema
 }
 func NewResthook() *Resthook {
-	return createResthook(sdlgo.NewSyncStorage())
+	return createResthook(sdlgo.NewSyncStorage(), rmr.NewRMRSender())
 }
 
-func createResthook(sdlInst iSdl) *Resthook {
+func createResthook(sdlInst iSdl, rmrSenderInst rmr.IRmrSender) *Resthook {
 	return &Resthook{
-		db: sdlInst,
+		db:             sdlInst,
+		iRmrSenderInst: rmrSenderInst,
 	}
 }
 
@@ -363,6 +365,8 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 		if iscreated {
 			a1.Logger.Debug("policy instance metadata created")
 		}
+		isSent := rh.iRmrSenderInst.RmrSendToXapp(httpBodyString)
+		a1.Logger.Debug("rmrSendToXapp return %+v", isSent)
 	} else {
 		a1.Logger.Error("%+v", invalidJsonSchema)
 		return invalidJsonSchema

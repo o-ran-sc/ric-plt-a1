@@ -20,14 +20,22 @@
 */
 package resthooks
 
-type Resthook struct {
-	db iSdl
-}
+import (
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/rmr"
+)
 
+type Resthook struct {
+	db             iSdl
+	iRmrSenderInst rmr.IRmrSender
+}
 type iSdl interface {
 	GetAll(string) ([]string, error)
 	SetIfNotExists(ns string, key string, data interface{}) (bool, error)
 	Get(string, []string) (map[string]interface{}, error)
 	SetIf(ns string, key string, oldData, newData interface{}) (bool, error)
 	Set(ns string, pairs ...interface{}) error
+}
+
+type iRMRClient interface {
+	SendMsg(params *xapp.RMRParams) bool
 }
