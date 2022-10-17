@@ -187,6 +187,22 @@ func TestGetAllPolicyIntances(t *testing.T) {
 	assert.Equal(t, 2, len(resp))
 }
 
+func TestDeletePolicyType(t *testing.T) {
+
+	policyTypeId := models.PolicyTypeID(20001)
+	key := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
+	var keys [1]string
+	keys[0] = key
+
+	//Setup Expectations
+	sdlInst.On("Remove", a1MediatorNs, keys[:]).Return(nil)
+
+	errresp := rh.DeletePolicyType(policyTypeId)
+
+	assert.Nil(t, errresp)
+	sdlInst.AssertExpectations(t)
+}
+
 type SdlMock struct {
 	mock.Mock
 }
@@ -244,4 +260,9 @@ func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bo
 func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string) bool {
 	args := rmr.MethodCalled("RmrSendToXapp", httpBodyString)
 	return args.Bool(0)
+}
+
+func (s *SdlMock) Remove(ns string, keys []string) error {
+	args := s.MethodCalled("Remove", ns, keys)
+	return args.Error(0)
 }
