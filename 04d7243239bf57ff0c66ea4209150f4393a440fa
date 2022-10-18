@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3995657e_ce9fa391",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-10-18T06:37:59Z",
+      "side": 1,
+      "message": "can be removed.",
+      "range": {
+        "startLine": 488,
+        "startChar": 1,
+        "endLine": 488,
+        "endChar": 48
+      },
+      "revId": "04d7243239bf57ff0c66ea4209150f4393a440fa",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14600c86_4ae4e993",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-10-18T06:37:59Z",
+      "side": 1,
+      "message": "error handling is ignored ?",
+      "range": {
+        "startLine": 489,
+        "startChar": 18,
+        "endLine": 489,
+        "endChar": 19
+      },
+      "revId": "04d7243239bf57ff0c66ea4209150f4393a440fa",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
