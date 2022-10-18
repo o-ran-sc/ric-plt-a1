@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad9b6eac_027befca",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-10-18T06:31:37Z",
+      "side": 1,
+      "message": "avoid using hardcoded value and read it from config or env.",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "3dbba4d44dfd7b919c3cf1449941e9e0905e492c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56176686_faf21339",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-10-18T06:31:37Z",
+      "side": 1,
+      "message": "I would suggest moving RMR related logics to move in separate file as I feel keep the resthook related statements.\n\nLet me know your thoughts.",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 61
+      },
+      "revId": "3dbba4d44dfd7b919c3cf1449941e9e0905e492c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51b1b0a1_2e2c568c",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-10-18T06:31:37Z",
+      "side": 1,
+      "message": "msgtype should not be hardcoded which can be referred from rmr library.",
+      "range": {
+        "startLine": 348,
+        "startChar": 16,
+        "endLine": 348,
+        "endChar": 21
+      },
+      "revId": "3dbba4d44dfd7b919c3cf1449941e9e0905e492c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
