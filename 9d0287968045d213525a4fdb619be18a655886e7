@@ -24,6 +24,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e72db8_0e049950",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-21T09:56:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9fa85b16_66eb1dfa",
+      "range": {
+        "startLine": 120,
+        "startChar": 1,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "9d0287968045d213525a4fdb619be18a655886e7",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d56048c_d668308e",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-10-21T09:23:55Z",
       "side": 1,
       "message": "could you use isSent to print logs to understand if operation is successful or failed instead printing flag.",
+      "range": {
+        "startLine": 368,
+        "startChar": 2,
+        "endLine": 369,
+        "endChar": 53
+      },
+      "revId": "9d0287968045d213525a4fdb619be18a655886e7",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd0a97f4_4edbd202",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-21T09:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d56048c_d668308e",
       "range": {
         "startLine": 368,
         "startChar": 2,

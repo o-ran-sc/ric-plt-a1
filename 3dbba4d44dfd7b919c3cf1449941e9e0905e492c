@@ -24,6 +24,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f73e1f8c_9660b743",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-21T09:56:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad9b6eac_027befca",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "3dbba4d44dfd7b919c3cf1449941e9e0905e492c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56176686_faf21339",
@@ -47,6 +71,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "553fae76_594bd458",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-21T09:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56176686_faf21339",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 61
+      },
+      "revId": "3dbba4d44dfd7b919c3cf1449941e9e0905e492c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51b1b0a1_2e2c568c",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-10-18T06:31:37Z",
       "side": 1,
       "message": "msgtype should not be hardcoded which can be referred from rmr library.",
+      "range": {
+        "startLine": 348,
+        "startChar": 16,
+        "endLine": 348,
+        "endChar": 21
+      },
+      "revId": "3dbba4d44dfd7b919c3cf1449941e9e0905e492c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e00ebf9_2ae3bf7e",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-21T09:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51b1b0a1_2e2c568c",
       "range": {
         "startLine": 348,
         "startChar": 16,
