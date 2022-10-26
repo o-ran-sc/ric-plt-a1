@@ -484,3 +484,79 @@ func (rh *Resthook) DeletePolicyType(policyTypeId models.PolicyTypeID) error {
 	}
 	return nil
 }
+
+func (rh *Resthook) typeValidity(policyTypeId models.PolicyTypeID) error {
+	var keys [1]string
+
+	typekey := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
+	keys[0] = typekey
+
+	a1.Logger.Debug("key1 : %+v", typekey)
+	valmap, err := rh.db.Get(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("error in retrieving policytype err: %v", err)
+		return err
+	}
+	if len(valmap) == 0 {
+		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
+		return policyTypeNotFoundError
+	}
+}
+
+func (rh *Resthook) instanceValidity(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) error {
+	err := rh.typeValidity(policyTypeId)
+	policyTypeInstances, err := rh.GetPolicyInstance(policyTypeId, policyInstanceID)
+	if err != nil {
+		a1.Logger.Error("policy instance error : %v", err)
+		return err
+	}
+	if len(policyTypeInstances.(string)) == 0 {
+		a1.Logger.Debug("policy instance Not Present  ")
+		return policyInstanceNotFoundError
+	}
+}
+
+func (rh *Resthook) getMetaData(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (map[string]interface{}, error) {
+	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	a1.Logger.Error("instanceMetadata key : %+v", instanceMetadataKey)
+	var keys [1]string
+	keys[0] = instanceMetadataKey
+	instanceMetadataMap, err := rh.db.Get(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("policy instance error : %v", err)
+	}
+	a1.Logger.Debug("instanceMetadata map : %+v", instanceMetadataMap)
+	if instanceMetadataMap[instanceMetadataKey] == nil {
+		a1.Logger.Error("policy instance Not Present for policyinstaneid : %v", policyInstanceID)
+		return map[string]interface{}{}, policyInstanceNotFoundError
+	}
+	return instanceMetadataMap, nil
+}
+
+func (rh *Resthook) GetPolicyInstanceStatus(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) *(a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody) {
+	err := rh.instanceValidity(policyTypeId, policyInstanceID)
+	policyInstanceStatus := a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody{}
+	metadata, err := rh.getMetaData(policyTypeId, policyInstanceID)
+	a1.Logger.Debug(" metadata %v", metadata)
+	if err != nil {
+		a1.Logger.Error("policy instance error : %v", err)
+		if err == policyInstanceNotFoundError || err == policyTypeNotFoundError {
+			policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
+			return &policyInstanceStatus
+		}
+	}
+	jsonbody, err := json.Marshal(metadata)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	if err := json.Unmarshal(jsonbody, &policyInstanceStatus); err != nil {
+		fmt.Println(err)
+	}
+	if policyInstanceStatus.HasBeenDeleted == false {
+		policyInstanceStatus.InstanceStatus = "IN EFFECT"
+	} else {
+		policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
+	}
+	return &policyInstanceStatus
+}
