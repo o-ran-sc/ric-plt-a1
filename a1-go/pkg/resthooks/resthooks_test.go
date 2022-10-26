@@ -203,6 +203,28 @@ func TestDeletePolicyType(t *testing.T) {
 	sdlInst.AssertExpectations(t)
 }
 
+func TestGetPolicyInstanceStatus(t *testing.T) {
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20001
+	var policyInstanceID models.PolicyInstanceID
+	policyInstanceID = "123456"
+	httpBody := `{
+		"created_at":"0001-01-01T00:00:00.000Z",
+		"instance_status":"NOT IN EFFECT"
+		}`
+	instancekey := a1InstanceMetadataPrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	a1.Logger.Debug("httpBody String : %+v", httpBody)
+	a1.Logger.Debug("key   : %+v", instancekey)
+	var keys [1]string
+	keys[0] = instancekey
+	sdlInst.On("Get", a1MediatorNs, keys[:]).Return(httpBody)
+
+	resp := rh.GetPolicyInstanceStatus(policyTypeId, policyInstanceID)
+
+	assert.NotNil(t, resp)
+	sdlInst.AssertExpectations(t)
+}
+
 type SdlMock struct {
 	mock.Mock
 }
@@ -215,7 +237,7 @@ func (s *SdlMock) GetAll(ns string) ([]string, error) {
 func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) {
 	a1.Logger.Debug("Get Called ")
 	args := s.MethodCalled("Get", ns, keys)
-	a1.Logger.Debug("keys :%+v", args.Get(1))
+	a1.Logger.Debug("ns :%+v", args.Get(0))
 	policytypeid := int64(20001)
 	policyInstanceID := "123456"
 	var policySchemaString string
@@ -231,6 +253,12 @@ func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) 
 	} else if keys[0] == "a1.policy_type.20001" {
 		policySchemaString = `{"create_schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"additionalProperties":false,"blocking_rate":{"default":10,"description":"% Connections to block","maximum":1001,"minimum":1,"type":"number"},"enforce":{"default":"true","type":"boolean"},"window_length":{"default":1,"description":"Sliding window length (in minutes)","maximum":60,"minimum":1,"type":"integer"}},"type":"object"},"description":"various parameters to control admission of dual connection","name":"admission_control_policy_mine","policy_type_id":20001}`
 		key = a1PolicyPrefix + strconv.FormatInt((policytypeid), 10)
+	} else if keys[0] == "a1.policy_inst_metadata.20001.123456" {
+		policySchemaString = `{
+			"created_at":"0001-01-01T00:00:00.000Z",
+			"instance_status":"NOT IN EFFECT"
+			}`
+		key = a1InstanceMetadataPrefix + strconv.FormatInt(policytypeid, 10) + "." + string(policyInstanceID)
 	}
 	a1.Logger.Debug(" policy SchemaString %+v", policySchemaString)
 	policyTypeSchema, _ := json.Marshal((policySchemaString))
@@ -239,10 +267,8 @@ func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) 
 	a1.Logger.Debug(" key for policy type %+v", key)
 	mp := map[string]interface{}{key: string(policySchemaString)}
 	a1.Logger.Debug("Get Called and mp return %+v ", mp)
-
 	return mp, nil
 }
-
 func (s *SdlMock) SetIfNotExists(ns string, key string, data interface{}) (bool, error) {
 	args := s.MethodCalled("SetIfNotExists", ns, key, data)
 	return args.Bool(0), args.Error(1)
