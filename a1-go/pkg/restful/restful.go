@@ -122,6 +122,17 @@ func (r *Restful) setupHandler() *operations.A1API {
 
 	})
 
+	api.A1MediatorA1ControllerGetPolicyInstanceStatusHandler = a1_mediator.A1ControllerGetPolicyInstanceStatusHandlerFunc(func(params a1_mediator.A1ControllerGetPolicyInstanceStatusParams) middleware.Responder {
+		a1.Logger.Debug("handler for get policy instance status")
+		if resp, err := r.rh.GetPolicyInstanceStatus(models.PolicyTypeID(params.PolicyTypeID), models.PolicyInstanceID(params.PolicyInstanceID)); err == nil {
+			return a1_mediator.NewA1ControllerGetPolicyInstanceStatusOK().WithPayload(resp)
+		}
+		if r.rh.IsPolicyInstanceNotFound(err) {
+			return a1_mediator.NewA1ControllerGetPolicyInstanceStatusNotFound()
+		}
+		return a1_mediator.NewA1ControllerGetPolicyInstanceStatusServiceUnavailable()
+	})
+
 	return api
 
 }
