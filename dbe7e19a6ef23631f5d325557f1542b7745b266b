@@ -41,6 +41,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9238790_0f96692b",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-27T10:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ebecd8df_5d67b32d",
+      "range": {
+        "startLine": 127,
+        "startChar": 134,
+        "endLine": 127,
+        "endChar": 145
+      },
+      "revId": "dbe7e19a6ef23631f5d325557f1542b7745b266b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37bf624d_3d07ca39",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-10-26T10:55:05Z",
       "side": 1,
       "message": "why error logging is used.",
+      "range": {
+        "startLine": 521,
+        "startChar": 0,
+        "endLine": 521,
+        "endChar": 67
+      },
+      "revId": "dbe7e19a6ef23631f5d325557f1542b7745b266b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e1c6f03_b928f2c6",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-27T10:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37bf624d_3d07ca39",
       "range": {
         "startLine": 521,
         "startChar": 0,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b485420d_c5c4c5a6",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-27T10:24:05Z",
+      "side": 1,
+      "message": "added error in return type and A1ControllerGetPolicyInstanceStatusOKBody is how naming is done for the body struct.",
+      "parentUuid": "f52b458c_f89f59cd",
+      "range": {
+        "startLine": 536,
+        "startChar": 120,
+        "endLine": 536,
+        "endChar": 176
+      },
+      "revId": "dbe7e19a6ef23631f5d325557f1542b7745b266b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da58a108_6e39b06f",
         "filename": "a1-go/pkg/resthooks/resthooks.go",
         "patchSetId": 1
@@ -100,6 +172,30 @@
       "writtenOn": "2022-10-26T10:55:05Z",
       "side": 1,
       "message": "err is not handled",
+      "range": {
+        "startLine": 537,
+        "startChar": 1,
+        "endLine": 537,
+        "endChar": 7
+      },
+      "revId": "dbe7e19a6ef23631f5d325557f1542b7745b266b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a9a0fee_641d4057",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-10-27T10:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "da58a108_6e39b06f",
       "range": {
         "startLine": 537,
         "startChar": 1,
