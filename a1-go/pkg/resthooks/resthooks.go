@@ -370,7 +370,14 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 		if iscreated {
 			a1.Logger.Debug("policy instance metadata created")
 		}
-		isSent := rh.iRmrSenderInst.RmrSendToXapp(httpBodyString)
+
+		message := rmr.Message{}
+		rmrMessage, err := message.PolicyMessage(strconv.FormatInt((int64(policyTypeId)), 10), string(policyInstanceID), httpBodyString, operation)
+		if err != nil {
+			a1.Logger.Error("error : %v", err)
+			return err
+		}
+		isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage)
 		if isSent {
 			a1.Logger.Debug("rmrSendToXapp : message sent")
 		} else {
