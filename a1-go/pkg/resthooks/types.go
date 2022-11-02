@@ -22,6 +22,7 @@ package resthooks
 
 import (
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/rmr"
+	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
 )
 
 type Resthook struct {
