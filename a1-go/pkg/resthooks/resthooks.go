@@ -51,6 +51,11 @@ var invalidJsonSchema = errors.New("Invalid Json ")
 var policyInstanceNotFoundError = errors.New("Policy Instance Not Found")
 var policyTypeNotFoundError = errors.New("Policy Type Not Found")
 var policyTypeCanNotBeDeletedError = errors.New("tried to delete a type that isn't empty")
+var policyInstanceCanNotBeDeletedError = errors.New("tried to delete a Instance that isn't empty")
+
+func (rh *Resthook) CanPolicyInstanceBeDeleted(err error) bool {
+	return err == policyInstanceCanNotBeDeletedError
+}
 
 func (rh *Resthook) CanPolicyTypeBeDeleted(err error) bool {
 	return err == policyTypeCanNotBeDeletedError
@@ -569,4 +574,92 @@ func (rh *Resthook) GetPolicyInstanceStatus(policyTypeId models.PolicyTypeID, po
 		policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
 	}
 	return &policyInstanceStatus, nil
+}
+
+func (rh *Resthook) storeDeletedPolicyInstanceMetadata(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, creation_timestamp string) (bool, error) {
+
+	deleted_timestamp := time.Now()
+
+	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+
+	a1.Logger.Debug("instanceMetadata Key : %+v", instanceMetadataKey)
+
+	var metadatajson interface{}
+	metadatajson = map[string]string{"created_at": creation_timestamp, "has_been_deleted": "True", "deleted_at": deleted_timestamp.Format("2006-01-02 15:04:05")}
+	a1.Logger.Debug("metadatajson to create : %+v", metadatajson)
+	deletedmetadata, err := json.Marshal(metadatajson)
+
+	a1.Logger.Debug("policyinstanceMetaData to create : %+v", string(deletedmetadata))
+
+	err = rh.db.Set(a1MediatorNs, instanceMetadataKey, string(deletedmetadata))
+	a1.Logger.Debug("deletemetadatacreated")
+	if err != nil {
+		a1.Logger.Error("error :%+v", err)
+		return false, err
+	}
+
+	a1.Logger.Error("Policy Instance Meta Data deleted at :%+v", creation_timestamp)
+
+	return true, nil
+}
+
+func (rh *Resthook) deleteInstancedata(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (bool, error) {
+	var keys [1]string
+	instancekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	keys[0] = instancekey
+	err := rh.db.Remove(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("error in deleting policy type err: %v", err)
+		return false, err
+	}
+	return true, nil
+}
+
+func (rh *Resthook) deleteMetadata(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (bool, error) {
+	var keys [1]string
+	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+
+	a1.Logger.Debug("instanceMetadata Key : %+v", instanceMetadataKey)
+	keys[0] = instanceMetadataKey
+	err := rh.db.Remove(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("error in deleting policy metadata err: %v", err)
+		return false, err
+	}
+	return true, nil
+}
+
+func (rh *Resthook) DeletePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) error {
+	err := rh.instanceValidity(policyTypeId, policyInstanceID)
+	if err != nil {
+		a1.Logger.Error("policy instance error : %v", err)
+		if err == policyInstanceNotFoundError || err == policyTypeNotFoundError {
+		}
+	}
+
+	createdmetadata, err := rh.getMetaData(policyTypeId, policyInstanceID)
+	a1.Logger.Debug(" created metadata %v", createdmetadata)
+	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	creation_metadata := createdmetadata[instanceMetadataKey]
+	var metadata map[string]interface{}
+	json.Unmarshal([]byte(creation_metadata.(string)), &metadata)
+	a1.Logger.Debug(" created metadata created_at %v", metadata["created_at"])
+	creation_timestamp := metadata["created_at"]
+
+	rh.deleteMetadata(policyTypeId, policyInstanceID)
+
+	rh.deleteInstancedata(policyTypeId, policyInstanceID)
+
+	rh.storeDeletedPolicyInstanceMetadata(policyTypeId, policyInstanceID, creation_timestamp.(string))
+
+	message := rmr.Message{}
+	rmrMessage := message.PolicyMessage(policyTypeId, policyInstanceID, "", "DELETE")
+	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage)
+	if isSent {
+		a1.Logger.Debug("rmrSendToXapp : message sent")
+	} else {
+		a1.Logger.Debug("rmrSendToXapp : message not sent")
+	}
+
+	return nil
 }
