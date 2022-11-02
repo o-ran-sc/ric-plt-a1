@@ -225,6 +225,76 @@ func TestGetPolicyInstanceStatus(t *testing.T) {
 	sdlInst.AssertExpectations(t)
 }
 
+func TestDeletePolicyInstance(t *testing.T) {
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20001
+	var policyInstanceID models.PolicyInstanceID
+	policyInstanceID = "123456"
+	var policyTypeSchema models.PolicyTypeSchema
+	name := "admission_control_policy_mine"
+	policyTypeSchema.Name = &name
+	policytypeid := int64(20001)
+	policyTypeSchema.PolicyTypeID = &policytypeid
+	description := "various parameters to control admission of dual connection"
+	policyTypeSchema.Description = &description
+	schema := `{"$schema": "http://json-schema.org/draft-07/schema#","type":"object","properties": {"enforce": {"type":"boolean","default":"true",},"window_length": {"type":        "integer","default":1,"minimum":1,"maximum":60,"description": "Sliding window length (in minutes)",},
+"blocking_rate": {"type":"number","default":10,"minimum":1,"maximum":100,"description": "% Connections to block",},"additionalProperties": false,},}`
+	policyTypeSchema.CreateSchema = schema
+
+	key := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
+	var policytypekeys [1]string
+	policytypekeys[0] = key
+
+	sdlInst.On("Get", a1MediatorNs, policytypekeys[:]).Return(map[string]interface{}{key: policyTypeSchema}, nil)
+
+	httpBody := `{
+		"enforce":true,
+		"window_length":20,
+	   "blocking_rate":20,
+		"trigger_threshold":10
+		}`
+	instancekey := a1InstancePrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	var instancekeys [1]string
+	instancekeys[0] = instancekey
+
+	sdlInst.On("Get", a1MediatorNs, instancekeys[:]).Return(httpBody, nil)
+
+	var instanceMetadataKeys [1]string
+	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	instanceMetadataKeys[0] = instanceMetadataKey
+	httpBody = `{
+		"created_at":"2022-11-02 10:30:20",
+			"instance_status":"NOT IN EFFECT"
+		}`
+
+	sdlInst.On("Get", a1MediatorNs, instanceMetadataKeys[:]).Return(httpBody, nil)
+
+	sdlInst.On("Remove", a1MediatorNs, instanceMetadataKeys[:]).Return(nil)
+
+	var metadatainstancekeys [1]string
+	metadatainstancekeys[0] = instancekey
+
+	sdlInst.On("Remove", a1MediatorNs, metadatainstancekeys[:]).Return(nil)
+
+	metadatainstancekey := a1InstanceMetadataPrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
+	deleted_timestamp := time.Now()
+	var metadatajson interface{}
+	metadatajson = map[string]string{"created_at": "2022-11-02 10:30:20", "deleted_at": deleted_timestamp.Format("2006-01-02 15:04:05"), "has_been_deleted": "True"}
+	metadata, _ := json.Marshal(metadatajson)
+	metadatainstancearr := []interface{}{metadatainstancekey, string(metadata)}
+
+	sdlInst.On("Set", "A1m_ns", metadatainstancearr).Return(nil)
+
+	httpBodyString := `{"operation":"DELETE","payload":"","policy_instance_id":"123456","policy_type_id":"20001"}`
+
+	rmrSenderInst.On("RmrSendToXapp", httpBodyString).Return(true)
+
+	errresp := rh.DeletePolicyInstance(policyTypeId, policyInstanceID)
+
+	assert.Nil(t, errresp)
+	sdlInst.AssertExpectations(t)
+}
+
 type SdlMock struct {
 	mock.Mock
 }
@@ -255,7 +325,7 @@ func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) 
 		key = a1PolicyPrefix + strconv.FormatInt((policytypeid), 10)
 	} else if keys[0] == "a1.policy_inst_metadata.20001.123456" {
 		policySchemaString = `{
-			"created_at":"0001-01-01T00:00:00.000Z",
+			"created_at":"2022-11-02 10:30:20",
 			"instance_status":"NOT IN EFFECT"
 			}`
 		key = a1InstanceMetadataPrefix + strconv.FormatInt(policytypeid, 10) + "." + string(policyInstanceID)
