@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2815b53a_d212a48a",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T13:59:06Z",
+      "side": 1,
+      "message": "better return nil",
+      "range": {
+        "startLine": 561,
+        "startChar": 9,
+        "endLine": 561,
+        "endChar": 30
+      },
+      "revId": "e15ff97a0a4b60a79a757a2193f7a4cb05f9116f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f19dbfe_4f6791d1",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T13:59:06Z",
+      "side": 1,
+      "message": "if unmarshall fails, then also we are returning NewA1ControllerGetPolicyInstanceStatusServiceUnavailable, could you check it once.",
+      "range": {
+        "startLine": 561,
+        "startChar": 31,
+        "endLine": 561,
+        "endChar": 35
+      },
+      "revId": "e15ff97a0a4b60a79a757a2193f7a4cb05f9116f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
