@@ -16,6 +16,213 @@
       "message": "Kindly review and merge",
       "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a9ea4fa_71b4efb8",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "why both are needed.",
+      "range": {
+        "startLine": 579,
+        "startChar": 159,
+        "endLine": 579,
+        "endChar": 170
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beea82bd_31be4230",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "why both are needed.",
+      "range": {
+        "startLine": 606,
+        "startChar": 116,
+        "endLine": 606,
+        "endChar": 127
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a9eae27_89c40b0c",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "why bool and error both are needed, I think only error is sufficient.",
+      "range": {
+        "startLine": 618,
+        "startChar": 112,
+        "endLine": 618,
+        "endChar": 123
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48de6ee1_85bfc765",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "we could directly assign to key[0]",
+      "range": {
+        "startLine": 620,
+        "startChar": 1,
+        "endLine": 620,
+        "endChar": 21
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04e2893f_680df7c9",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "if body is empty",
+      "range": {
+        "startLine": 636,
+        "startChar": 2,
+        "endLine": 637,
+        "endChar": 3
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "236fdf71_24b6c604",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "err is not checked",
+      "range": {
+        "startLine": 640,
+        "startChar": 18,
+        "endLine": 640,
+        "endChar": 22
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e14e03_468d5f9f",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "err is not checked",
+      "range": {
+        "startLine": 645,
+        "startChar": 6,
+        "endLine": 645,
+        "endChar": 15
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e29455a1_5c879c63",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "do you think silently ignoring the message not sent to xApp is okay and only logging is sufficient.",
+      "range": {
+        "startLine": 661,
+        "startChar": 2,
+        "endLine": 661,
+        "endChar": 53
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25309c62_fee7f1ae",
+        "filename": "a1-go/pkg/resthooks/types.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T03:05:45Z",
+      "side": 1,
+      "message": "why this import is added.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "c839b5d5ac428b72dce05a50f59afb5fbf7ac936",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
