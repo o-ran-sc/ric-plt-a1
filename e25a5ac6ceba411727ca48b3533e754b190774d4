@@ -16,6 +16,98 @@
       "message": "Kindly review and merge",
       "revId": "e25a5ac6ceba411727ca48b3533e754b190774d4",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfd08e69_a47f0282",
+        "filename": "a1-go/pkg/rmr/messages.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T02:43:04Z",
+      "side": 1,
+      "message": "IMessage is not used and any advantage of having this interface ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "e25a5ac6ceba411727ca48b3533e754b190774d4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ca72c90_970f095b",
+        "filename": "a1-go/pkg/rmr/messages.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T02:43:04Z",
+      "side": 1,
+      "message": "type should be string",
+      "range": {
+        "startLine": 37,
+        "startChar": 108,
+        "endLine": 37,
+        "endChar": 128
+      },
+      "revId": "e25a5ac6ceba411727ca48b3533e754b190774d4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "778f6779_5ee8af2c",
+        "filename": "a1-go/pkg/rmr/messages.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T02:43:04Z",
+      "side": 1,
+      "message": "Instead of model type use primitive types (int, string)",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 64
+      },
+      "revId": "e25a5ac6ceba411727ca48b3533e754b190774d4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb3b24cc_ca4b52d3",
+        "filename": "a1-go/pkg/rmr/messages.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-03T02:43:04Z",
+      "side": 1,
+      "message": "error is ignored",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "e25a5ac6ceba411727ca48b3533e754b190774d4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
