@@ -93,6 +93,30 @@
       },
       "revId": "e15ff97a0a4b60a79a757a2193f7a4cb05f9116f",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d361325e_d66512ca",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-04T09:49:42Z",
+      "side": 1,
+      "message": "make a note (comment). As per the standard it should 500 for internal server error.",
+      "parentUuid": "2feb75d6_09eccbea",
+      "range": {
+        "startLine": 561,
+        "startChar": 31,
+        "endLine": 561,
+        "endChar": 35
+      },
+      "revId": "e15ff97a0a4b60a79a757a2193f7a4cb05f9116f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
