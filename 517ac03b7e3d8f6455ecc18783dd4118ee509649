@@ -41,6 +41,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c563a9fe_15edd826",
+        "filename": "a1-go/pkg/restful/restful.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-11-04T08:24:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "675c5388_33a7036b",
+      "range": {
+        "startLine": 127,
+        "startChar": 18,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "517ac03b7e3d8f6455ecc18783dd4118ee509649",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c447a98c_f8f7bb4f",
@@ -64,6 +88,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7abbd8b2_5ca52bb4",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-11-04T08:24:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c447a98c_f8f7bb4f",
+      "range": {
+        "startLine": 555,
+        "startChar": 0,
+        "endLine": 555,
+        "endChar": 18
+      },
+      "revId": "517ac03b7e3d8f6455ecc18783dd4118ee509649",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b1e781f_e51b1b5d",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-10-27T14:32:36Z",
       "side": 1,
       "message": "return is missing and logger is not used",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 559,
+        "endChar": 18
+      },
+      "revId": "517ac03b7e3d8f6455ecc18783dd4118ee509649",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eb378cd_35fbfc73",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-11-04T08:24:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b1e781f_e51b1b5d",
       "range": {
         "startLine": 559,
         "startChar": 0,

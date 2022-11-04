@@ -93,6 +93,30 @@
       },
       "revId": "63a8140fb1744d2746ccdadd524155f8ce30fc4b",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33070c94_d70e6c33",
+        "filename": "tox.ini",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-11-04T08:24:39Z",
+      "side": 1,
+      "message": "because the build was failing",
+      "parentUuid": "5c1cd74b_aa5a530d",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "63a8140fb1744d2746ccdadd524155f8ce30fc4b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }

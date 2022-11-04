@@ -45,6 +45,54 @@
       },
       "revId": "e15ff97a0a4b60a79a757a2193f7a4cb05f9116f",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6734e8a7_61dd6f93",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-11-04T08:24:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2815b53a_d212a48a",
+      "range": {
+        "startLine": 561,
+        "startChar": 9,
+        "endLine": 561,
+        "endChar": 30
+      },
+      "revId": "e15ff97a0a4b60a79a757a2193f7a4cb05f9116f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2feb75d6_09eccbea",
+        "filename": "a1-go/pkg/resthooks/resthooks.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-11-04T08:24:39Z",
+      "side": 1,
+      "message": "A1ControllerGetPolicyInstanceStatusServiceUnavailableCode int \u003d 503 i checked , service unavaiblable is 503 code only which covers backend or internal error",
+      "parentUuid": "2f19dbfe_4f6791d1",
+      "range": {
+        "startLine": 561,
+        "startChar": 31,
+        "endLine": 561,
+        "endChar": 35
+      },
+      "revId": "e15ff97a0a4b60a79a757a2193f7a4cb05f9116f",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
