@@ -27,8 +27,7 @@ import (
 )
 
 const (
-	a1PolicyRequest = 20010
-	a1SourceName    = "service-ricplt-a1mediator-http"
+	a1SourceName = "service-ricplt-a1mediator-http"
 )
 
 type RmrSender struct {
@@ -36,7 +35,7 @@ type RmrSender struct {
 }
 
 type IRmrSender interface {
-	RmrSendToXapp(httpBodyString string) bool
+	RmrSendToXapp(httpBodyString string, messagetype int) bool
 }
 
 func NewRMRSender() IRmrSender {
@@ -56,10 +55,10 @@ func NewRMRSender() IRmrSender {
 	}
 }
 
-func (rmr *RmrSender) RmrSendToXapp(httpBodyString string) bool {
+func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int) bool {
 
 	params := &xapp.RMRParams{}
-	params.Mtype = a1PolicyRequest
+	params.Mtype = messagetype
 	params.SubId = -1
 	params.Xid = ""
 	params.Meid = &xapp.RMRMeid{}
