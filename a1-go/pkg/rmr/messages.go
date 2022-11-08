@@ -43,3 +43,17 @@ func (m *Message) PolicyMessage(policyTypeId string, policyInstanceID string, ht
 	}
 	return string(data), nil
 }
+
+func (m *Message) A1EIMessage(eiJobId string, httpBody string) (string, error) {
+	var datajson interface{}
+	datajson = map[string]string{
+		"ei_job_id": eiJobId,
+		"payload":   httpBody}
+	data, err := json.Marshal(datajson)
+
+	if err != nil {
+		a1.Logger.Error("marshal error : %v", err)
+		return "", err
+	}
+	return string(data), nil
+}

@@ -28,6 +28,7 @@ import (
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi/operations"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi/operations/a1_e_i_data_delivery"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi/operations/a1_mediator"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/resthooks"
 	"github.com/go-openapi/loads"
@@ -145,7 +146,15 @@ func (r *Restful) setupHandler() *operations.A1API {
 		return a1_mediator.NewA1ControllerDeletePolicyInstanceAccepted()
 
 	})
-	
+
+	api.A1eiDataDeliveryA1ControllerDataDeliveryHandler = a1_e_i_data_delivery.A1ControllerDataDeliveryHandlerFunc(func(params a1_e_i_data_delivery.A1ControllerDataDeliveryParams) middleware.Responder {
+		a1.Logger.Debug("handler for EI data delivery")
+		if err = r.rh.DataDelivery(params.Body); err != nil {
+			return a1_e_i_data_delivery.NewA1ControllerDataDeliveryNotFound()
+		}
+		return a1_e_i_data_delivery.NewA1ControllerDataDeliveryOK()
+	})
+
 	return api
 
 }

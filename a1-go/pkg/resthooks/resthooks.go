@@ -42,6 +42,8 @@ const (
 	a1InstancePrefix         = "a1.policy_instance."
 	a1InstanceMetadataPrefix = "a1.policy_inst_metadata."
 	a1HandlerPrefix          = "a1.policy_handler."
+	a1PolicyRequest          = 20010
+	a1EIDataDelivery         = 20017
 )
 
 var typeAlreadyError = errors.New("Policy Type already exists")
@@ -382,7 +384,7 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 			a1.Logger.Error("error : %v", err)
 			return err
 		}
-		isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage)
+		isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1PolicyRequest)
 		if isSent {
 			a1.Logger.Debug("rmrSendToXapp : message sent")
 		} else {
@@ -671,7 +673,7 @@ func (rh *Resthook) DeletePolicyInstance(policyTypeId models.PolicyTypeID, polic
 		a1.Logger.Error("error : %v", err)
 		return err
 	}
-	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage)
+	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1PolicyRequest)
 	if isSent {
 		a1.Logger.Debug("rmrSendToXapp : message sent")
 	} else {
@@ -679,5 +681,24 @@ func (rh *Resthook) DeletePolicyInstance(policyTypeId models.PolicyTypeID, polic
 		a1.Logger.Error("rmrSendToXapp : message not sent")
 	}
 
+	return nil
+}
+
+func (rh *Resthook) DataDelivery(httpBody interface{}) error {
+	a1.Logger.Debug("httpbody : %+v", httpBody)
+	mymap := httpBody.(map[string]interface{})
+	message := rmr.Message{}
+	rmrMessage, err := message.A1EIMessage(mymap["job"].(string), mymap["payload"].(string))
+	if err != nil {
+		a1.Logger.Error("error : %v", err)
+		return err
+	}
+	a1.Logger.Debug("rmrSendToXapp :rmrMessage %+v", rmrMessage)
+	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1EIDataDelivery)
+	if isSent {
+		a1.Logger.Debug("rmrSendToXapp : message sent")
+	} else {
+		a1.Logger.Error("rmrSendToXapp : message not sent")
+	}
 	return nil
 }
