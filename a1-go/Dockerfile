@@ -16,6 +16,13 @@
 
 FROM nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-ubuntu18-c-go:1.9.0 AS a1-build
 
+#Install Go 
+ARG GOVERSION="1.18.5"
+RUN wget -nv https://dl.google.com/go/go${GOVERSION}.linux-amd64.tar.gz \
+     && tar -xf go${GOVERSION}.linux-amd64.tar.gz \
+     && mv go /opt/go/${GOVERSION} \
+     && rm -f go*.gz
+
 RUN apt-get update -y && apt-get install -y jq
 
 # Update CA certificates
@@ -23,6 +30,18 @@ RUN apt update && apt install --reinstall -y \
   ca-certificates \
   && \
   update-ca-certificates
+
+#Install RMR
+
+ARG RMR_VER=4.8.3
+ARG RMR_PKG_URL=https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/
+
+RUN wget -nv --content-disposition ${RMR_PKG_URL}/rmr_${RMR_VER}_amd64.deb/download.deb
+RUN wget -nv --content-disposition ${RMR_PKG_URL}/rmr-dev_${RMR_VER}_amd64.deb/download.deb
+RUN    dpkg -i rmr_${RMR_VER}_amd64.deb  \
+        && dpkg -i rmr-dev_${RMR_VER}_amd64.deb \
+        && ldconfig
+
 
 ENV PATH="/usr/local/go/bin:${PATH}"
 
@@ -40,6 +59,13 @@ RUN GO111MODULE=on go mod download
 # build and test
 COPY . /go/src/ws
 
+COPY  ./config/uta_rtg.rt /opt/a1-mediator/
+
+ENV RMR_RTG_SVC=-1
+ENV RMR_LOG_VLEVEL=5
+ENV CFG_FILE=/opt/a1-mediator/config-file.json
+ENV RMR_SEED_RT=/opt/a1-mediator/uta_rtg.rt
+
 # Build the code
 RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/src/ws/cache/go/cmd/a1 cmd/a1.go
 
@@ -56,8 +82,19 @@ CMD ["/bin/bash"]
 FROM ubuntu:18.04 as a1-mediator
 
 RUN apt-get update -y \
-    && apt-get install --reinstall -y sudo openssl ca-certificates ca-cacert \
+    && apt-get install --reinstall -y sudo openssl ca-certificates ca-cacert wget\
     && apt-get clean && update-ca-certificates
+
+#Install RMR
+
+ARG RMR_VER=4.8.3
+ARG RMR_PKG_URL=https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/
+
+RUN wget -nv --content-disposition ${RMR_PKG_URL}/rmr_${RMR_VER}_amd64.deb/download.deb
+RUN wget -nv --content-disposition ${RMR_PKG_URL}/rmr-dev_${RMR_VER}_amd64.deb/download.deb
+RUN    dpkg -i rmr_${RMR_VER}_amd64.deb  \
+        && dpkg -i rmr-dev_${RMR_VER}_amd64.deb \
+        && ldconfig
 
 #
 # a1-mediator
