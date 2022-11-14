@@ -39,6 +39,30 @@
       },
       "revId": "44278043c518036f8b4bc299f4e61f91a9a97299",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b772f53d_f983a827",
+        "filename": "a1-go/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-11-14T07:26:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4c38ae6_177bcce5",
+      "range": {
+        "startLine": 17,
+        "startChar": 40,
+        "endLine": 17,
+        "endChar": 64
+      },
+      "revId": "44278043c518036f8b4bc299f4e61f91a9a97299",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
