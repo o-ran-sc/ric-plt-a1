@@ -50,6 +50,16 @@ func (r *Restful) setupHandler() *operations.A1API {
 	}
 
 	api := operations.NewA1API(swaggerSpec)
+
+	api.A1MediatorA1ControllerGetHealthcheckHandler = a1_mediator.A1ControllerGetHealthcheckHandlerFunc(func(param a1_mediator.A1ControllerGetHealthcheckParams) middleware.Responder {
+		a1.Logger.Debug("handler for get Health Check of A1")
+		resp := r.rh.GetA1Health()
+		if resp == false {
+			return a1_mediator.NewA1ControllerGetHealthcheckInternalServerError()
+		}
+		return a1_mediator.NewA1ControllerGetHealthcheckOK()
+	})
+
 	api.A1MediatorA1ControllerGetAllPolicyTypesHandler = a1_mediator.A1ControllerGetAllPolicyTypesHandlerFunc(func(param a1_mediator.A1ControllerGetAllPolicyTypesParams) middleware.Responder {
 		a1.Logger.Debug("handler for get all policy type")
 		return a1_mediator.NewA1ControllerGetAllPolicyTypesOK().WithPayload(r.rh.GetAllPolicyType())

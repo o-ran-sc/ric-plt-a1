@@ -55,3 +55,27 @@ func (o *A1ControllerGetHealthcheckOK) WriteResponse(rw http.ResponseWriter, pro
 
 	rw.WriteHeader(200)
 }
+
+// A1ControllerGetHealthcheckInternalServerErrorCode is the HTTP code returned for type A1ControllerGetHealthcheckInternalServerError
+const A1ControllerGetHealthcheckInternalServerErrorCode int = 500
+
+/*A1ControllerGetHealthcheckInternalServerError Internal error to signal A1 is not healthy. Client should attempt to retry later.
+
+swagger:response a1ControllerGetHealthcheckInternalServerError
+*/
+type A1ControllerGetHealthcheckInternalServerError struct {
+}
+
+// NewA1ControllerGetHealthcheckInternalServerError creates A1ControllerGetHealthcheckInternalServerError with default headers values
+func NewA1ControllerGetHealthcheckInternalServerError() *A1ControllerGetHealthcheckInternalServerError {
+
+	return &A1ControllerGetHealthcheckInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *A1ControllerGetHealthcheckInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
+}

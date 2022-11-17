@@ -58,6 +58,17 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
+func TestHealth(t *testing.T) {
+	resp := rh.GetA1Health()
+	if resp == true {
+		a1.Logger.Debug("A1 is healthy ")
+		assert.Equal(t, true, resp)
+	} else {
+		a1.Logger.Debug("A1 is unhealthy")
+		assert.Equal(t, false, resp)
+	}
+}
+
 func TestGetAllPolicyType(t *testing.T) {
 	resp := rh.GetAllPolicyType()
 	assert.Equal(t, 2, len(resp))
