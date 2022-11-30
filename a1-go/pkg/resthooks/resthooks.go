@@ -30,6 +30,8 @@ import (
 
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/policy"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi/operations/a1_mediator"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/rmr"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
 	"github.com/santhosh-tekuri/jsonschema/v5"
@@ -85,14 +87,19 @@ func (rh *Resthook) IsValidJson(err error) bool {
 	return err == invalidJsonSchema
 }
 func NewResthook() *Resthook {
-	return createResthook(sdlgo.NewSyncStorage(), rmr.NewRMRSender())
+	sdl := sdlgo.NewSyncStorage()
+	policyManager := policy.NewPolicyManager(sdl)
+	return createResthook(sdl, rmr.NewRMRSender(policyManager))
 }
 
 func createResthook(sdlInst iSdl, rmrSenderInst rmr.IRmrSender) *Resthook {
-	return &Resthook{
+	rh := &Resthook{
 		db:             sdlInst,
 		iRmrSenderInst: rmrSenderInst,
 	}
+
+	rh.iRmrSenderInst.RmrRecieveStart()
+	return rh
 }
 
 func (rh *Resthook) GetA1Health() bool {
