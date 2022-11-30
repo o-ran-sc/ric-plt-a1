@@ -37,7 +37,7 @@ import (
 
 func NewRestful() *Restful {
 	r := &Restful{
-		rh: resthooks.NewResthook(),
+		rh: resthooks.NewResthook(policy.NewPolicyManager()),
 	}
 	r.api = r.setupHandler()
 	return r
