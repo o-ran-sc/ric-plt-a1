@@ -26,4 +26,6 @@ type PolicyManager struct {
 }
 type iSdl interface {
 	Set(ns string, pairs ...interface{}) error
+	GetAll(string) ([]string, error)
+	Get(string, []string) (map[string]interface{}, error)
 }
