@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfadb542_0d8c5cc8",
+        "filename": "a1-go/pkg/instanceManager/instanceManager.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-11-30T11:50:13Z",
+      "side": 1,
+      "message": "remove this error log",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "9b94de177a13688ff7147710b5e8e96c93849395",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
