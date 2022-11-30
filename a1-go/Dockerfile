@@ -16,6 +16,18 @@
 
 FROM nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-ubuntu20-c-go:1.1.0 AS a1-build
 
+
+#TODO check why defualt golang is not working
+ARG GOVERSION="1.18.5"
+RUN wget -nv https://dl.google.com/go/go${GOVERSION}.linux-amd64.tar.gz \
+     && tar -xf go${GOVERSION}.linux-amd64.tar.gz \
+     && mv go /opt/go/${GOVERSION} \
+     && rm -f go*.gz
+
+
+ENV DEFAULTPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=$DEFAULTPATH:/usr/local/go/bin:/opt/go/${GOVERSION}/bin:/root/go/bin
+
 RUN apt-get update -y && apt-get install -y jq
 
 # Update CA certificates
