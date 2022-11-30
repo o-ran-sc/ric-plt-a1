@@ -22,9 +22,8 @@ package rmr
 
 import (
 	"encoding/json"
-	"strconv"
 
-	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 )
 
 type Message struct {
