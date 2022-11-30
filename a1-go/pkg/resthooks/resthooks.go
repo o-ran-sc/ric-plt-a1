@@ -89,10 +89,13 @@ func NewResthook() *Resthook {
 }
 
 func createResthook(sdlInst iSdl, rmrSenderInst rmr.IRmrSender) *Resthook {
-	return &Resthook{
+	rh := &Resthook{
 		db:             sdlInst,
 		iRmrSenderInst: rmrSenderInst,
 	}
+
+	defer rh.iRmrSenderInst.RmrMessageRecieve()
+	return rh
 }
 
 func (rh *Resthook) GetA1Health() bool {
