@@ -95,6 +95,40 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 		}
 		a1.Logger.Debug("message recieved for %d and %d with status : %s", result["policy_type_id"], result["policy_instance_id"], result["status"])
 		rmr.policyManager.SetPolicyInstanceStatus(int(result["policy_type_id"].(float64)), int(result["policy_instance_id"].(float64)), result["status"].(string))
+	case "A1_POLICY_QUERY":
+		a1.Logger.Debug("Recived policy query")
+		a1.Logger.Debug("message recieved ", msg.Payload)
+		payload := msg.Payload
+		var result map[string]interface{}
+		json.Unmarshal([]byte(payload), &result)
+		a1.Logger.Debug("message recieved : %s for %d and %d", result, result["policy_type_id"], result["policy_instance_id"])
+		policytypeid := (result["policy_type_id"].(float64))
+		instanceList, err1 := rmr.policyManager.GetAllPolicyInstance(int(policytypeid))
+		if err1 != nil {
+			a1.Logger.Error("Error : %+v", err1)
+		}
+		a1.Logger.Debug("instanceList ", instanceList)
+		a1.Logger.Debug("Received a query for a known policy type: %d", policytypeid)
+		for _, policyinstanceid := range instanceList {
+			policyinstance, err2 := rmr.policyManager.GetPolicyInstance(models.PolicyTypeID(policytypeid), policyinstanceid)
+			if err2 != nil {
+				a1.Logger.Error("Error : %+v", err2)
+			}
+			a1.Logger.Debug("policyinstance ", policyinstance.(string))
+			message := Message{}
+			rmrMessage, err1 := message.PolicyMessage(strconv.FormatInt((int64(policytypeid)), 10), string(policyinstanceid), policyinstance.(string), "CREATE")
+			if err1 != nil {
+				a1.Logger.Error("error : %v", err1)
+				return err1
+			}
+			a1.Logger.Debug("rmrMessage ", rmrMessage)
+			isSent := rmr.RmrSendToXapp(rmrMessage, a1PolicyRequest)
+			if isSent {
+				a1.Logger.Error("rmrSendToXapp : message sent")
+			} else {
+				a1.Logger.Error("rmrSendToXapp : message not sent")
+			}
+		}
 	default:
 		xapp.Logger.Error("Unknown message type '%d', discarding", msg.Mtype)
 	}
