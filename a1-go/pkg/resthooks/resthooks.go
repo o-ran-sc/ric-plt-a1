@@ -85,14 +85,18 @@ func (rh *Resthook) IsValidJson(err error) bool {
 	return err == invalidJsonSchema
 }
 func NewResthook() *Resthook {
-	return createResthook(sdlgo.NewSyncStorage(), rmr.NewRMRSender())
+	policyManager := policy.NewPolicyManager()
+	return createResthook(sdlgo.NewSyncStorage(), rmr.NewRMRSender(policyManager))
 }
 
 func createResthook(sdlInst iSdl, rmrSenderInst rmr.IRmrSender) *Resthook {
-	return &Resthook{
+	rh := &Resthook{
 		db:             sdlInst,
 		iRmrSenderInst: rmrSenderInst,
 	}
+
+	rh.iRmrSenderInst.RmrMessageRecieve()
+	return rh
 }
 
 func (rh *Resthook) GetA1Health() bool {
