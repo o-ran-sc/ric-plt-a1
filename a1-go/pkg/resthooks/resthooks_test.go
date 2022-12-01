@@ -51,9 +51,9 @@ func TestMain(m *testing.M) {
 		"a1.policy_type.20000",
 		"a1.policy_inst_metadata.1006001.qos",
 	}, nil)
-	RMRclient = new(RMRClientMock)
+	rmrSenderInst = new(RmrSenderMock)
 	a1.Init()
-	rh = createResthook(sdlInst, RMRclient)
+	rh = createResthook(sdlInst, rmrSenderInst)
 	code := m.Run()
 	os.Exit(code)
 }

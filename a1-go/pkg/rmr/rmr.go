@@ -22,7 +22,11 @@
 package rmr
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 	"strconv"
 
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
@@ -32,7 +36,14 @@ import (
 )
 
 const (
-	a1SourceName = "service-ricplt-a1mediator-http"
+	a1SourceName      = "service-ricplt-a1mediator-http"
+	a1PolicyRequest   = 20010
+	ecsServiceHost    = "http://ecs-service:8083"
+	ecsEiTypePath     = ecsServiceHost + "/A1-EI/v1/eitypes"
+	ecsEiJobPath      = ecsServiceHost + "/A1-EI/v1/eijobs/"
+	a1EiQueryAllResp  = 20014
+	a1EiCreateJobResp = 20016
+	jobCreationData   = `{"ei_job_id": %s.}`
 )
 
 type RmrSender struct {
@@ -68,6 +79,26 @@ func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
 	return rmrsender
 }
 
+var RICMessageTypes = map[string]int{
+	"A1_POLICY_REQ":         20010,
+	"A1_POLICY_RESP":        20011,
+	"A1_POLICY_QUERY":       20012,
+	"A1_EI_QUERY_ALL":       20013,
+	"AI_EI_QUERY_ALL_RESP":  20014,
+	"A1_EI_CREATE_JOB":      20015,
+	"A1_EI_CREATE_JOB_RESP": 20016,
+	"A1_EI_DATA_DELIVERY":   20017,
+}
+
+func (rmr *RmrSender) GetRicMessageName(id int) (s string) {
+	for k, v := range RICMessageTypes {
+		if id == v {
+			return k
+		}
+	}
+	return
+}
+
 func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int) bool {
 
 	params := &xapp.RMRParams{}
@@ -87,7 +118,7 @@ func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int) bool
 
 func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 	a1.Logger.Debug("In the Consume function")
-	id := xapp.Rmr.GetRicMessageName(msg.Mtype)
+	id := rmr.GetRicMessageName(msg.Mtype)
 	a1.Logger.Debug("Message received: name=%s meid=%s subId=%d txid=%s len=%d", id, msg.Meid.RanName, msg.SubId, msg.Xid, msg.PayloadLen)
 
 	switch id {
@@ -140,6 +171,86 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 				a1.Logger.Error("rmrSendToXapp : message not sent")
 			}
 		}
+
+	case "A1_EI_QUERY_ALL":
+		a1.Logger.Debug("message recieved ", msg.Payload)
+		resp, err := http.Get(ecsEiTypePath)
+		if err != nil {
+			a1.Logger.Error("Received error while fetching health info: %v", err)
+		}
+		if resp.StatusCode != http.StatusOK {
+			a1.Logger.Warning("Received no reponse from A1-EI service1")
+		}
+		a1.Logger.Debug("response from A1-EI service : ", resp)
+
+		defer resp.Body.Close()
+		respByte, err := ioutil.ReadAll(resp.Body)
+
+		if err != nil {
+			a1.Logger.Debug("error in response: %+v", respByte)
+		}
+
+		a1.Logger.Debug("response : %+v", string(respByte))
+
+		isSent := rmr.RmrSendToXapp(string(respByte), a1EiQueryAllResp)
+		if isSent {
+			a1.Logger.Debug("rmrSendToXapp : message sent")
+		} else {
+			a1.Logger.Error("rmrSendToXapp : message not sent")
+		}
+	case "A1_EI_CREATE_JOB":
+		payload := msg.Payload
+		a1.Logger.Debug("message recieved : %s", payload)
+
+		var result map[string]interface{}
+
+		err := json.Unmarshal([]byte(payload), &result)
+		if err != nil {
+			a1.Logger.Error("Unmarshal error : %+v", err)
+			return err
+		}
+		a1.Logger.Debug("Unmarshaled message recieved : %s ", result)
+
+		jobIdStr := strconv.FormatInt((int64(result["job-id"].(float64))), 10)
+		jsonReq, err := json.Marshal(result)
+		if err != nil {
+			a1.Logger.Error("marshal error : %v", err)
+			return err
+		}
+
+		a1.Logger.Debug("url to send to :", ecsEiJobPath+jobIdStr)
+		req, err := http.NewRequest(http.MethodPut, ecsEiJobPath+jobIdStr, bytes.NewBuffer(jsonReq))
+		if err != nil {
+			a1.Logger.Error("http error : %v", err)
+			return err
+		}
+
+		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		client := &http.Client{}
+		resp, err3 := client.Do(req)
+		if err3 != nil {
+			a1.Logger.Error("error:", err3)
+			return err
+		}
+
+		defer resp.Body.Close()
+
+		a1.Logger.Debug("response status : ", resp.StatusCode)
+		if resp.StatusCode == 200 || resp.StatusCode == 201 {
+			a1.Logger.Debug("received successful response for ei-job-id : ", jobIdStr)
+			rmrData := fmt.Sprintf(jobCreationData, jobIdStr)
+			a1.Logger.Debug("rmr_Data to send: ", rmrData)
+
+			isSent := rmr.RmrSendToXapp(rmrData, a1EiCreateJobResp)
+			if isSent {
+				a1.Logger.Debug("rmrSendToXapp : message sent")
+			} else {
+				a1.Logger.Error("rmrSendToXapp : message not sent")
+			}
+		} else {
+			a1.Logger.Warning("failed to create EIJOB ")
+		}
+
 	default:
 		xapp.Logger.Error("Unknown message type '%d', discarding", msg.Mtype)
 	}
