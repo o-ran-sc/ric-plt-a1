@@ -40,9 +40,10 @@ require (
 	github.com/go-openapi/swag v0.19.12
 	github.com/go-openapi/validate v0.19.15
 	github.com/jessevdk/go-flags v1.5.0
+	github.com/santhosh-tekuri/jsonschema/v5 v5.1.0
 	github.com/stretchr/testify v1.6.1
-	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
+	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/utils v0.0.0-20210930125809-cb0fa318a74b // indirect
 
 )
