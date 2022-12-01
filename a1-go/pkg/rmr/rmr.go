@@ -24,10 +24,16 @@ package rmr
 import (
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
+	"io/ioutil"
+	"net/http"
 )
 
 const (
-	a1SourceName = "service-ricplt-a1mediator-http"
+	a1SourceName     = "service-ricplt-a1mediator-http"
+	a1PolicyRequest  = 20010
+	ecsServiceHost   = "http://ecs-service:8083"
+	ecsEiTypePath    = ecsServiceHost + "/A1-EI/v1/eitypes"
+	a1EiQueryAllResp = 20014
 )
 
 type RmrSender struct {
@@ -36,7 +42,7 @@ type RmrSender struct {
 }
 
 type IRmrSender interface {
-	RmrSendToXapp(httpBodyString string, messagetype int) bool
+	RmrSendToXapp(httpBodyString string, messagetype int, isrts bool) bool
 	RmrRecieveStart()
 }
 
@@ -60,7 +66,27 @@ func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
 	}
 }
 
-func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int) bool {
+var RICMessageTypes = map[string]int{
+	"A1_POLICY_REQ":         20010,
+	"A1_POLICY_RESP":        20011,
+	"A1_POLICY_QUERY":       20012,
+	"A1_EI_QUERY_ALL":       20013,
+	"AI_EI_QUERY_ALL_RESP":  20014,
+	"A1_EI_CREATE_JOB":      20015,
+	"A1_EI_CREATE_JOB_RESP": 20016,
+	"A1_EI_DATA_DELIVERY":   20017,
+}
+
+func (rmr *RmrSender) GetRicMessageName(id int) (s string) {
+	for k, v := range RICMessageTypes {
+		if id == v {
+			return k
+		}
+	}
+	return
+}
+
+func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int, isrts bool) bool {
 
 	params := &xapp.RMRParams{}
 	params.Mtype = messagetype
@@ -72,14 +98,19 @@ func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int) bool
 	params.Payload = []byte(httpBodyString)
 	a1.Logger.Debug("MSG to XAPP: %s ", params.String())
 	a1.Logger.Debug("len payload %+v", len(params.Payload))
-	s := rmr.rmrclient.SendMsg(params)
+	var s bool
+	if !isrts {
+		s = rmr.rmrclient.SendMsg(params)
+	} else {
+		s = rmr.rmrclient.SendRts(params)
+	}
 	a1.Logger.Debug("rmrSendToXapp: sending: %+v", s)
 	return s
 }
 
 func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 	a1.Logger.Debug("In the Consume function")
-	id := xapp.Rmr.GetRicMessageName(msg.Mtype)
+	id := rmr.GetRicMessageName(msg.Mtype)
 	a1.Logger.Debug("Message received: name=%s meid=%s subId=%d txid=%s len=%d", id, msg.Meid.RanName, msg.SubId, msg.Xid, msg.PayloadLen)
 
 	switch id {
@@ -122,12 +153,39 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 				return err1
 			}
 			a1.Logger.Debug("rmrMessage ", rmrMessage)
-			isSent := rmr.RmrSendToXapp(rmrMessage, a1PolicyRequest)
+			isSent := rmr.RmrSendToXapp(rmrMessage, a1PolicyRequest, true)
 			if isSent {
 				a1.Logger.Error("rmrSendToXapp : message sent")
 			} else {
 				a1.Logger.Error("rmrSendToXapp : message not sent")
 			}
+		}
+
+	case "A1_EI_QUERY_ALL":
+		a1.Logger.Debug("message recieved ", msg.Payload)
+		resp, err := http.Get(ecsEiTypePath)
+		if err != nil {
+			a1.Logger.Error("Received error while fetching health info: %v", err)
+		}
+		if resp.StatusCode != http.StatusOK {
+			a1.Logger.Warning("Received no reponse from A1-EI service1")
+		}
+		a1.Logger.Debug("response from A1-EI service : ", resp)
+
+		defer resp.Body.Close()
+		respByte, err := ioutil.ReadAll(resp.Body)
+
+		if err != nil {
+			a1.Logger.Debug("error in response: %+v", respByte)
+		}
+
+		a1.Logger.Debug("response : %+v", string(respByte))
+
+		isSent := rmr.RmrSendToXapp(string(respByte), a1EiQueryAllResp, true)
+		if isSent {
+			a1.Logger.Debug("rmrSendToXapp : message sent")
+		} else {
+			a1.Logger.Error("rmrSendToXapp : message not sent")
 		}
 	default:
 		xapp.Logger.Error("Unknown message type '%d', discarding", msg.Mtype)

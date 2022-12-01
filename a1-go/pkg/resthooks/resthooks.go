@@ -398,7 +398,7 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 			a1.Logger.Error("error : %v", err)
 			return err
 		}
-		isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1PolicyRequest)
+		isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1PolicyRequest, false)
 		if isSent {
 			a1.Logger.Debug("rmrSendToXapp : message sent")
 		} else {
@@ -687,7 +687,7 @@ func (rh *Resthook) DeletePolicyInstance(policyTypeId models.PolicyTypeID, polic
 		a1.Logger.Error("error : %v", err)
 		return err
 	}
-	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1PolicyRequest)
+	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1PolicyRequest, false)
 	if isSent {
 		a1.Logger.Debug("rmrSendToXapp : message sent")
 	} else {
@@ -708,7 +708,7 @@ func (rh *Resthook) DataDelivery(httpBody interface{}) error {
 		return err
 	}
 	a1.Logger.Debug("rmrSendToXapp :rmrMessage %+v", rmrMessage)
-	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1EIDataDelivery)
+	isSent := rh.iRmrSenderInst.RmrSendToXapp(rmrMessage, a1EIDataDelivery, false)
 	if isSent {
 		a1.Logger.Debug("rmrSendToXapp : message sent")
 	} else {

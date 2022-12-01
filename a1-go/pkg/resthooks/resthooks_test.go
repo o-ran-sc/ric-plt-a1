@@ -382,12 +382,12 @@ func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bo
 	return args.Bool(0), args.Error(1)
 }
 
-func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string, mtype int) bool {
+func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string, mtype int, isrts bool) bool {
 	if httpBodyString == `{"blocking_rate":20,"enforce":true,"trigger_threshold":10,"window_length":20}` {
-		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype)
+		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype, false)
 		return args.Bool(0)
 	} else if httpBodyString == `{"ei_job_id":"1","payload":"payload"}` {
-		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype)
+		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype, false)
 		return args.Bool(0)
 	}
 	return true
