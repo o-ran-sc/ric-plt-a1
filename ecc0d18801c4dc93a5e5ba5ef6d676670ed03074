@@ -24,6 +24,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "091ab8ca_23b62145",
+        "filename": "a1-go/pkg/policyManager/policyManager.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81db41b0_9fa8a843",
+      "range": {
+        "startLine": 82,
+        "startChar": 1,
+        "endLine": 84,
+        "endChar": 2
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdee9bdd_8e4cab08",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-01T17:13:43Z",
       "side": 1,
       "message": "do we need to send \"{}\" string alongwith error ?",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3534d38f_522c560f",
+        "filename": "a1-go/pkg/policyManager/policyManager.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fdee9bdd_8e4cab08",
       "range": {
         "startLine": 103,
         "startChar": 9,
@@ -70,6 +118,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63ebfbc1_c961a7a4",
+        "filename": "a1-go/pkg/policyManager/policyManager.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b1748d1_2a2f905c",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7085a668_474328b5",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-12-01T17:13:43Z",
       "side": 1,
       "message": "do we need to send \"{}\" string alongwith error ?",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 38
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12a3022b_75e15652",
+        "filename": "a1-go/pkg/policyManager/policyManager.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7085a668_474328b5",
       "range": {
         "startLine": 113,
         "startChar": 2,
@@ -116,6 +212,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f395caa_3a27a8f9",
+        "filename": "a1-go/pkg/policyManager/policyManager.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa1ccbd2_bd0dadf2",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 52
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1a83ee3_9631c23d",
@@ -139,6 +259,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c1c32db_c97b4170",
+        "filename": "a1-go/pkg/policyManager/policyManager.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1a83ee3_9631c23d",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 13
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7865d241_e82f8f04",
@@ -152,6 +296,30 @@
       "writtenOn": "2022-12-01T17:13:43Z",
       "side": 1,
       "message": "should we continue after error ?",
+      "range": {
+        "startLine": 108,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8f315d7_1e374c1d",
+        "filename": "a1-go/pkg/rmr/rmr.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7865d241_e82f8f04",
       "range": {
         "startLine": 108,
         "startChar": 3,
@@ -187,6 +355,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abca2b0e_93caf3dd",
+        "filename": "a1-go/pkg/rmr/rmr.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "as discussed policy manager instance is part of rmrsender struct so it has to be there",
+      "parentUuid": "d566b740_f1f5c26f",
+      "range": {
+        "startLine": 113,
+        "startChar": 27,
+        "endLine": 113,
+        "endChar": 44
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9cdc54f_f8250b53",
         "filename": "a1-go/pkg/rmr/rmr.go",
         "patchSetId": 5
@@ -198,6 +390,30 @@
       "writtenOn": "2022-12-01T17:13:43Z",
       "side": 1,
       "message": "should we continue after error ?",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 40
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf756f22_d7deeb04",
+        "filename": "a1-go/pkg/rmr/rmr.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f9cdc54f_f8250b53",
       "range": {
         "startLine": 115,
         "startChar": 4,
@@ -221,6 +437,30 @@
       "writtenOn": "2022-12-01T17:13:43Z",
       "side": 1,
       "message": "this should not be error log",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "ecc0d18801c4dc93a5e5ba5ef6d676670ed03074",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a53b4b_4e4178d4",
+        "filename": "a1-go/pkg/rmr/rmr.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-04T08:32:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21f33854_f9809ab1",
       "range": {
         "startLine": 127,
         "startChar": 4,
