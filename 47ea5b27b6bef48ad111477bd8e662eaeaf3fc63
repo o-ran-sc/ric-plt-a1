@@ -22,6 +22,30 @@
       },
       "revId": "47ea5b27b6bef48ad111477bd8e662eaeaf3fc63",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebe0ddaa_8fc5fde4",
+        "filename": "a1-go/pkg/rmr/rmr.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-05T07:50:58Z",
+      "side": 1,
+      "message": "true for sending response rmr message.",
+      "parentUuid": "c8cf5f00_e82d95c1",
+      "range": {
+        "startLine": 243,
+        "startChar": 59,
+        "endLine": 243,
+        "endChar": 63
+      },
+      "revId": "47ea5b27b6bef48ad111477bd8e662eaeaf3fc63",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
