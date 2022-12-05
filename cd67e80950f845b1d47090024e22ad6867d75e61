@@ -95,6 +95,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5ddcf5b_1ad12afc",
+        "filename": "a1-go/pkg/rmr/rmr.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-05T06:58:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "988c848a_45000bf9",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "cd67e80950f845b1d47090024e22ad6867d75e61",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "382edf65_4336eea2",
