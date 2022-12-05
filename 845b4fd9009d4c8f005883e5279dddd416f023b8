@@ -22,6 +22,30 @@
       },
       "revId": "845b4fd9009d4c8f005883e5279dddd416f023b8",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "043fb805_a0721f54",
+        "filename": "a1-go/pkg/rmr/rmr.go",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-05T07:58:12Z",
+      "side": 1,
+      "message": "yes , the interface should rather be just Rmr",
+      "parentUuid": "9a698448_12a7112a",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 43,
+        "endChar": 18
+      },
+      "revId": "845b4fd9009d4c8f005883e5279dddd416f023b8",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
