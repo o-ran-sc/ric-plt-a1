@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cd35c63_e7ec21bb",
+        "filename": "a1-go/pkg/policy/policyManager.go",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-05T08:55:34Z",
+      "side": 1,
+      "message": "Do you think we should have test cases for all these functionalities.",
+      "revId": "d93d97515c4546f4f5b0865346ba94caca968eae",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
