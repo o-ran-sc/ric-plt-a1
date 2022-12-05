@@ -22,6 +22,30 @@
       },
       "revId": "309348ac1f1fca5f804ed83925c58729a3501037",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db372aa3_f6e0dc4b",
+        "filename": "a1-go/pkg/resthooks/resthooks_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-05T09:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e1cf208_ad2a00fa",
+      "range": {
+        "startLine": 385,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 12
+      },
+      "revId": "309348ac1f1fca5f804ed83925c58729a3501037",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
