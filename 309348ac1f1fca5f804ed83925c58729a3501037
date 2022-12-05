@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e1cf208_ad2a00fa",
+        "filename": "a1-go/pkg/resthooks/resthooks_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-05T08:55:42Z",
+      "side": 1,
+      "message": "this mock is not injected and not used inside resthook.",
+      "range": {
+        "startLine": 385,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 12
+      },
+      "revId": "309348ac1f1fca5f804ed83925c58729a3501037",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
