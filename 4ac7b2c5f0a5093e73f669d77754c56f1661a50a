@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89c92ba4_ca4c665d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-06T06:10:28Z",
+      "side": 1,
+      "message": "this patch is empty ",
+      "revId": "4ac7b2c5f0a5093e73f669d77754c56f1661a50a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
