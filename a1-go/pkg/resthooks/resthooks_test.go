@@ -324,6 +324,31 @@ func TestDataDelivery(t *testing.T) {
 	sdlInst.AssertExpectations(t)
 }
 
+func TestGetMetaData(t *testing.T) {
+	var policyTypeId models.PolicyTypeID
+	policyTypeId = 20001
+	var policyInstanceID models.PolicyInstanceID
+	policyInstanceID = "123456"
+	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	a1.Logger.Debug("key : %+v", instanceMetadataKey)
+
+	var keys [1]string
+	keys[0] = instanceMetadataKey
+
+	policySchemaString := `{
+		"created_at":"2022-11-02 10:30:20",
+		"instance_status":"NOT IN EFFECT"
+		}`
+
+	sdlInst.On("Get", a1MediatorNs, keys[:]).Return(map[string]interface{}{instanceMetadataKey: policySchemaString}, nil)
+
+	resp, errresp := rh.getMetaData(policyTypeId, policyInstanceID)
+
+	assert.Nil(t, errresp)
+	assert.NotNil(t, resp)
+	sdlInst.AssertExpectations(t)
+}
+
 type SdlMock struct {
 	mock.Mock
 }
