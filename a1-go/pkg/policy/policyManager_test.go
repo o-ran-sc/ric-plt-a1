@@ -1,3 +1,24 @@
+/*
+==================================================================================
+  Copyright (c) 2022 Samsung
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   This source code is part of the near-RT RIC (RAN Intelligent Controller)
+   platform project (RICP).
+==================================================================================
+*/
+
 package policy
 
 import (
@@ -36,8 +57,22 @@ func TestSetPolicyInstance(t *testing.T) {
 	sdlInst.On("Set", "A1m_ns", instancehandlerKey, instancearr).Return(nil)
 	errresp := pm.SetPolicyInstanceStatus(policyTypeId, policyInstanceID, status)
 	assert.NoError(t, errresp)
-
 	sdlInst.AssertExpectations(t)
+}
+
+func TestGetAllPolicyIntances(t *testing.T) {
+	var policyTypeId int
+	policyTypeId = 20005
+	sdlInst.On("GetAll", "A1m_ns").Return([]string{"a1.policy_instance.1006001.qos",
+		"a1.policy_instance.20005.123456",
+		"a1.policy_instance.20005.234567",
+		"a1.policy_type.1006001",
+		"a1.policy_type.20000",
+		"a1.policy_inst_metadata.1006001.qos",
+	}, nil)
+	resp, err := pm.GetAllPolicyInstance(policyTypeId)
+	assert.NoError(t, err)
+	assert.Equal(t, 2, len(resp))
 }
 
 func (s *SdlMock) Set(ns string, pairs ...interface{}) error {
