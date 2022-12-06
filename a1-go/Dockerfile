@@ -77,6 +77,7 @@ RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go
 # Run unit tests
 RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go test -p 1 -cover ./pkg/resthooks/
 RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go test -p 1 -cover ./pkg/a1/
+RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go test -p 1 -cover ./pkg/policyManager
 
 RUN gofmt -l $(find cmd/ pkg/  -name '*.go' -not -name '*_test.go')
 
