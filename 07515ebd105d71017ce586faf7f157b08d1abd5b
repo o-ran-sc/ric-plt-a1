@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24d9675b_c99eba36",
+        "filename": "a1-go/go.mod",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-06T06:09:10Z",
+      "side": 1,
+      "message": "why this import is introduced , I did not see use of yaml or jsonschema in this patch",
+      "range": {
+        "startLine": 46,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 24
+      },
+      "revId": "07515ebd105d71017ce586faf7f157b08d1abd5b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
