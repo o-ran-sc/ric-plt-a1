@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d429155_c46b0dc2",
+        "filename": "a1-go/pkg/policy/policyManager_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-07T06:14:03Z",
+      "side": 1,
+      "message": "remove commented line",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "1001364dd39e264746c48962defc8f23b52d4cfc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "542b1078_f7291fee",
+        "filename": "a1-go/pkg/policy/policyManager_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-07T06:14:03Z",
+      "side": 1,
+      "message": "why error is invoked not the Get()",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "1001364dd39e264746c48962defc8f23b52d4cfc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c65653_0e7a326f",
+        "filename": "a1-go/pkg/policy/policyManager_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-07T06:14:03Z",
+      "side": 1,
+      "message": "this  two mocks are not used and not set for On() on the mock object.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "1001364dd39e264746c48962defc8f23b52d4cfc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
