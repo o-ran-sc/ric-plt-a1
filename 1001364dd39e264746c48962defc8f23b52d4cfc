@@ -95,6 +95,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "537c8fa8_132f295e",
+        "filename": "a1-go/pkg/policy/policyManager_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-07T08:51:12Z",
+      "side": 1,
+      "message": "okay it only returns error. ok",
+      "parentUuid": "8952db48_3da6a079",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "1001364dd39e264746c48962defc8f23b52d4cfc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3c65653_0e7a326f",
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "These are dummy implementation in order to use mock object SDLInstance",
       "parentUuid": "f3c65653_0e7a326f",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "1001364dd39e264746c48962defc8f23b52d4cfc",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3914c473_ef1c1018",
+        "filename": "a1-go/pkg/policy/policyManager_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-07T08:51:12Z",
+      "side": 1,
+      "message": "I would suggest push these methods when needed.",
+      "parentUuid": "9873f1bb_7b71de87",
       "range": {
         "startLine": 49,
         "startChar": 0,
