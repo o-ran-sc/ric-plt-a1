@@ -63,13 +63,12 @@ RUN GO111MODULE=on go mod download
 
 # build and test
 COPY . /go/src/ws
+COPY  ./config/config.yaml /opt/a1-mediator/
+COPY  ./config/config_rmr.json /opt/a1-mediator/
 
-COPY  ./config/uta_rtg.rt /opt/a1-mediator/
+ENV CFG_FILE=/opt/a1-mediator/config-_rmr.json
+ENV A1_CONFIG_FILE=/opt/a1-mediator/config.yaml
 
-ENV RMR_RTG_SVC=-1
-ENV RMR_LOG_VLEVEL=5
-ENV CFG_FILE=/opt/a1-mediator/config-file.json
-ENV RMR_SEED_RT=/opt/a1-mediator/uta_rtg.rt
 
 # Build the code
 RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/src/ws/cache/go/cmd/a1 cmd/a1.go
@@ -77,7 +76,7 @@ RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go
 # Run unit tests
 RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go test -p 1 -cover ./pkg/resthooks/
 RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go test -p 1 -cover ./pkg/a1/
-RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go test -p 1 -cover ./pkg/policyManager
+RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go test -p 1 -cover ./pkg/policy
 
 RUN gofmt -l $(find cmd/ pkg/  -name '*.go' -not -name '*_test.go')
 
@@ -110,7 +109,13 @@ RUN mkdir -p /opt/a1-mediator \
 
 COPY --from=a1-build /go/src/ws/cache/go/cmd/a1 /opt/a1-mediator/a1
 
+COPY  ./config/config.yaml /opt/a1-mediator/
+COPY  ./config/config_rmr.json /opt/a1-mediator/
+
 WORKDIR /opt/a1-mediator
+
+ENV CFG_FILE=/opt/a1-mediator/config-_rmr.json
+ENV A1_CONFIG_FILE=/opt/a1-mediator/config.yaml
 
 COPY a1-entrypoint.sh /opt/a1-mediator/
 ENTRYPOINT ["/opt/a1-mediator/a1-entrypoint.sh"]
