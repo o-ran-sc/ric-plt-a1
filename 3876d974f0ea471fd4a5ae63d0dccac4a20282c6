@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b7142cf_196379ac",
+        "filename": "a1-go/pkg/policy/policyManager_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-07T06:17:08Z",
+      "side": 1,
+      "message": "why logger is used in test case.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "3876d974f0ea471fd4a5ae63d0dccac4a20282c6",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
