@@ -264,6 +264,6 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 
 func (rmr *RmrSender) RmrRecieveStart() {
 	a1.Logger.Debug("Inside RmrRecieveStart function ")
-	rmr.rmrclient.Start(rmr)
+	go rmr.rmrclient.Start(rmr)
 	a1.Logger.Debug("Reciever started")
 }

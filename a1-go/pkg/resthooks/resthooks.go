@@ -530,6 +530,7 @@ func (rh *Resthook) typeValidity(policyTypeId models.PolicyTypeID) error {
 		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
 		return policyTypeNotFoundError
 	}
+	return nil
 }
 
 func (rh *Resthook) instanceValidity(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) error {
@@ -546,6 +547,7 @@ func (rh *Resthook) instanceValidity(policyTypeId models.PolicyTypeID, policyIns
 		a1.Logger.Debug("policy instance Not Present  ")
 		return policyInstanceNotFoundError
 	}
+	return nil
 }
 
 func (rh *Resthook) getMetaData(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (map[string]interface{}, error) {
@@ -567,11 +569,11 @@ func (rh *Resthook) getMetaData(policyTypeId models.PolicyTypeID, policyInstance
 
 func (rh *Resthook) GetPolicyInstanceStatus(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (*a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody, error) {
 	err := rh.instanceValidity(policyTypeId, policyInstanceID)
+	policyInstanceStatus := a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody{}
 	if err != nil && err == policyInstanceNotFoundError || err == policyTypeNotFoundError {
 		policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
 		return &policyInstanceStatus, err
 	}
-	policyInstanceStatus := a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody{}
 	metadata, err := rh.getMetaData(policyTypeId, policyInstanceID)
 	a1.Logger.Debug(" metadata %v", metadata)
 	if err != nil {

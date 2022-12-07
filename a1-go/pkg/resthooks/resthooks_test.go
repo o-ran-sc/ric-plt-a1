@@ -230,8 +230,9 @@ func TestGetPolicyInstanceStatus(t *testing.T) {
 	keys[0] = instancekey
 	sdlInst.On("Get", a1MediatorNs, keys[:]).Return(httpBody)
 
-	resp := rh.GetPolicyInstanceStatus(policyTypeId, policyInstanceID)
+	resp, errresp := rh.GetPolicyInstanceStatus(policyTypeId, policyInstanceID)
 
+	assert.Nil(t, errresp)
 	assert.NotNil(t, resp)
 	sdlInst.AssertExpectations(t)
 }
