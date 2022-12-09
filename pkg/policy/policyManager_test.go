@@ -54,7 +54,7 @@ func TestSetPolicyInstance(t *testing.T) {
 	status = "OK"
 	instancehandlerKey := a1HandlerPrefix + strconv.FormatInt(20001, 10) + "." + strconv.FormatInt(int64(policyInstanceID), 10)
 	instancearr := []interface{}{instancehandlerKey, status}
-	sdlInst.On("Set", "A1m_ns", instancehandlerKey, instancearr).Return(nil)
+	sdlInst.On("Set", "A1m_ns", instancearr).Return(nil)
 	errresp := pm.SetPolicyInstanceStatus(policyTypeId, policyInstanceID, status)
 	assert.NoError(t, errresp)
 	sdlInst.AssertExpectations(t)

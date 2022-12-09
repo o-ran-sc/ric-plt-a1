@@ -64,9 +64,8 @@ RUN GO111MODULE=on go mod download
 # build and test
 COPY . /go/src/ws
 COPY  ./config/config_test.yaml /opt/a1-mediator/
-COPY  ./config/config_rmr.json /opt/a1-mediator/
 
-ENV CFG_FILE=/opt/a1-mediator/config-_rmr.json
+ENV CFG_FILE=/opt/a1-mediator/config.yaml
 ENV A1_CONFIG_FILE=/opt/a1-mediator/config_test.yaml
 
 
@@ -110,11 +109,10 @@ RUN mkdir -p /opt/a1-mediator \
 COPY --from=a1-build /go/src/ws/cache/go/cmd/a1 /opt/a1-mediator/a1
 
 COPY  ./config/config.yaml /opt/a1-mediator/
-COPY  ./config/config_rmr.json /opt/a1-mediator/
 
 WORKDIR /opt/a1-mediator
 
-ARG RMR_CONFIG=/opt/a1-mediator/config-_rmr.json
+ARG RMR_CONFIG=/opt/a1-mediator/config.yaml
 ENV CFG_FILE=$RMR_CONFIG
 ARG A1_CONFIG=/opt/a1-mediator/config.yaml
 ENV A1_CONFIG_FILE=$A1_CONFIG
