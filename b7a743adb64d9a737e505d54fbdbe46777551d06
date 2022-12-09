@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ca2fddc_65081e8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-09T06:14:12Z",
+      "side": 1,
+      "message": "New Jenkins job yet to configured : https://gerrit.o-ran-sc.org/r/c/ci-management/+/10028",
+      "revId": "b7a743adb64d9a737e505d54fbdbe46777551d06",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
