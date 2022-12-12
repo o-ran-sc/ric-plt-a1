@@ -24,6 +24,30 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "821cf37b_4e9562a7",
+        "filename": "Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-12T14:28:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa0d42df_4b014197",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "821bd404f52aa12270dbe4920e8083540462efc2",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd85b490_c03ed3c6",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-12T07:50:26Z",
       "side": 1,
       "message": "there is no such file copied to this container.",
+      "range": {
+        "startLine": 115,
+        "startChar": 32,
+        "endLine": 115,
+        "endChar": 48
+      },
+      "revId": "821bd404f52aa12270dbe4920e8083540462efc2",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36640cdc_94c9fa70",
+        "filename": "Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2022-12-12T14:28:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd85b490_c03ed3c6",
       "range": {
         "startLine": 115,
         "startChar": 32,
