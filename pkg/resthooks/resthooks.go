@@ -414,7 +414,7 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	return nil
 }
 
-func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (interface{}, error) {
+func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (map[string]interface{}, error) {
 	a1.Logger.Debug("GetPolicyInstance1")
 
 	var keys [1]string
@@ -427,17 +427,17 @@ func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyIn
 	valmap, err := rh.db.Get(a1MediatorNs, keys[:])
 	if len(valmap) == 0 {
 		a1.Logger.Debug("policy type Not Present for policyid : %v", policyTypeId)
-		return "{}", policyTypeNotFoundError
+		return map[string]interface{}{}, policyTypeNotFoundError
 	}
 
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy type. err: %v", err)
-		return "{}", err
+		return map[string]interface{}{}, err
 	}
 
 	if valmap[typekey] == nil {
 		a1.Logger.Debug("policy type Not Present for policyid : %v", policyTypeId)
-		return "{}", policyTypeNotFoundError
+		return map[string]interface{}{}, policyTypeNotFoundError
 	}
 
 	a1.Logger.Debug("keysmap : %+v", valmap[typekey])
@@ -453,10 +453,15 @@ func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyIn
 
 	if instanceMap[instancekey] == nil {
 		a1.Logger.Debug("policy instance Not Present for policyinstaneid : %v", policyInstanceID)
-		return "{}", policyInstanceNotFoundError
+		return map[string]interface{}{}, policyInstanceNotFoundError
 	}
 
-	valStr := fmt.Sprint(instanceMap[instancekey])
+	var valStr map[string]interface{}
+	err = json.Unmarshal([]byte(instanceMap[instancekey].(string)), &valStr)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	fmt.Println(valStr)
 	return valStr, nil
 }
 
@@ -543,7 +548,7 @@ func (rh *Resthook) instanceValidity(policyTypeId models.PolicyTypeID, policyIns
 		a1.Logger.Error("policy instance error : %v", err)
 		return err
 	}
-	if len(policyTypeInstances.(string)) == 0 {
+	if policyTypeInstances == nil {
 		a1.Logger.Debug("policy instance Not Present  ")
 		return policyInstanceNotFoundError
 	}
