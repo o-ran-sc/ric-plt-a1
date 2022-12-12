@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa0d42df_4b014197",
+        "filename": "Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-12T07:50:26Z",
+      "side": 1,
+      "message": "there is no such file copied to this container.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "821bd404f52aa12270dbe4920e8083540462efc2",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd85b490_c03ed3c6",
+        "filename": "Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-12T07:50:26Z",
+      "side": 1,
+      "message": "there is no such file copied to this container.",
+      "range": {
+        "startLine": 115,
+        "startChar": 32,
+        "endLine": 115,
+        "endChar": 48
+      },
+      "revId": "821bd404f52aa12270dbe4920e8083540462efc2",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
