@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a38e1e9_ebb30e2c",
+        "filename": "docs/installation-guide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-12T18:08:25Z",
+      "side": 1,
+      "message": "is this constants are applicable",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "1e3bcd297cd30804db3079849d6746f823672f10",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4cb1a04_ee65e18e",
+        "filename": "docs/installation-guide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-12T18:08:25Z",
+      "side": 1,
+      "message": "please confirm once if golang version also expose this URL for UI",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "1e3bcd297cd30804db3079849d6746f823672f10",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "749cd3cf_6129720d",
+        "filename": "docs/release-notes.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-12T18:08:25Z",
+      "side": 1,
+      "message": "you can have release note for latest a1 mediator.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "1e3bcd297cd30804db3079849d6746f823672f10",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
