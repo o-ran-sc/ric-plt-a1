@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31ecea1b_10f508c2",
+        "filename": "pkg/resthooks/resthooks.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-12T18:08:17Z",
+      "side": 1,
+      "message": "Do you want to provide test case for these changes",
+      "range": {
+        "startLine": 417,
+        "startChar": 114,
+        "endLine": 417,
+        "endChar": 137
+      },
+      "revId": "bc5118c8a957ee6ed06e6a9cc481b850966dab9a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
