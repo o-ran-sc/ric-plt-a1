@@ -92,8 +92,250 @@ Northbound API Specification
 
 This section shows the Open API specification for the A1 Mediator's
 northbound interface, which accepts policy type and policy instance requests.
-Alternately, if you have checked out the code and are running the server,
-you can see a formatted version at this URL: ``http://localhost:10000/ui/``.
+Following are the api and the response::
+
+#. Healthcheck:
+
+    curl -v -X GET "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/healthcheck"
+.. code-block:: yaml  
+
+    < HTTP/1.1 200 OK
+
+#. Get all policy types
+    curl -X GET "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/"
+.. code-block:: yaml
+
+    [20001,5003,21001,21000,21002]
+
+
+#. Get Policy Type based on policyid
+
+    curl -s -X GET "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/20001" | jq .
+.. code-block:: yaml
+
+    {
+      "create_schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "properties": {
+          "additionalProperties": false,
+          "blocking_rate": {
+            "default": 10,
+            "description": "% Connections to block",
+            "maximum": 1001,
+            "minimum": 1,
+            "type": "number"
+          },
+          "enforce": {
+            "default": "true",
+            "type": "boolean"
+          },
+          "window_length": {
+            "default": 1,
+            "description": "Sliding window length (in minutes)",
+            "maximum": 60,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "description": "various parameters to control admission of dual connection",
+      "name": "admission_control_policy_mine",
+      "policy_type_id": 20001
+    }
+
+
+#. Get all policy instances for a given policy type
+
+    curl -s -X GET "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/20001/policies/" | jq .
+.. code-block:: yaml
+  
+    [
+      "1234",
+      "1235"
+    ]
+
+#. Get policy instance for a policy id and policy instance id
+
+    curl -s -X GET "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/20001/policies/1234" | jq .
+.. code-block:: yaml
+
+    {
+      "blocking_rate": 20,
+      "enforce": true,
+      "trigger_threshold": 20,
+      "window_length": 20
+    }
+
+#. Create Policy type
+
+    curl -X PUT "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/21003/" -H "Content-Type: application/json" -d @policy_schema_ratecontrol.json
+
+
+    cat policy_schema_ratecontrol.json
+.. code-block:: yaml
+
+    "name": "Policy for Rate Control",
+      "policy_type_id":21003,
+      "description":"This policy is associated with rate control. Entities which support this policy type must accept the following policy inputs (see the payload for more specifics) : class, which represents the class of traffic for which the policy is being enforced",
+
+      "create_schema":{
+          "$schema":"http://json-schema.org/draft-07/schema#",
+          "type":"object",
+          "additionalProperties":false,
+          "required":["class"],
+          "properties":{
+              "class":{
+                  "type":"integer",
+                  "minimum":1,
+                  "maximum":256,
+                  "description":"integer id representing class to which we are applying policy"
+              },
+              "enforce":{
+                  "type":"boolean",
+                  "description": "Whether to enable or disable enforcement of policy on this class"
+              },
+              "window_length":{
+                  "type":"integer",
+                  "minimum":15,
+                  "maximum":300,
+                  "description":"Sliding window length in seconds"
+              },
+              "trigger_threshold":{
+                  "type":"integer",
+                  "minimum":1
+              },
+              "blocking_rate":{
+                  "type":"number",
+                  "minimum":0,
+                  "maximum":100
+              }
+
+          }
+      },
+
+      "downstream_schema":{
+          "type":"object",
+          "additionalProperties":false,
+          "required":["policy_type_id", "policy_instance_id", "operation"],
+          "properties":{
+              "policy_type_id":{
+                  "type":"integer",
+                  "enum":[21000]
+              },
+              "policy_instance_id":{
+                  "type":"string"
+              },
+              "operation":{
+                  "type":"string",
+                  "enum":["CREATE", "UPDATE", "DELETE"]
+              },
+              "payload":{
+                  "$schema":"http://json-schema.org/draft-07/schema#",
+                  "type":"object",
+                  "additionalProperties":false,
+                  "required":["class"],
+                  "properties":{
+                      "class":{
+                          "type":"integer",
+                          "minimum":1,
+                          "maximum":256,
+                          "description":"integer id representing class to which we are applying policy"
+                      },
+                      "enforce":{
+                          "type":"boolean",
+                          "description": "Whether to enable or disable enforcement of policy on this class"
+                      },
+                      "window_length":{
+                          "type":"integer",
+                          "minimum":15,
+                          "maximum":300,
+                          "description":"Sliding window length in seconds"
+                      },
+                      "trigger_threshold":{
+                          "type":"integer",
+                          "minimum":1
+                      },
+                      "blocking_rate":{
+                          "type":"number",
+                          "minimum":0,
+                          "maximum":100
+                      }
+
+
+                  }
+              }
+          }
+      },
+      "notify_schema":{
+          "type":"object",
+          "additionalProperties":false,
+          "required":["policy_type_id", "policy_instance_id", "handler_id", "status"],
+          "properties":{
+              "policy_type_id":{
+                  "type":"integer",
+                  "enum":[21000]
+              },
+              "policy_instance_id":{
+                  "type":"string"
+              },
+              "handler_id":{
+                  "type":"string"
+              },
+              "status":{
+                  "type":"string",
+                  "enum":["OK", "ERROR", "DELETED"]
+              }
+          }
+      }
+    }
+
+
+
+
+#. Create policy instance
+
+    curl -X PUT "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/21003/policies/1234" -H "Content-Type: application/json" -d @policy_instance_ratecontrol.json
+    
+    cat policy_instance_ratecontrol.json
+.. code-block:: yaml
+
+    {
+        "class":12,
+        "enforce":true,
+        "window_length":20,
+        "blocking_rate":20,
+        "trigger_threshold":10
+    }
+
+
+#. Get policy instance status:
+    curl -s -X GET "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/21004/policies/1235/status" | jq .
+.. code-block:: yaml
+  
+    {
+      "created_at": "0001-01-01T00:00:00.000Z",
+      "instance_status": "IN EFFECT"
+    }
+
+
+#. Delete policy type
+    curl -s -X DELETE "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/21004/"
+
+#. Delete policy instance
+    curl -s -X DELETE "http://<a1service-ip>:<a1service-port>/a1mediator/a1-p/policytypes/21004/policies/1234/"
+
+#. A1-EI data delivery for a job id:
+
+    curl -X POST "http://<a1service-ip>:<a1service-port>/a1mediator/data-delivery" -H "Content-Type: application/json" -d @a1eidata.json
+
+    cat a1eidata.json
+.. code-block:: yaml
+  
+    {
+    "job":"100",
+    "payload":"payload"
+    }
 
 
 
