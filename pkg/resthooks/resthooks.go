@@ -572,18 +572,34 @@ func (rh *Resthook) getMetaData(policyTypeId models.PolicyTypeID, policyInstance
 	return instanceMetadataMap, nil
 }
 
+func (rh *Resthook) getPolicyInstanceStatus(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (bool, error) {
+	instancehandlerKey := a1HandlerPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	var keys [1]string
+	keys[0] = instancehandlerKey
+	resp, err := rh.db.Get(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("error1 :%+v", err)
+		return false, err
+	}
+	for _, key := range resp {
+		if key == "OK" {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 func (rh *Resthook) GetPolicyInstanceStatus(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (*a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody, error) {
 	err := rh.instanceValidity(policyTypeId, policyInstanceID)
 	policyInstanceStatus := a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody{}
+	policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
 	if err != nil && err == policyInstanceNotFoundError || err == policyTypeNotFoundError {
-		policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
 		return &policyInstanceStatus, err
 	}
 	metadata, err := rh.getMetaData(policyTypeId, policyInstanceID)
 	a1.Logger.Debug(" metadata %v", metadata)
 	if err != nil {
 		a1.Logger.Error("policy instance error : %v", err)
-		policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
 		return &policyInstanceStatus, err
 	}
 	jsonbody, err := json.Marshal(metadata)
@@ -597,10 +613,12 @@ func (rh *Resthook) GetPolicyInstanceStatus(policyTypeId models.PolicyTypeID, po
 		//this error maps to 503 error but can be mapped to 500: internal error
 		return &policyInstanceStatus, err
 	}
-	if policyInstanceStatus.HasBeenDeleted == false {
+	resp, err := rh.getPolicyInstanceStatus(policyTypeId, policyInstanceID)
+	if err != nil || (err == nil && resp == false) {
+		a1.Logger.Error("marshal error : %v", err)
+		return &policyInstanceStatus, err
+	} else if policyInstanceStatus.HasBeenDeleted == true {
 		policyInstanceStatus.InstanceStatus = "IN EFFECT"
-	} else {
-		policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
 	}
 	return &policyInstanceStatus, nil
 }
