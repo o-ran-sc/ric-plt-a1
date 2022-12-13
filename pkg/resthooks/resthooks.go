@@ -675,7 +675,10 @@ func (rh *Resthook) DeletePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
 	creation_metadata := createdmetadata[instanceMetadataKey]
 	var metadata map[string]interface{}
-	if err = json.Unmarshal([]byte(creation_metadata.(string)), &metadata); err != nil {
+	creation_metadata_string := creation_metadata.(string)
+	creation_metadata_string = strings.TrimRight(creation_metadata_string, "]")
+	creation_metadata_string = strings.TrimLeft(creation_metadata_string, "[")
+	if err = json.Unmarshal([]byte(creation_metadata_string), &metadata); err != nil {
 		a1.Logger.Error("unmarshal error : %v", err)
 		return err
 	}
