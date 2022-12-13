@@ -1,0 +1,8 @@
+Verified+1: ORAN Jobbuilder <releng+oran-jobbuilder@linuxfoundation.org>
+Verified+1: Thoralf Czichy <thoralf.czichy@nokia.com>
+Code-Review+2: Thoralf Czichy <thoralf.czichy@nokia.com>
+Submitted-by: subhash kumar singh <subh.singh@samsung.com>
+Submitted-at: Tue, 13 Dec 2022 14:20:24 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/ric-plt/a1/+/10116
+Project: ric-plt/a1
+Branch: refs/heads/master
