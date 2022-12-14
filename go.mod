@@ -22,7 +22,7 @@ module gerrit.o-ran-sc.org/r/ric-plt/a1
 
 go 1.16
 
-replace gerrit.o-ran-sc.org/r/ric-plt/sdlgo => gerrit.o-ran-sc.org/r/ric-plt/sdlgo.git v0.7.0
+replace gerrit.o-ran-sc.org/r/ric-plt/sdlgo => gerrit.o-ran-sc.org/r/ric-plt/sdlgo.git v0.10.2
 
 replace gerrit.o-ran-sc.org/r/com/golog => gerrit.o-ran-sc.org/r/com/golog.git v0.0.2
 
@@ -30,7 +30,7 @@ replace gerrit.o-ran-sc.org/r/ric-plt/xapp-frame => gerrit.o-ran-sc.org/r/ric-pl
 
 require (
 	gerrit.o-ran-sc.org/r/com/golog v0.0.2
-	gerrit.o-ran-sc.org/r/ric-plt/sdlgo v0.7.0
+	gerrit.o-ran-sc.org/r/ric-plt/sdlgo v0.10.2
 	gerrit.o-ran-sc.org/r/ric-plt/xapp-frame v0.0.0-00010101000000-000000000000
 	github.com/go-openapi/errors v0.19.9
 	github.com/go-openapi/loads v0.19.7
