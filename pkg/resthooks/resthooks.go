@@ -102,12 +102,9 @@ func createResthook(sdlInst iSdl, rmrSenderInst rmr.IRmrSender) *Resthook {
 }
 
 func (rh *Resthook) GetA1Health() bool {
-	data, _ := rh.db.GetAll(a1MediatorNs)
-	if data != nil {
-		a1.Logger.Debug("Database connected and A1 is healthy")
-		return true
-	}
-	return false
+	//TODO : Add database healthcheck
+	a1.Logger.Debug("A1 is healthy")
+	return true
 }
 
 func (rh *Resthook) GetAllPolicyType() []models.PolicyTypeID {
