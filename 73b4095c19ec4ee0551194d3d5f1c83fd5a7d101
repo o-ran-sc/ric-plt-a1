@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47a42715_d6971f7e",
+        "filename": "docs/user-guide-api.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-14T09:33:24Z",
+      "side": 1,
+      "message": "specify service-name instead localhost.",
+      "range": {
+        "startLine": 99,
+        "startChar": 27,
+        "endLine": 99,
+        "endChar": 36
+      },
+      "revId": "73b4095c19ec4ee0551194d3d5f1c83fd5a7d101",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc4b92d2_b97d2da0",
+        "filename": "docs/user-guide-api.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-14T09:33:24Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "73b4095c19ec4ee0551194d3d5f1c83fd5a7d101",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48480a1a_86685aef",
+        "filename": "docs/user-guide-api.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-14T09:33:24Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 154,
+        "startChar": 27,
+        "endLine": 154,
+        "endChar": 36
+      },
+      "revId": "73b4095c19ec4ee0551194d3d5f1c83fd5a7d101",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ed70520_43e96f50",
+        "filename": "docs/user-guide-api.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2022-12-14T09:33:24Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 165,
+        "startChar": 27,
+        "endLine": 165,
+        "endChar": 36
+      },
+      "revId": "73b4095c19ec4ee0551194d3d5f1c83fd5a7d101",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
