@@ -26,10 +26,9 @@ import (
 	"strconv"
 	"testing"
 	"time"
-
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
-	"github.com/stretchr/testify/assert"
+  "github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -57,6 +56,12 @@ func TestMain(m *testing.M) {
 	code := m.Run()
 	os.Exit(code)
 }
+
+func (s *SdlMock) GetAll(ns string) ([]string, error) {
+	args := s.MethodCalled("GetAll", ns)
+	return args.Get(0).([]string), nil
+}
+
 
 func TestHealth(t *testing.T) {
 	resp := rh.GetA1Health()
@@ -99,6 +104,7 @@ func TestGetPolicyType(t *testing.T) {
 	sdlInst.AssertExpectations(t)
 
 }
+
 
 func TestCreatePolicyType(t *testing.T) {
 	var policyTypeId models.PolicyTypeID
@@ -358,10 +364,6 @@ type SdlMock struct {
 	mock.Mock
 }
 
-func (s *SdlMock) GetAll(ns string) ([]string, error) {
-	args := s.MethodCalled("GetAll", ns)
-	return args.Get(0).([]string), nil
-}
 
 func (s *SdlMock) Get(ns string, keys []string) (map[string]interface{}, error) {
 	a1.Logger.Debug("Get Called ")
