@@ -27,7 +27,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/policy"
@@ -102,7 +101,11 @@ func createResthook(sdlInst iSdl, rmrSenderInst rmr.IRmrSender) *Resthook {
 }
 
 func (rh *Resthook) GetA1Health() bool {
-	//TODO : Add database healthcheck
+        _, err := rh.db.GetAll("A1m_ns")
+        if err != nil {
+                a1.Logger.Error("error in connecting to the database. err: %v", err)
+                return false
+        }
 	a1.Logger.Debug("A1 is healthy")
 	return true
 }
