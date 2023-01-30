@@ -28,7 +28,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
-
+  "github.com/techschool/simplebank/util"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/policy"
@@ -58,15 +58,19 @@ type IRmrSender interface {
 func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
 	RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
 		StatDesc: "",
+    config, err := util.LoadConfig(".")
+    if err != nil{
+         log.Fatal("cannot log config:", err)
+    }     
 		RmrData: xapp.PortData{
-			//TODO: Read configuration from config file
-			Name:              "",
-			MaxSize:           65534,
-			ThreadType:        0,
-			LowLatency:        false,
-			FastAck:           false,
-			MaxRetryOnFailure: 1,
-			Port:              4561,
+			//ADDED: Read configuration from config file
+			Name:              config.Name,
+			MaxSize:           config.MaxSize,
+			ThreadType:        config.ThreadType,
+			LowLatency:        config.LowLatency,
+			FastAck:           config.FastAck,
+			MaxRetryOnFailure: config.MaxRetryOnFailure,
+			Port:              config.Port,
 		},
 	})
 
