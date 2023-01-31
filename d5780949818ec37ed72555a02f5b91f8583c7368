@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edbd0e72_9a8a1511",
+        "filename": "pkg/resthooks/resthooks_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2023-01-31T06:33:41Z",
+      "side": 0,
+      "message": "why it is deleted and kept on top",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 1
+      },
+      "revId": "d5780949818ec37ed72555a02f5b91f8583c7368",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

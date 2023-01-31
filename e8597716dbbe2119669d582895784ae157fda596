@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35f63830_5c182759",
+        "filename": "pkg/resthooks/resthooks.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2023-01-31T06:33:41Z",
+      "side": 1,
+      "message": "remove comment",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "e8597716dbbe2119669d582895784ae157fda596",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf0764d0_3b93ddc7",
+        "filename": "pkg/resthooks/resthooks_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2023-01-31T06:33:41Z",
+      "side": 1,
+      "message": "align the line",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "e8597716dbbe2119669d582895784ae157fda596",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "775c11aa_711253c1",
+        "filename": "pkg/resthooks/resthooks_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2023-01-31T06:33:41Z",
+      "side": 1,
+      "message": "extra whitespace",
+      "revId": "e8597716dbbe2119669d582895784ae157fda596",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
