@@ -28,12 +28,29 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
-
+	"github.com/spf13/viper"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/policy"
 	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
 )
+
+//LoadConfig reads configuration from file or environment variables.
+func LoadConfig(path string) (config Config, err error) {
+	viper.AddConfigPath(path)
+	viper.SetConfigName("app")
+	viper.SetConfigType("env")
+
+	viper.AutomaticEnv()
+
+	err = viper.ReadInConfig()
+	if err != nil {
+		return
+	}
+
+	err = viper.Unmarshal(&config)
+	return
+}
 
 const (
 	a1SourceName      = "service-ricplt-a1mediator-http"
@@ -56,17 +73,21 @@ type IRmrSender interface {
 }
 
 func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
-	RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
-		StatDesc: "",
+	config, err := LoadConfig(".")
+  if err != nil{
+         a1.Logger.Error("Unable to read the config values")
+  } 
+  RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
+		StatDesc: "",    
 		RmrData: xapp.PortData{
-			//TODO: Read configuration from config file
-			Name:              "",
-			MaxSize:           65534,
-			ThreadType:        0,
-			LowLatency:        false,
-			FastAck:           false,
-			MaxRetryOnFailure: 1,
-			Port:              4561,
+			//ADDED: Read configuration from config file
+			Name:              config.Name,
+			MaxSize:           config.MaxSize,
+			ThreadType:        config.ThreadType,
+			LowLatency:        config.LowLatency,
+			FastAck:           config.FastAck,
+			MaxRetryOnFailure: config.MaxRetryOnFailure,
+			Port:              config.Port,
 		},
 	})
 
