@@ -41,8 +41,9 @@ require (
 	github.com/go-openapi/validate v0.19.15
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/santhosh-tekuri/jsonschema/v5 v5.1.0
-	github.com/stretchr/testify v1.6.1
-	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
+	github.com/spf13/viper v1.10.1
+	github.com/stretchr/testify v1.7.0
+	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/utils v0.0.0-20210930125809-cb0fa318a74b // indirect
 

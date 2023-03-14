@@ -28,13 +28,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
-
+	"github.com/spf13/viper"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/policy"
 	"gerrit.o-ran-sc.org/r/ric-plt/xapp-frame/pkg/xapp"
 )
-
 const (
 	a1SourceName      = "service-ricplt-a1mediator-http"
 	a1PolicyRequest   = 20010
@@ -54,19 +53,20 @@ type RmrSender struct {
 type IRmrSender interface {
 	RmrSendToXapp(httpBodyString string, messagetype int) bool
 }
-
 func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
-	RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
+  vi := viper.New()
+  vi.SetConfigFile("../../config/config.yaml")
+  vi.ReadInConfig()
+  RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
 		StatDesc: "",
 		RmrData: xapp.PortData{
-			//TODO: Read configuration from config file
-			Name:              "",
-			MaxSize:           65534,
-			ThreadType:        0,
-			LowLatency:        false,
-			FastAck:           false,
-			MaxRetryOnFailure: 1,
-			Port:              4561,
+			Name:              vi.GetString("NAME"),
+			MaxSize:           vi.GetInt("MAX_SIZE"),
+			ThreadType:        vi.GetInt("THREAD_TYPE"),
+			LowLatency:        vi.GetBool("LOW_LATENCY"),
+			FastAck:           vi.GetBool("FAST_ACK"),
+			MaxRetryOnFailure: vi.GetInt("MAX_RETRY_ON_FAILURE"),
+			Port:              vi.GetInt("PORT"),
 		},
 	})
 
@@ -78,7 +78,6 @@ func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
 	rmrsender.RmrRecieveStart()
 	return rmrsender
 }
-
 var RICMessageTypes = map[string]int{
 	"A1_POLICY_REQ":         20010,
 	"A1_POLICY_RESP":        20011,
