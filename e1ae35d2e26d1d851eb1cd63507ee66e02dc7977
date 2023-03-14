@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da9b5f34_8bda3359",
+        "filename": "pkg/rmr/app.env",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-03-14T10:56:33Z",
+      "side": 1,
+      "message": "move all this configuration to config folder",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "e1ae35d2e26d1d851eb1cd63507ee66e02dc7977",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e91f6ead_a94ed892",
+        "filename": "pkg/rmr/config.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-03-14T10:56:33Z",
+      "side": 1,
+      "message": "package rmr should have single responsibility of rmr related communication",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 8
+      },
+      "revId": "e1ae35d2e26d1d851eb1cd63507ee66e02dc7977",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a67897_41d58bc0",
+        "filename": "pkg/rmr/rmr.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-03-14T10:56:33Z",
+      "side": 1,
+      "message": "should have single responsibility of rmr related communication and not loading configuration",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 15
+      },
+      "revId": "e1ae35d2e26d1d851eb1cd63507ee66e02dc7977",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f789b68_24b42563",
+        "filename": "pkg/rmr/rmr.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-03-14T10:56:33Z",
+      "side": 1,
+      "message": "ṛemove this extra line.",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 0
+      },
+      "revId": "e1ae35d2e26d1d851eb1cd63507ee66e02dc7977",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
