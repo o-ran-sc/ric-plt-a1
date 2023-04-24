@@ -44,6 +44,7 @@ const (
 	a1EiQueryAllResp  = 20014
 	a1EiCreateJobResp = 20016
 	jobCreationData   = `{"ei_job_id": %s.}`
+	DefaultSubId      = -1
 )
 
 type RmrSender struct {
@@ -52,7 +53,7 @@ type RmrSender struct {
 }
 
 type IRmrSender interface {
-	RmrSendToXapp(httpBodyString string, messagetype int) bool
+	RmrSendToXapp(httpBodyString string, messagetype int, subid int) bool
 }
 
 func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
@@ -99,11 +100,11 @@ func (rmr *RmrSender) GetRicMessageName(id int) (s string) {
 	return
 }
 
-func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int) bool {
+func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int, subid int) bool {
 
 	params := &xapp.RMRParams{}
 	params.Mtype = messagetype
-	params.SubId = -1
+	params.SubId = subid
 	params.Xid = ""
 	params.Meid = &xapp.RMRMeid{}
 	params.Src = a1SourceName
@@ -164,7 +165,7 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 				return err1
 			}
 			a1.Logger.Debug("rmrMessage ", rmrMessage)
-			isSent := rmr.RmrSendToXapp(rmrMessage, a1PolicyRequest)
+			isSent := rmr.RmrSendToXapp(rmrMessage, a1PolicyRequest, int(policytypeid))
 			if isSent {
 				a1.Logger.Debug("rmrSendToXapp : message sent")
 			} else {
@@ -192,7 +193,7 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 
 		a1.Logger.Debug("response : %+v", string(respByte))
 
-		isSent := rmr.RmrSendToXapp(string(respByte), a1EiQueryAllResp)
+		isSent := rmr.RmrSendToXapp(string(respByte), a1EiQueryAllResp, DefaultSubId)
 		if isSent {
 			a1.Logger.Debug("rmrSendToXapp : message sent")
 		} else {
@@ -241,7 +242,7 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 			rmrData := fmt.Sprintf(jobCreationData, jobIdStr)
 			a1.Logger.Debug("rmr_Data to send: ", rmrData)
 
-			isSent := rmr.RmrSendToXapp(rmrData, a1EiCreateJobResp)
+			isSent := rmr.RmrSendToXapp(rmrData, a1EiCreateJobResp, DefaultSubId)
 			if isSent {
 				a1.Logger.Debug("rmrSendToXapp : message sent")
 			} else {

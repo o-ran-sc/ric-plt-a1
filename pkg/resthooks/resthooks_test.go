@@ -155,7 +155,7 @@ func TestCreatePolicyTypeInstance(t *testing.T) {
 	a1.Logger.Debug("metadatainstancekey   : %+v", metadatainstancekey)
 	metadatainstancearr := []interface{}{metadatainstancekey, string(metadata)}
 	sdlInst.On("Set", "A1m_ns", metadatainstancearr).Return(nil)
-	rmrSenderInst.On("RmrSendToXapp", "httpBodyString", 20010).Return(true)
+	rmrSenderInst.On("RmrSendToXapp", "httpBodyString", 20010, int(policyTypeId)).Return(true)
 
 	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata)
 
@@ -303,7 +303,7 @@ func TestDeletePolicyInstance(t *testing.T) {
 
 	httpBodyString := `{"operation":"DELETE","payload":"","policy_instance_id":"123456","policy_type_id":"20001"}`
 
-	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20010).Return(true)
+	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20010, int(policyTypeId)).Return(true)
 
 	errresp := rh.DeletePolicyInstance(policyTypeId, policyInstanceID)
 
@@ -322,7 +322,7 @@ func TestDataDelivery(t *testing.T) {
 	json.Unmarshal([]byte(httpBody), &instancedata)
 	a1.Logger.Debug("Marshaled data : %+v", (instancedata))
 	httpBodyString := `{"ei_job_id":"1","payload":"payload"}`
-	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20017).Return(true)
+	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20017, -1).Return(true)
 	errresp := rh.DataDelivery(instancedata)
 
 	assert.Nil(t, errresp)
@@ -412,12 +412,12 @@ func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bo
 	return args.Bool(0), args.Error(1)
 }
 
-func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string, mtype int) bool {
+func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string, mtype int, subid int) bool {
 	if httpBodyString == `{"blocking_rate":20,"enforce":true,"trigger_threshold":10,"window_length":20}` {
-		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype)
+		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype, subid)
 		return args.Bool(0)
 	} else if httpBodyString == `{"ei_job_id":"1","payload":"payload"}` {
-		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype)
+		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype, subid)
 		return args.Bool(0)
 	}
 	return true
