@@ -36,7 +36,8 @@ import (
 )
 
 // NewA1ControllerGetPolicyTypeParams creates a new A1ControllerGetPolicyTypeParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewA1ControllerGetPolicyTypeParams() A1ControllerGetPolicyTypeParams {
 
 	return A1ControllerGetPolicyTypeParams{}
@@ -74,7 +75,6 @@ func (o *A1ControllerGetPolicyTypeParams) BindRequest(r *http.Request, route *mi
 	if err := o.bindPolicyTypeID(rPolicyTypeID, rhkPolicyTypeID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -107,11 +107,11 @@ func (o *A1ControllerGetPolicyTypeParams) bindPolicyTypeID(rawData []string, has
 // validatePolicyTypeID carries on validations for parameter PolicyTypeID
 func (o *A1ControllerGetPolicyTypeParams) validatePolicyTypeID(formats strfmt.Registry) error {
 
-	if err := validate.MinimumInt("policy_type_id", "path", int64(o.PolicyTypeID), 1, false); err != nil {
+	if err := validate.MinimumInt("policy_type_id", "path", o.PolicyTypeID, 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("policy_type_id", "path", int64(o.PolicyTypeID), 2.147483647e+09, false); err != nil {
+	if err := validate.MaximumInt("policy_type_id", "path", o.PolicyTypeID, 2.147483647e+09, false); err != nil {
 		return err
 	}
 

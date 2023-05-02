@@ -49,11 +49,10 @@ func NewA1ControllerCreatePolicyType(ctx *middleware.Context, handler A1Controll
 	return &A1ControllerCreatePolicyType{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerCreatePolicyType swagger:route PUT /a1-p/policytypes/{policy_type_id} A1 Mediator a1ControllerCreatePolicyType
+/*
+	A1ControllerCreatePolicyType swagger:route PUT /a1-p/policytypes/{policy_type_id} A1 Mediator a1ControllerCreatePolicyType
 
 Create a new policy type . Replace is not currently allowed; to replace, for now do a DELETE and then a PUT again.
-
-
 */
 type A1ControllerCreatePolicyType struct {
 	Context *middleware.Context
@@ -63,17 +62,15 @@ type A1ControllerCreatePolicyType struct {
 func (o *A1ControllerCreatePolicyType) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerCreatePolicyTypeParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

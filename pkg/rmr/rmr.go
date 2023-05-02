@@ -44,6 +44,7 @@ const (
 	a1EiQueryAllResp  = 20014
 	a1EiCreateJobResp = 20016
 	jobCreationData   = `{"ei_job_id": %s.}`
+	DefaultSubId      = -1
 )
 
 type RmrSender struct {
@@ -52,7 +53,7 @@ type RmrSender struct {
 }
 
 type IRmrSender interface {
-	RmrSendToXapp(httpBodyString string, messagetype int) bool
+	RmrSendToXapp(httpBodyString string, messagetype int, subid int) bool
 }
 
 func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
@@ -66,7 +67,7 @@ func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
 			LowLatency:        false,
 			FastAck:           false,
 			MaxRetryOnFailure: 1,
-			Port:              4561,
+			Port:              4562, //NOTE: Default port value updated
 		},
 	})
 
@@ -99,11 +100,11 @@ func (rmr *RmrSender) GetRicMessageName(id int) (s string) {
 	return
 }
 
-func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int) bool {
+func (rmr *RmrSender) RmrSendToXapp(httpBodyString string, messagetype int, subid int) bool {
 
 	params := &xapp.RMRParams{}
 	params.Mtype = messagetype
-	params.SubId = -1
+	params.SubId = subid
 	params.Xid = ""
 	params.Meid = &xapp.RMRMeid{}
 	params.Src = a1SourceName
@@ -133,8 +134,17 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 			a1.Logger.Error("Unmarshal error : %+v", err)
 			return err
 		}
-		a1.Logger.Debug("message recieved for %d and %d with status : %s", result["policy_type_id"], result["policy_instance_id"], result["status"])
-		rmr.policyManager.SetPolicyInstanceStatus(int(result["policy_type_id"].(float64)), int(result["policy_instance_id"].(float64)), result["status"].(string))
+		policyTypeId := int(result["policy_type_id"].(float64))
+		policyInstanceId := result["policy_instance_id"].(string)
+		policyHandlerId := result["handler_id"].(string)
+		policyStatus := result["status"].(string)
+
+		a1.Logger.Debug("message recieved for %d and %s with status : %s", policyTypeId, policyInstanceId, policyStatus)
+		rmr.policyManager.SetPolicyInstanceStatus(policyTypeId, policyInstanceId, policyStatus)
+		err = rmr.policyManager.SendPolicyStatusNotification(policyTypeId, policyInstanceId, policyHandlerId, policyStatus)
+		if err != nil {
+			a1.Logger.Debug("failed to send policy status notification %v+", err)
+		}
 	case "A1_POLICY_QUERY":
 		a1.Logger.Debug("Recived policy query")
 		a1.Logger.Debug("message recieved ", msg.Payload)
@@ -164,7 +174,7 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 				return err1
 			}
 			a1.Logger.Debug("rmrMessage ", rmrMessage)
-			isSent := rmr.RmrSendToXapp(rmrMessage, a1PolicyRequest)
+			isSent := rmr.RmrSendToXapp(rmrMessage, a1PolicyRequest, int(policytypeid))
 			if isSent {
 				a1.Logger.Debug("rmrSendToXapp : message sent")
 			} else {
@@ -192,7 +202,7 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 
 		a1.Logger.Debug("response : %+v", string(respByte))
 
-		isSent := rmr.RmrSendToXapp(string(respByte), a1EiQueryAllResp)
+		isSent := rmr.RmrSendToXapp(string(respByte), a1EiQueryAllResp, DefaultSubId)
 		if isSent {
 			a1.Logger.Debug("rmrSendToXapp : message sent")
 		} else {
@@ -241,7 +251,7 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 			rmrData := fmt.Sprintf(jobCreationData, jobIdStr)
 			a1.Logger.Debug("rmr_Data to send: ", rmrData)
 
-			isSent := rmr.RmrSendToXapp(rmrData, a1EiCreateJobResp)
+			isSent := rmr.RmrSendToXapp(rmrData, a1EiCreateJobResp, DefaultSubId)
 			if isSent {
 				a1.Logger.Debug("rmrSendToXapp : message sent")
 			} else {

@@ -39,6 +39,8 @@ type A1ControllerGetPolicyInstanceURL struct {
 	PolicyInstanceID string
 	PolicyTypeID     int64
 
+	NotificationDestination *string
+
 	_basePath string
 	// avoid unkeyed usage
 	_ struct{}
@@ -81,6 +83,18 @@ func (o *A1ControllerGetPolicyInstanceURL) Build() (*url.URL, error) {
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var notificationDestinationQ string
+	if o.NotificationDestination != nil {
+		notificationDestinationQ = *o.NotificationDestination
+	}
+	if notificationDestinationQ != "" {
+		qs.Set("notificationDestination", notificationDestinationQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

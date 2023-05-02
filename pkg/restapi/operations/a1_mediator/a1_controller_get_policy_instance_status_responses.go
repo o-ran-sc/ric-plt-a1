@@ -34,8 +34,8 @@ import (
 // A1ControllerGetPolicyInstanceStatusOKCode is the HTTP code returned for type A1ControllerGetPolicyInstanceStatusOK
 const A1ControllerGetPolicyInstanceStatusOKCode int = 200
 
-/*A1ControllerGetPolicyInstanceStatusOK successfully retrieved the status
-
+/*
+A1ControllerGetPolicyInstanceStatusOK successfully retrieved the status
 
 swagger:response a1ControllerGetPolicyInstanceStatusOK
 */
@@ -79,8 +79,8 @@ func (o *A1ControllerGetPolicyInstanceStatusOK) WriteResponse(rw http.ResponseWr
 // A1ControllerGetPolicyInstanceStatusNotFoundCode is the HTTP code returned for type A1ControllerGetPolicyInstanceStatusNotFound
 const A1ControllerGetPolicyInstanceStatusNotFoundCode int = 404
 
-/*A1ControllerGetPolicyInstanceStatusNotFound there is no policy instance with this policy_instance_id or there is no policy type with this policy_type_id
-
+/*
+A1ControllerGetPolicyInstanceStatusNotFound there is no policy instance with this policy_instance_id or there is no policy type with this policy_type_id
 
 swagger:response a1ControllerGetPolicyInstanceStatusNotFound
 */
@@ -104,7 +104,8 @@ func (o *A1ControllerGetPolicyInstanceStatusNotFound) WriteResponse(rw http.Resp
 // A1ControllerGetPolicyInstanceStatusServiceUnavailableCode is the HTTP code returned for type A1ControllerGetPolicyInstanceStatusServiceUnavailable
 const A1ControllerGetPolicyInstanceStatusServiceUnavailableCode int = 503
 
-/*A1ControllerGetPolicyInstanceStatusServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
+/*
+A1ControllerGetPolicyInstanceStatusServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
 
 swagger:response a1ControllerGetPolicyInstanceStatusServiceUnavailable
 */

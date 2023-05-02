@@ -34,8 +34,8 @@ import (
 // A1ControllerDataDeliveryOKCode is the HTTP code returned for type A1ControllerDataDeliveryOK
 const A1ControllerDataDeliveryOKCode int = 200
 
-/*A1ControllerDataDeliveryOK successfully delivered data from data producer
-
+/*
+A1ControllerDataDeliveryOK successfully delivered data from data producer
 
 swagger:response a1ControllerDataDeliveryOK
 */
@@ -59,8 +59,8 @@ func (o *A1ControllerDataDeliveryOK) WriteResponse(rw http.ResponseWriter, produ
 // A1ControllerDataDeliveryNotFoundCode is the HTTP code returned for type A1ControllerDataDeliveryNotFound
 const A1ControllerDataDeliveryNotFoundCode int = 404
 
-/*A1ControllerDataDeliveryNotFound no job id defined for this data delivery
-
+/*
+A1ControllerDataDeliveryNotFound no job id defined for this data delivery
 
 swagger:response a1ControllerDataDeliveryNotFound
 */

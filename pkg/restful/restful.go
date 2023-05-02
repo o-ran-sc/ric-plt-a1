@@ -85,7 +85,12 @@ func (r *Restful) setupHandler() *operations.A1API {
 
 	api.A1MediatorA1ControllerCreateOrReplacePolicyInstanceHandler = a1_mediator.A1ControllerCreateOrReplacePolicyInstanceHandlerFunc(func(params a1_mediator.A1ControllerCreateOrReplacePolicyInstanceParams) middleware.Responder {
 		a1.Logger.Debug("handler for create policy type instance ")
-		if err = r.rh.CreatePolicyInstance(models.PolicyTypeID(params.PolicyTypeID), models.PolicyInstanceID(params.PolicyInstanceID), params.Body); err == nil {
+		var notificationDestination string
+		if params.NotificationDestination != nil {
+			notificationDestination = *params.NotificationDestination
+		}
+		if err = r.rh.CreatePolicyInstance(models.PolicyTypeID(params.PolicyTypeID), models.PolicyInstanceID(params.PolicyInstanceID), params.Body, notificationDestination); err == nil {
+
 			return a1_mediator.NewA1ControllerCreateOrReplacePolicyInstanceAccepted()
 		}
 		if r.rh.IsValidJson(err) {
@@ -137,8 +142,7 @@ func (r *Restful) setupHandler() *operations.A1API {
 		a1.Logger.Debug("handler for get policy instance status")
 		if resp, err := r.rh.GetPolicyInstanceStatus(models.PolicyTypeID(params.PolicyTypeID), models.PolicyInstanceID(params.PolicyInstanceID)); err == nil {
 			return a1_mediator.NewA1ControllerGetPolicyInstanceStatusOK().WithPayload(resp)
-		}
-		if r.rh.IsPolicyInstanceNotFound(err) {
+		} else if r.rh.IsPolicyInstanceNotFound(err) {
 			return a1_mediator.NewA1ControllerGetPolicyInstanceStatusNotFound()
 		}
 		return a1_mediator.NewA1ControllerGetPolicyInstanceStatusServiceUnavailable()

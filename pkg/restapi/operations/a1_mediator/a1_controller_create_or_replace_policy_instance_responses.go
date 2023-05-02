@@ -34,8 +34,8 @@ import (
 // A1ControllerCreateOrReplacePolicyInstanceAcceptedCode is the HTTP code returned for type A1ControllerCreateOrReplacePolicyInstanceAccepted
 const A1ControllerCreateOrReplacePolicyInstanceAcceptedCode int = 202
 
-/*A1ControllerCreateOrReplacePolicyInstanceAccepted Policy instance creation initiated
-
+/*
+A1ControllerCreateOrReplacePolicyInstanceAccepted Policy instance creation initiated
 
 swagger:response a1ControllerCreateOrReplacePolicyInstanceAccepted
 */
@@ -59,8 +59,8 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceAccepted) WriteResponse(rw htt
 // A1ControllerCreateOrReplacePolicyInstanceBadRequestCode is the HTTP code returned for type A1ControllerCreateOrReplacePolicyInstanceBadRequest
 const A1ControllerCreateOrReplacePolicyInstanceBadRequestCode int = 400
 
-/*A1ControllerCreateOrReplacePolicyInstanceBadRequest Bad PUT body for this policy instance
-
+/*
+A1ControllerCreateOrReplacePolicyInstanceBadRequest Bad PUT body for this policy instance
 
 swagger:response a1ControllerCreateOrReplacePolicyInstanceBadRequest
 */
@@ -84,8 +84,8 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceBadRequest) WriteResponse(rw h
 // A1ControllerCreateOrReplacePolicyInstanceNotFoundCode is the HTTP code returned for type A1ControllerCreateOrReplacePolicyInstanceNotFound
 const A1ControllerCreateOrReplacePolicyInstanceNotFoundCode int = 404
 
-/*A1ControllerCreateOrReplacePolicyInstanceNotFound There is no policy type with this policy_type_id
-
+/*
+A1ControllerCreateOrReplacePolicyInstanceNotFound There is no policy type with this policy_type_id
 
 swagger:response a1ControllerCreateOrReplacePolicyInstanceNotFound
 */
@@ -109,7 +109,8 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceNotFound) WriteResponse(rw htt
 // A1ControllerCreateOrReplacePolicyInstanceServiceUnavailableCode is the HTTP code returned for type A1ControllerCreateOrReplacePolicyInstanceServiceUnavailable
 const A1ControllerCreateOrReplacePolicyInstanceServiceUnavailableCode int = 503
 
-/*A1ControllerCreateOrReplacePolicyInstanceServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
+/*
+A1ControllerCreateOrReplacePolicyInstanceServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
 
 swagger:response a1ControllerCreateOrReplacePolicyInstanceServiceUnavailable
 */

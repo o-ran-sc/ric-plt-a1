@@ -36,6 +36,7 @@ var (
 	FlatSwaggerJSON json.RawMessage
 )
 
+// Notification object modified as per O-RAN.WG2.A1TD
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
   "swagger": "2.0",
@@ -314,6 +315,12 @@ func init() {
           "name": "policy_instance_id",
           "in": "path",
           "required": true
+        },
+        {
+          "type": "string",
+          "description": "URL sent by non-RT RIC. This is where non-RT RIC expects status updates on the policy creation\n",
+          "name": "notificationDestination",
+          "in": "query"
         }
       ]
     },
@@ -333,18 +340,19 @@ func init() {
             "schema": {
               "type": "object",
               "properties": {
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "has_been_deleted": {
-                  "type": "boolean"
-                },
-                "instance_status": {
+                "enforceReason": {
                   "type": "string",
                   "enum": [
-                    "IN EFFECT",
-                    "NOT IN EFFECT"
+                    "SCOPE_NOT_APPLICABLE",
+                    "STATEMENT_NOT_APPLICABLE",
+                    "OTHER_REASON"
+                  ]
+                },
+                "enforceStatus": {
+                  "type": "string",
+                  "enum": [
+                    "ENFORCED",
+                    "NOT_ENFORCED"
                   ]
                 }
               }
@@ -728,6 +736,12 @@ func init() {
           "name": "policy_instance_id",
           "in": "path",
           "required": true
+        },
+        {
+          "type": "string",
+          "description": "URL sent by non-RT RIC. This is where non-RT RIC expects status updates on the policy creation\n",
+          "name": "notificationDestination",
+          "in": "query"
         }
       ]
     },
@@ -747,18 +761,19 @@ func init() {
             "schema": {
               "type": "object",
               "properties": {
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "has_been_deleted": {
-                  "type": "boolean"
-                },
-                "instance_status": {
+                "enforceReason": {
                   "type": "string",
                   "enum": [
-                    "IN EFFECT",
-                    "NOT IN EFFECT"
+                    "SCOPE_NOT_APPLICABLE",
+                    "STATEMENT_NOT_APPLICABLE",
+                    "OTHER_REASON"
+                  ]
+                },
+                "enforceStatus": {
+                  "type": "string",
+                  "enum": [
+                    "ENFORCED",
+                    "NOT_ENFORCED"
                   ]
                 }
               }
