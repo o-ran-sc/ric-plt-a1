@@ -29,6 +29,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -36,7 +37,8 @@ import (
 )
 
 // NewA1ControllerGetPolicyInstanceParams creates a new A1ControllerGetPolicyInstanceParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewA1ControllerGetPolicyInstanceParams() A1ControllerGetPolicyInstanceParams {
 
 	return A1ControllerGetPolicyInstanceParams{}
@@ -51,6 +53,11 @@ type A1ControllerGetPolicyInstanceParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*URL send by non-RT RIC. This where non-RT RIC expects status updates on the policy creation
+
+	  In: query
+	*/
+	NotificationDestination *string
 	/*represents a policy instance identifier. UUIDs are advisable but can be any string
 
 	  Required: true
@@ -76,6 +83,13 @@ func (o *A1ControllerGetPolicyInstanceParams) BindRequest(r *http.Request, route
 
 	o.HTTPRequest = r
 
+	qs := runtime.Values(r.URL.Query())
+
+	qNotificationDestination, qhkNotificationDestination, _ := qs.GetOK("notificationDestination")
+	if err := o.bindNotificationDestination(qNotificationDestination, qhkNotificationDestination, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rPolicyInstanceID, rhkPolicyInstanceID, _ := route.Params.GetOK("policy_instance_id")
 	if err := o.bindPolicyInstanceID(rPolicyInstanceID, rhkPolicyInstanceID, route.Formats); err != nil {
 		res = append(res, err)
@@ -85,10 +99,27 @@ func (o *A1ControllerGetPolicyInstanceParams) BindRequest(r *http.Request, route
 	if err := o.bindPolicyTypeID(rPolicyTypeID, rhkPolicyTypeID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindNotificationDestination binds and validates parameter NotificationDestination from query.
+func (o *A1ControllerGetPolicyInstanceParams) bindNotificationDestination(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+	o.NotificationDestination = &raw
+
 	return nil
 }
 
@@ -101,7 +132,6 @@ func (o *A1ControllerGetPolicyInstanceParams) bindPolicyInstanceID(rawData []str
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.PolicyInstanceID = raw
 
 	return nil
@@ -133,11 +163,11 @@ func (o *A1ControllerGetPolicyInstanceParams) bindPolicyTypeID(rawData []string,
 // validatePolicyTypeID carries on validations for parameter PolicyTypeID
 func (o *A1ControllerGetPolicyInstanceParams) validatePolicyTypeID(formats strfmt.Registry) error {
 
-	if err := validate.MinimumInt("policy_type_id", "path", int64(o.PolicyTypeID), 1, false); err != nil {
+	if err := validate.MinimumInt("policy_type_id", "path", o.PolicyTypeID, 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("policy_type_id", "path", int64(o.PolicyTypeID), 2.147483647e+09, false); err != nil {
+	if err := validate.MaximumInt("policy_type_id", "path", o.PolicyTypeID, 2.147483647e+09, false); err != nil {
 		return err
 	}
 

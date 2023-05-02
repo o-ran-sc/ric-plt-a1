@@ -33,7 +33,8 @@ import (
 )
 
 // NewA1ControllerGetHealthcheckParams creates a new A1ControllerGetHealthcheckParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewA1ControllerGetHealthcheckParams() A1ControllerGetHealthcheckParams {
 
 	return A1ControllerGetHealthcheckParams{}

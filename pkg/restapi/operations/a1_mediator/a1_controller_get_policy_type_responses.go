@@ -30,13 +30,14 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-       "gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 )
 
 // A1ControllerGetPolicyTypeOKCode is the HTTP code returned for type A1ControllerGetPolicyTypeOK
 const A1ControllerGetPolicyTypeOKCode int = 200
 
-/*A1ControllerGetPolicyTypeOK policy type successfully found
+/*
+A1ControllerGetPolicyTypeOK policy type successfully found
 
 swagger:response a1ControllerGetPolicyTypeOK
 */
@@ -80,8 +81,8 @@ func (o *A1ControllerGetPolicyTypeOK) WriteResponse(rw http.ResponseWriter, prod
 // A1ControllerGetPolicyTypeNotFoundCode is the HTTP code returned for type A1ControllerGetPolicyTypeNotFound
 const A1ControllerGetPolicyTypeNotFoundCode int = 404
 
-/*A1ControllerGetPolicyTypeNotFound policy type not found
-
+/*
+A1ControllerGetPolicyTypeNotFound policy type not found
 
 swagger:response a1ControllerGetPolicyTypeNotFound
 */
@@ -105,7 +106,8 @@ func (o *A1ControllerGetPolicyTypeNotFound) WriteResponse(rw http.ResponseWriter
 // A1ControllerGetPolicyTypeServiceUnavailableCode is the HTTP code returned for type A1ControllerGetPolicyTypeServiceUnavailable
 const A1ControllerGetPolicyTypeServiceUnavailableCode int = 503
 
-/*A1ControllerGetPolicyTypeServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
+/*
+A1ControllerGetPolicyTypeServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
 
 swagger:response a1ControllerGetPolicyTypeServiceUnavailable
 */

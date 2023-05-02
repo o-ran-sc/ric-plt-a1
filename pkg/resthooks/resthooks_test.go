@@ -155,9 +155,9 @@ func TestCreatePolicyTypeInstance(t *testing.T) {
 	a1.Logger.Debug("metadatainstancekey   : %+v", metadatainstancekey)
 	metadatainstancearr := []interface{}{metadatainstancekey, string(metadata)}
 	sdlInst.On("Set", "A1m_ns", metadatainstancearr).Return(nil)
-	rmrSenderInst.On("RmrSendToXapp", "httpBodyString", 20010).Return(true)
+	rmrSenderInst.On("RmrSendToXapp", "httpBodyString", 20010, int(policyTypeId)).Return(true)
 
-	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata)
+	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata, "")
 
 	assert.Nil(t, errresp)
 	sdlInst.AssertExpectations(t)
@@ -254,7 +254,9 @@ func TestDeletePolicyInstance(t *testing.T) {
 	description := "various parameters to control admission of dual connection"
 	policyTypeSchema.Description = &description
 	schema := `{"$schema": "http://json-schema.org/draft-07/schema#","type":"object","properties": {"enforce": {"type":"boolean","default":"true",},"window_length": {"type":        "integer","default":1,"minimum":1,"maximum":60,"description": "Sliding window length (in minutes)",},
+
 "blocking_rate": {"type":"number","default":10,"minimum":1,"maximum":100,"description": "% Connections to block",},"additionalProperties": false,},}`
+
 	policyTypeSchema.CreateSchema = schema
 
 	key := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
@@ -264,11 +266,11 @@ func TestDeletePolicyInstance(t *testing.T) {
 	sdlInst.On("Get", a1MediatorNs, policytypekeys[:]).Return(map[string]interface{}{key: policyTypeSchema}, nil)
 
 	httpBody := `{
-		"enforce":true,
-		"window_length":20,
-	   "blocking_rate":20,
-		"trigger_threshold":10
-		}`
+			"enforce":true,
+			"window_length":20,
+		   "blocking_rate":20,
+			"trigger_threshold":10
+			}`
 	instancekey := a1InstancePrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
 	var instancekeys [1]string
 	instancekeys[0] = instancekey
@@ -279,9 +281,9 @@ func TestDeletePolicyInstance(t *testing.T) {
 	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
 	instanceMetadataKeys[0] = instanceMetadataKey
 	httpBody = `{
-		"created_at":"2022-11-02 10:30:20",
-			"instance_status":"NOT IN EFFECT"
-		}`
+			"created_at":"2022-11-02 10:30:20",
+				"instance_status":"NOT IN EFFECT"
+			}`
 
 	sdlInst.On("Get", a1MediatorNs, instanceMetadataKeys[:]).Return(httpBody, nil)
 
@@ -303,13 +305,19 @@ func TestDeletePolicyInstance(t *testing.T) {
 
 	httpBodyString := `{"operation":"DELETE","payload":"","policy_instance_id":"123456","policy_type_id":"20001"}`
 
-	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20010).Return(true)
+	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20010, int(policyTypeId)).Return(true)
+
+	notificationDestinationkey := a1NotificationDestinationPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	var notificationDestinationkeys [1]string
+	notificationDestinationkeys[0] = notificationDestinationkey
+	sdlInst.On("Remove", a1MediatorNs, notificationDestinationkeys[:]).Return(nil)
 
 	errresp := rh.DeletePolicyInstance(policyTypeId, policyInstanceID)
 
 	assert.Nil(t, errresp)
 	sdlInst.AssertExpectations(t)
 }
+
 func TestDataDelivery(t *testing.T) {
 
 	httpBody := `{
@@ -322,7 +330,7 @@ func TestDataDelivery(t *testing.T) {
 	json.Unmarshal([]byte(httpBody), &instancedata)
 	a1.Logger.Debug("Marshaled data : %+v", (instancedata))
 	httpBodyString := `{"ei_job_id":"1","payload":"payload"}`
-	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20017).Return(true)
+	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20017, -1).Return(true)
 	errresp := rh.DataDelivery(instancedata)
 
 	assert.Nil(t, errresp)
@@ -412,12 +420,12 @@ func (s *SdlMock) SetIf(ns string, key string, oldData, newData interface{}) (bo
 	return args.Bool(0), args.Error(1)
 }
 
-func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string, mtype int) bool {
+func (rmr *RmrSenderMock) RmrSendToXapp(httpBodyString string, mtype int, subid int) bool {
 	if httpBodyString == `{"blocking_rate":20,"enforce":true,"trigger_threshold":10,"window_length":20}` {
-		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype)
+		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype, subid)
 		return args.Bool(0)
 	} else if httpBodyString == `{"ei_job_id":"1","payload":"payload"}` {
-		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype)
+		args := rmr.MethodCalled("RmrSendToXapp", httpBodyString, mtype, subid)
 		return args.Bool(0)
 	}
 	return true
