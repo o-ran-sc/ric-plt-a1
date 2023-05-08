@@ -13,3 +13,12 @@
 #   limitations under the License.
 #
 log-level: debug
+
+#Config variable for rmr
+NAME: ""
+MAX_SIZE: 65534
+THREAD_TYPE: 0
+LOW_LATENCY: false
+FAST_ACK: false
+MAX_RETRY_ON_FAILURE: 1
+PORT : 4561
