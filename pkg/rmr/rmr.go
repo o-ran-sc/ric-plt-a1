@@ -29,6 +29,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/config"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/policy"
@@ -56,17 +57,18 @@ type IRmrSender interface {
 }
 
 func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
+	config := config.ParseConfiguration()
 	RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
 		StatDesc: "",
 		RmrData: xapp.PortData{
-			//TODO: Read configuration from config file
-			Name:              "",
-			MaxSize:           65534,
-			ThreadType:        0,
-			LowLatency:        false,
-			FastAck:           false,
-			MaxRetryOnFailure: 1,
-			Port:              4561,
+
+			Name:              config.Name,
+			MaxSize:           config.MaxSize,
+			ThreadType:        config.ThreadType,
+			LowLatency:        config.LowLatency,
+			FastAck:           config.FastAck,
+			MaxRetryOnFailure: config.MaxRetryOnFailure,
+			Port:              config.Port,
 		},
 	})
 
