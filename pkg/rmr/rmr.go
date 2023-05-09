@@ -59,7 +59,7 @@ func NewRMRSender(policyManager *policy.PolicyManager) IRmrSender {
 	RMRclient := xapp.NewRMRClientWithParams(&xapp.RMRClientParams{
 		StatDesc: "",
 		RmrData: xapp.PortData{
-			//TODO: Read configuration from config file
+			 
 			Name:              "",
 			MaxSize:           65534,
 			ThreadType:        0,
