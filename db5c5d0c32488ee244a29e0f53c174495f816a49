@@ -16,6 +16,52 @@
       "message": "Kindly review and merge",
       "revId": "db5c5d0c32488ee244a29e0f53c174495f816a49",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "146af3b2_a656c0a4",
+        "filename": "config/configuration.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2023-05-09T10:30:22Z",
+      "side": 1,
+      "message": "avoid panic",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 104
+      },
+      "revId": "db5c5d0c32488ee244a29e0f53c174495f816a49",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d961067_a346c63b",
+        "filename": "config/configuration.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2023-05-09T10:30:22Z",
+      "side": 1,
+      "message": "add default values/",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "db5c5d0c32488ee244a29e0f53c174495f816a49",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
