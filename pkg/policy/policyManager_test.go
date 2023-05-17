@@ -48,11 +48,10 @@ func TestMain(m *testing.M) {
 func TestSetPolicyInstance(t *testing.T) {
 	var policyTypeId int
 	policyTypeId = 20001
-	var policyInstanceID int
-	policyInstanceID = 123456
+	policyInstanceID := "123456"
 	var status string
 	status = "OK"
-	instancehandlerKey := a1HandlerPrefix + strconv.FormatInt(20001, 10) + "." + strconv.FormatInt(int64(policyInstanceID), 10)
+	instancehandlerKey := a1HandlerPrefix + strconv.FormatInt(20001, 10) + "." + policyInstanceID
 	instancearr := []interface{}{instancehandlerKey, status}
 	sdlInst.On("Set", "A1m_ns", instancearr).Return(nil)
 	errresp := pm.SetPolicyInstanceStatus(policyTypeId, policyInstanceID, status)

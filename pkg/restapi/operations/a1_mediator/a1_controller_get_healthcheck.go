@@ -49,11 +49,10 @@ func NewA1ControllerGetHealthcheck(ctx *middleware.Context, handler A1Controller
 	return &A1ControllerGetHealthcheck{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerGetHealthcheck swagger:route GET /a1-p/healthcheck A1 Mediator a1ControllerGetHealthcheck
+/*
+	A1ControllerGetHealthcheck swagger:route GET /a1-p/healthcheck A1 Mediator a1ControllerGetHealthcheck
 
 Perform a healthcheck on a1
-
-
 */
 type A1ControllerGetHealthcheck struct {
 	Context *middleware.Context
@@ -63,17 +62,15 @@ type A1ControllerGetHealthcheck struct {
 func (o *A1ControllerGetHealthcheck) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerGetHealthcheckParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

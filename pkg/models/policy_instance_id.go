@@ -26,16 +26,24 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/strfmt"
 )
 
 // PolicyInstanceID represents a policy instance identifier. UUIDs are advisable but can be any string
 //
+// Example: 3d2157af-6a8f-4a7c-810f-38c2f824bf12
 //
 // swagger:model policy_instance_id
 type PolicyInstanceID string
 
 // Validate validates this policy instance id
 func (m PolicyInstanceID) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this policy instance id based on context it is used
+func (m PolicyInstanceID) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

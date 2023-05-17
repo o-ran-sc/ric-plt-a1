@@ -22,6 +22,7 @@
 package policy
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
@@ -29,6 +30,8 @@ import (
 
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/a1"
 	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/notification"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi/operations/a1_mediator"
 	"gerrit.o-ran-sc.org/r/ric-plt/sdlgo"
 )
 
@@ -36,10 +39,11 @@ var policyTypeNotFoundError = errors.New("Policy Type Not Found")
 var policyInstanceNotFoundError = errors.New("Policy Instance Not Found")
 
 const (
-	a1HandlerPrefix  = "a1.policy_handler."
-	a1PolicyPrefix   = "a1.policy_type."
-	a1MediatorNs     = "A1m_ns"
-	a1InstancePrefix = "a1.policy_instance."
+	a1HandlerPrefix                 = "a1.policy_handler."
+	a1PolicyPrefix                  = "a1.policy_type."
+	a1MediatorNs                    = "A1m_ns"
+	a1InstancePrefix                = "a1.policy_instance."
+	a1NotificationDestinationPrefix = "a1.policy_notification_destination."
 )
 
 func NewPolicyManager(sdl *sdlgo.SyncStorage) *PolicyManager {
@@ -52,9 +56,9 @@ func createPolicyManager(sdlInst iSdl) *PolicyManager {
 	}
 	return pm
 }
-func (pm *PolicyManager) SetPolicyInstanceStatus(policyTypeId int, policyInstanceID int, status string) error {
-	a1.Logger.Debug("message recieved for %d and %d", policyTypeId, policyInstanceID)
-	instancehandlerKey := a1HandlerPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + strconv.FormatInt((int64(policyInstanceID)), 10)
+func (pm *PolicyManager) SetPolicyInstanceStatus(policyTypeId int, policyInstanceID string, status string) error {
+	a1.Logger.Debug("In SetPolicyInstanceStatus message recieved for %d and %s", policyTypeId, policyInstanceID)
+	instancehandlerKey := a1HandlerPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + policyInstanceID
 	err := pm.db.Set(a1MediatorNs, instancehandlerKey, status)
 	if err != nil {
 		a1.Logger.Error("error1 :%+v", err)
@@ -63,10 +67,69 @@ func (pm *PolicyManager) SetPolicyInstanceStatus(policyTypeId int, policyInstanc
 	return nil
 }
 
+func (pm *PolicyManager) GetPolicyInstanceStatus(policyTypeId int, policyInstanceID string) (bool, error) {
+	a1.Logger.Debug("In GetPolicyInstanceStatus message recieved for %d and %s", policyTypeId, policyInstanceID)
+	instancehandlerKey := a1HandlerPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + policyInstanceID
+	keys := []string{instancehandlerKey}
+	resp, err := pm.db.Get(a1MediatorNs, keys)
+	if err != nil {
+		a1.Logger.Error("error1 :%+v", err)
+		return false, err
+	}
+	for _, key := range resp {
+		if key == "OK" {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
+func (pm *PolicyManager) SendPolicyStatusNotification(policyTypeId int, policyInstanceID string, handler string, status string) error {
+	a1.Logger.Debug("In SendPolicyStatusNotification status message recieved for %d and %s", policyTypeId, policyInstanceID)
+	notificationDestinationkey := a1NotificationDestinationPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + fmt.Sprint(policyInstanceID)
+	keys := [1]string{notificationDestinationkey}
+	data, err := pm.db.Get(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("error1 :%+v", err)
+		return err
+	}
+
+	if data[notificationDestinationkey] == nil {
+		// notificationDestination URL is not available. Not an error, non-RT RIC
+		// possibly not expecting any callback.
+		return nil
+	}
+
+	notificationDestination, ok := data[notificationDestinationkey].(string)
+	if !ok {
+		return errors.New("failed to process notificationDestination URL")
+	}
+
+	policyInstanceStatus := a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody{EnforceStatus: "ENFORCED"}
+	enforced, err := pm.GetPolicyInstanceStatus(policyTypeId, policyInstanceID)
+	if err != nil {
+		return err
+	}
+
+	if !enforced {
+		policyInstanceStatus.EnforceStatus = "NOT ENFORCED"
+		policyInstanceStatus.EnforceReason = "OTHER_REASON"
+	}
+
+	jsonbody, err := json.Marshal(policyInstanceStatus)
+	if err != nil {
+		return err
+	}
+	err = notification.SendNotification(notificationDestination, string(jsonbody))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (im *PolicyManager) GetAllPolicyInstance(policyTypeId int) ([]models.PolicyInstanceID, error) {
 	a1.Logger.Debug("GetAllPolicyInstance")
 	var policyTypeInstances = []models.PolicyInstanceID{}
-
 	keys, err := im.db.GetAll("A1m_ns")
 
 	if err != nil {

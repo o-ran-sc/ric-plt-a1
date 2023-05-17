@@ -49,11 +49,10 @@ func NewA1ControllerDataDelivery(ctx *middleware.Context, handler A1ControllerDa
 	return &A1ControllerDataDelivery{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerDataDelivery swagger:route POST /data-delivery A1 EI Data Delivery a1ControllerDataDelivery
+/*
+	A1ControllerDataDelivery swagger:route POST /data-delivery A1 EI Data Delivery a1ControllerDataDelivery
 
 Deliver data produced by data producer.
-
-
 */
 type A1ControllerDataDelivery struct {
 	Context *middleware.Context
@@ -63,17 +62,15 @@ type A1ControllerDataDelivery struct {
 func (o *A1ControllerDataDelivery) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerDataDeliveryParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

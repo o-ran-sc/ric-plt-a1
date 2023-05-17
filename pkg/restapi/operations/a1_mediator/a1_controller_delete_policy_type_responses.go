@@ -34,8 +34,8 @@ import (
 // A1ControllerDeletePolicyTypeNoContentCode is the HTTP code returned for type A1ControllerDeletePolicyTypeNoContent
 const A1ControllerDeletePolicyTypeNoContentCode int = 204
 
-/*A1ControllerDeletePolicyTypeNoContent policy type successfully deleted
-
+/*
+A1ControllerDeletePolicyTypeNoContent policy type successfully deleted
 
 swagger:response a1ControllerDeletePolicyTypeNoContent
 */
@@ -59,8 +59,8 @@ func (o *A1ControllerDeletePolicyTypeNoContent) WriteResponse(rw http.ResponseWr
 // A1ControllerDeletePolicyTypeBadRequestCode is the HTTP code returned for type A1ControllerDeletePolicyTypeBadRequest
 const A1ControllerDeletePolicyTypeBadRequestCode int = 400
 
-/*A1ControllerDeletePolicyTypeBadRequest Policy type cannot be deleted because there are instances All instances must be removed before a policy type can be deleted
-
+/*
+A1ControllerDeletePolicyTypeBadRequest Policy type cannot be deleted because there are instances All instances must be removed before a policy type can be deleted
 
 swagger:response a1ControllerDeletePolicyTypeBadRequest
 */
@@ -84,8 +84,8 @@ func (o *A1ControllerDeletePolicyTypeBadRequest) WriteResponse(rw http.ResponseW
 // A1ControllerDeletePolicyTypeNotFoundCode is the HTTP code returned for type A1ControllerDeletePolicyTypeNotFound
 const A1ControllerDeletePolicyTypeNotFoundCode int = 404
 
-/*A1ControllerDeletePolicyTypeNotFound policy type not found
-
+/*
+A1ControllerDeletePolicyTypeNotFound policy type not found
 
 swagger:response a1ControllerDeletePolicyTypeNotFound
 */
@@ -109,7 +109,8 @@ func (o *A1ControllerDeletePolicyTypeNotFound) WriteResponse(rw http.ResponseWri
 // A1ControllerDeletePolicyTypeServiceUnavailableCode is the HTTP code returned for type A1ControllerDeletePolicyTypeServiceUnavailable
 const A1ControllerDeletePolicyTypeServiceUnavailableCode int = 503
 
-/*A1ControllerDeletePolicyTypeServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
+/*
+A1ControllerDeletePolicyTypeServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
 
 swagger:response a1ControllerDeletePolicyTypeServiceUnavailable
 */
