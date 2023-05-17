@@ -26,6 +26,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -83,8 +85,8 @@ func (m *PolicyTypeSchema) Validate(formats strfmt.Registry) error {
 
 func (m *PolicyTypeSchema) validateCreateSchema(formats strfmt.Registry) error {
 
-	if err := validate.Required("create_schema", "body", m.CreateSchema); err != nil {
-		return err
+	if m.CreateSchema == nil {
+		return errors.Required("create_schema", "body", nil)
 	}
 
 	return nil
@@ -114,6 +116,11 @@ func (m *PolicyTypeSchema) validatePolicyTypeID(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this policy type schema based on context it is used
+func (m *PolicyTypeSchema) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -34,8 +34,8 @@ import (
 // A1ControllerDeletePolicyInstanceAcceptedCode is the HTTP code returned for type A1ControllerDeletePolicyInstanceAccepted
 const A1ControllerDeletePolicyInstanceAcceptedCode int = 202
 
-/*A1ControllerDeletePolicyInstanceAccepted policy instance deletion initiated
-
+/*
+A1ControllerDeletePolicyInstanceAccepted policy instance deletion initiated
 
 swagger:response a1ControllerDeletePolicyInstanceAccepted
 */
@@ -59,8 +59,8 @@ func (o *A1ControllerDeletePolicyInstanceAccepted) WriteResponse(rw http.Respons
 // A1ControllerDeletePolicyInstanceNotFoundCode is the HTTP code returned for type A1ControllerDeletePolicyInstanceNotFound
 const A1ControllerDeletePolicyInstanceNotFoundCode int = 404
 
-/*A1ControllerDeletePolicyInstanceNotFound there is no policy instance with this policy_instance_id or there is no policy type with this policy_type_id
-
+/*
+A1ControllerDeletePolicyInstanceNotFound there is no policy instance with this policy_instance_id or there is no policy type with this policy_type_id
 
 swagger:response a1ControllerDeletePolicyInstanceNotFound
 */
@@ -84,7 +84,8 @@ func (o *A1ControllerDeletePolicyInstanceNotFound) WriteResponse(rw http.Respons
 // A1ControllerDeletePolicyInstanceServiceUnavailableCode is the HTTP code returned for type A1ControllerDeletePolicyInstanceServiceUnavailable
 const A1ControllerDeletePolicyInstanceServiceUnavailableCode int = 503
 
-/*A1ControllerDeletePolicyInstanceServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
+/*
+A1ControllerDeletePolicyInstanceServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
 
 swagger:response a1ControllerDeletePolicyInstanceServiceUnavailable
 */

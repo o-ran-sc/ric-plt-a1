@@ -34,7 +34,8 @@ import (
 // A1ControllerCreatePolicyTypeCreatedCode is the HTTP code returned for type A1ControllerCreatePolicyTypeCreated
 const A1ControllerCreatePolicyTypeCreatedCode int = 201
 
-/*A1ControllerCreatePolicyTypeCreated policy type successfully created
+/*
+A1ControllerCreatePolicyTypeCreated policy type successfully created
 
 swagger:response a1ControllerCreatePolicyTypeCreated
 */
@@ -58,7 +59,8 @@ func (o *A1ControllerCreatePolicyTypeCreated) WriteResponse(rw http.ResponseWrit
 // A1ControllerCreatePolicyTypeBadRequestCode is the HTTP code returned for type A1ControllerCreatePolicyTypeBadRequest
 const A1ControllerCreatePolicyTypeBadRequestCode int = 400
 
-/*A1ControllerCreatePolicyTypeBadRequest illegal ID, or object already existed
+/*
+A1ControllerCreatePolicyTypeBadRequest illegal ID, or object already existed
 
 swagger:response a1ControllerCreatePolicyTypeBadRequest
 */
@@ -82,7 +84,8 @@ func (o *A1ControllerCreatePolicyTypeBadRequest) WriteResponse(rw http.ResponseW
 // A1ControllerCreatePolicyTypeServiceUnavailableCode is the HTTP code returned for type A1ControllerCreatePolicyTypeServiceUnavailable
 const A1ControllerCreatePolicyTypeServiceUnavailableCode int = 503
 
-/*A1ControllerCreatePolicyTypeServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
+/*
+A1ControllerCreatePolicyTypeServiceUnavailable Potentially transient backend database error. Client should attempt to retry later.
 
 swagger:response a1ControllerCreatePolicyTypeServiceUnavailable
 */

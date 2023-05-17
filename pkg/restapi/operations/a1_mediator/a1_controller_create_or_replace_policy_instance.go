@@ -49,11 +49,10 @@ func NewA1ControllerCreateOrReplacePolicyInstance(ctx *middleware.Context, handl
 	return &A1ControllerCreateOrReplacePolicyInstance{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerCreateOrReplacePolicyInstance swagger:route PUT /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerCreateOrReplacePolicyInstance
+/*
+	A1ControllerCreateOrReplacePolicyInstance swagger:route PUT /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerCreateOrReplacePolicyInstance
 
 Create or replace a policy instance of type policy_type_id. The schema of the PUT body is defined by the create_schema field of the policy type.
-
-
 */
 type A1ControllerCreateOrReplacePolicyInstance struct {
 	Context *middleware.Context
@@ -63,17 +62,15 @@ type A1ControllerCreateOrReplacePolicyInstance struct {
 func (o *A1ControllerCreateOrReplacePolicyInstance) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerCreateOrReplacePolicyInstanceParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

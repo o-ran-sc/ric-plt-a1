@@ -38,7 +38,7 @@ RUN apt update && apt install --reinstall -y \
 
 #Install RMR
 
-ARG RMR_VER=4.8.3
+ARG RMR_VER=4.8.5
 ARG RMR_PKG_URL=https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/
 
 RUN wget -nv --content-disposition ${RMR_PKG_URL}/rmr_${RMR_VER}_amd64.deb/download.deb
@@ -67,7 +67,6 @@ COPY  ./config/config_test.yaml /opt/a1-mediator/
 
 ENV CFG_FILE=/opt/a1-mediator/config_test.yaml
 ENV A1_CONFIG_FILE=/opt/a1-mediator/config_test.yaml
-
 
 # Build the code
 RUN GO111MODULE=on GO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/src/ws/cache/go/cmd/a1 cmd/a1.go

@@ -314,6 +314,12 @@ func init() {
           "name": "policy_instance_id",
           "in": "path",
           "required": true
+        },
+        {
+          "type": "string",
+          "description": "URL send by non-RT RIC. This where non-RT RIC expects status updates on the policy creation\n",
+          "name": "notificationDestination",
+          "in": "query"
         }
       ]
     },
@@ -333,18 +339,19 @@ func init() {
             "schema": {
               "type": "object",
               "properties": {
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "has_been_deleted": {
-                  "type": "boolean"
-                },
-                "instance_status": {
+                "enforceReason": {
                   "type": "string",
                   "enum": [
-                    "IN EFFECT",
-                    "NOT IN EFFECT"
+                    "SCOPE_NOT_APPLICABLE",
+                    "STATEMENT_NOT_APPLICABLE",
+                    "OTHER_REASON"
+                  ]
+                },
+                "enforceStatus": {
+                  "type": "string",
+                  "enum": [
+                    "ENFORCED",
+                    "NOT_ENFORCED"
                   ]
                 }
               }
@@ -728,6 +735,12 @@ func init() {
           "name": "policy_instance_id",
           "in": "path",
           "required": true
+        },
+        {
+          "type": "string",
+          "description": "URL send by non-RT RIC. This where non-RT RIC expects status updates on the policy creation\n",
+          "name": "notificationDestination",
+          "in": "query"
         }
       ]
     },
@@ -747,18 +760,19 @@ func init() {
             "schema": {
               "type": "object",
               "properties": {
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "has_been_deleted": {
-                  "type": "boolean"
-                },
-                "instance_status": {
+                "enforceReason": {
                   "type": "string",
                   "enum": [
-                    "IN EFFECT",
-                    "NOT IN EFFECT"
+                    "SCOPE_NOT_APPLICABLE",
+                    "STATEMENT_NOT_APPLICABLE",
+                    "OTHER_REASON"
+                  ]
+                },
+                "enforceStatus": {
+                  "type": "string",
+                  "enum": [
+                    "ENFORCED",
+                    "NOT_ENFORCED"
                   ]
                 }
               }

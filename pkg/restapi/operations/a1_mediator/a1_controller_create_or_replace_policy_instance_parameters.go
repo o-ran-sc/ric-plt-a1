@@ -37,7 +37,8 @@ import (
 )
 
 // NewA1ControllerCreateOrReplacePolicyInstanceParams creates a new A1ControllerCreateOrReplacePolicyInstanceParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewA1ControllerCreateOrReplacePolicyInstanceParams() A1ControllerCreateOrReplacePolicyInstanceParams {
 
 	return A1ControllerCreateOrReplacePolicyInstanceParams{}
@@ -56,6 +57,11 @@ type A1ControllerCreateOrReplacePolicyInstanceParams struct {
 	  In: body
 	*/
 	Body interface{}
+	/*URL send by non-RT RIC. This where non-RT RIC expects status updates on the policy creation
+
+	  In: query
+	*/
+	NotificationDestination *string
 	/*represents a policy instance identifier. UUIDs are advisable but can be any string
 
 	  Required: true
@@ -81,6 +87,8 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceParams) BindRequest(r *http.Re
 
 	o.HTTPRequest = r
 
+	qs := runtime.Values(r.URL.Query())
+
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
 		var body interface{}
@@ -91,6 +99,12 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceParams) BindRequest(r *http.Re
 			o.Body = body
 		}
 	}
+
+	qNotificationDestination, qhkNotificationDestination, _ := qs.GetOK("notificationDestination")
+	if err := o.bindNotificationDestination(qNotificationDestination, qhkNotificationDestination, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rPolicyInstanceID, rhkPolicyInstanceID, _ := route.Params.GetOK("policy_instance_id")
 	if err := o.bindPolicyInstanceID(rPolicyInstanceID, rhkPolicyInstanceID, route.Formats); err != nil {
 		res = append(res, err)
@@ -100,10 +114,27 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceParams) BindRequest(r *http.Re
 	if err := o.bindPolicyTypeID(rPolicyTypeID, rhkPolicyTypeID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindNotificationDestination binds and validates parameter NotificationDestination from query.
+func (o *A1ControllerCreateOrReplacePolicyInstanceParams) bindNotificationDestination(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+	o.NotificationDestination = &raw
+
 	return nil
 }
 
@@ -116,7 +147,6 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceParams) bindPolicyInstanceID(r
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.PolicyInstanceID = raw
 
 	return nil
@@ -148,11 +178,11 @@ func (o *A1ControllerCreateOrReplacePolicyInstanceParams) bindPolicyTypeID(rawDa
 // validatePolicyTypeID carries on validations for parameter PolicyTypeID
 func (o *A1ControllerCreateOrReplacePolicyInstanceParams) validatePolicyTypeID(formats strfmt.Registry) error {
 
-	if err := validate.MinimumInt("policy_type_id", "path", int64(o.PolicyTypeID), 1, false); err != nil {
+	if err := validate.MinimumInt("policy_type_id", "path", o.PolicyTypeID, 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("policy_type_id", "path", int64(o.PolicyTypeID), 2.147483647e+09, false); err != nil {
+	if err := validate.MaximumInt("policy_type_id", "path", o.PolicyTypeID, 2.147483647e+09, false); err != nil {
 		return err
 	}
 

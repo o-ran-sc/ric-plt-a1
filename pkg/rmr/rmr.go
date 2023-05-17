@@ -136,8 +136,17 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 			a1.Logger.Error("Unmarshal error : %+v", err)
 			return err
 		}
-		a1.Logger.Debug("message recieved for %d and %d with status : %s", result["policy_type_id"], result["policy_instance_id"], result["status"])
-		rmr.policyManager.SetPolicyInstanceStatus(int(result["policy_type_id"].(float64)), int(result["policy_instance_id"].(float64)), result["status"].(string))
+		policyTypeId := int(result["policy_type_id"].(float64))
+		policyInstanceId := result["policy_instance_id"].(string)
+		policyHandlerId := result["handler_id"].(string)
+		policyStatus := result["status"].(string)
+
+		a1.Logger.Debug("message recieved for %d and %s with status : %s", policyTypeId, policyInstanceId, policyStatus)
+		rmr.policyManager.SetPolicyInstanceStatus(policyTypeId, policyInstanceId, policyStatus)
+		err = rmr.policyManager.SendPolicyStatusNotification(policyTypeId, policyInstanceId, policyHandlerId, policyStatus)
+		if err != nil {
+			a1.Logger.Debug("failed to send policy status notification %v+", err)
+		}
 	case "A1_POLICY_QUERY":
 		a1.Logger.Debug("Recived policy query")
 		a1.Logger.Debug("message recieved ", msg.Payload)
