@@ -80,7 +80,14 @@ func (r *Restful) setupHandler() *operations.A1API {
 
 	api.A1MediatorA1ControllerGetPolicyTypeHandler = a1_mediator.A1ControllerGetPolicyTypeHandlerFunc(func(params a1_mediator.A1ControllerGetPolicyTypeParams) middleware.Responder {
 		a1.Logger.Debug("handler for get policy type from policytypeID")
-		return a1_mediator.NewA1ControllerGetPolicyTypeOK().WithPayload(r.rh.GetPolicyType(models.PolicyTypeID(params.PolicyTypeID)))
+		policyTypeSchema, err := r.rh.GetPolicyType(models.PolicyTypeID(params.PolicyTypeID))
+		if err == nil {
+			return a1_mediator.NewA1ControllerGetPolicyTypeOK().WithPayload(policyTypeSchema)
+		}
+		if r.rh.IsPolicyTypeNotFound(err) {
+			return a1_mediator.NewA1ControllerGetPolicyTypeNotFound()
+		}
+		return a1_mediator.NewA1ControllerGetPolicyTypeServiceUnavailable()
 	})
 
 	api.A1MediatorA1ControllerCreateOrReplacePolicyInstanceHandler = a1_mediator.A1ControllerCreateOrReplacePolicyInstanceHandlerFunc(func(params a1_mediator.A1ControllerCreateOrReplacePolicyInstanceParams) middleware.Responder {
@@ -91,6 +98,9 @@ func (r *Restful) setupHandler() *operations.A1API {
 		if r.rh.IsValidJson(err) {
 			return a1_mediator.NewA1ControllerCreateOrReplacePolicyInstanceBadRequest()
 		}
+		if r.rh.IsPolicyTypeNotFound(err) {
+			return a1_mediator.NewA1ControllerCreateOrReplacePolicyInstanceNotFound()
+		}
 		return a1_mediator.NewA1ControllerCreateOrReplacePolicyInstanceServiceUnavailable()
 
 	})
@@ -99,9 +109,10 @@ func (r *Restful) setupHandler() *operations.A1API {
 		a1.Logger.Debug("handler for get policy instance from policytypeID")
 		if resp, err := r.rh.GetPolicyInstance(models.PolicyTypeID(params.PolicyTypeID), models.PolicyInstanceID(params.PolicyInstanceID)); err == nil {
 			return a1_mediator.NewA1ControllerGetPolicyInstanceOK().WithPayload(resp)
-		}
-		if r.rh.IsPolicyInstanceNotFound(err) {
+		} else if r.rh.IsPolicyInstanceNotFound(err) {
 			return a1_mediator.NewA1ControllerGetPolicyInstanceNotFound()
+		} else if r.rh.IsPolicyTypeNotFound(err) {
+			return a1_mediator.NewA1ControllerGetPolicyTypeNotFound()
 		}
 		return a1_mediator.NewA1ControllerGetPolicyInstanceServiceUnavailable()
 	})
@@ -126,9 +137,11 @@ func (r *Restful) setupHandler() *operations.A1API {
 			if r.rh.CanPolicyTypeBeDeleted(err) {
 				return a1_mediator.NewA1ControllerDeletePolicyTypeBadRequest()
 			}
+			if r.rh.IsPolicyTypeNotFound(err) {
+				return a1_mediator.NewA1ControllerDeletePolicyTypeNotFound()
+			}
 			return a1_mediator.NewA1ControllerDeletePolicyTypeServiceUnavailable()
 		}
-
 		return a1_mediator.NewA1ControllerDeletePolicyTypeNoContent()
 
 	})
@@ -140,6 +153,8 @@ func (r *Restful) setupHandler() *operations.A1API {
 		}
 		if r.rh.IsPolicyInstanceNotFound(err) {
 			return a1_mediator.NewA1ControllerGetPolicyInstanceStatusNotFound()
+		} else if r.rh.IsPolicyTypeNotFound(err) {
+			return a1_mediator.NewA1ControllerGetPolicyTypeNotFound()
 		}
 		return a1_mediator.NewA1ControllerGetPolicyInstanceStatusServiceUnavailable()
 	})
@@ -148,11 +163,16 @@ func (r *Restful) setupHandler() *operations.A1API {
 		a1.Logger.Debug("handler for delete policy instance")
 		if err := r.rh.DeletePolicyInstance(models.PolicyTypeID(params.PolicyTypeID), models.PolicyInstanceID(params.PolicyInstanceID)); err != nil {
 			if r.rh.CanPolicyInstanceBeDeleted(err) {
+				return a1_mediator.NewA1ControllerDeletePolicyTypeBadRequest()
+			}
+			if r.rh.IsPolicyInstanceNotFound(err) {
 				return a1_mediator.NewA1ControllerDeletePolicyInstanceNotFound()
+			}
+			if r.rh.IsPolicyTypeNotFound(err) {
+				return a1_mediator.NewA1ControllerDeletePolicyTypeNotFound()
 			}
 			return a1_mediator.NewA1ControllerDeletePolicyInstanceServiceUnavailable()
 		}
-
 		return a1_mediator.NewA1ControllerDeletePolicyInstanceAccepted()
 
 	})

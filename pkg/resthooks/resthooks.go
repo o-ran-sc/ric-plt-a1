@@ -65,6 +65,10 @@ func (rh *Resthook) CanPolicyTypeBeDeleted(err error) bool {
 	return err == policyTypeCanNotBeDeletedError
 }
 
+func (rh *Resthook) IsPolicyTypeNotFound(err error) bool {
+        return err == policyTypeNotFoundError
+}
+
 func (rh *Resthook) IsPolicyTypePresent(err error) bool {
 	return err == policyTypeNotFoundError
 }
@@ -135,37 +139,23 @@ func (rh *Resthook) GetAllPolicyType() []models.PolicyTypeID {
 	return policyTypeIDs
 }
 
-func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.PolicyTypeSchema {
+func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) (*models.PolicyTypeSchema, error) {
 	a1.Logger.Debug("GetPolicyType1")
 
-	var policytypeschema *models.PolicyTypeSchema
-	var keys [1]string
-
 	key := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
-	keys[0] = key
-
 	a1.Logger.Debug("key : %+v", key)
 
-	valmap, err := rh.db.Get(a1MediatorNs, keys[:])
-
-	a1.Logger.Debug("policytype map : %+v", valmap)
-
-	if len(valmap) == 0 {
-		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
-		return policytypeschema
-	}
-
+	valmap, err := rh.db.Get(a1MediatorNs, []string{key}[:])
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy type. err: %v", err)
-		return nil
+		return nil, err
 	}
-
 	if valmap[key] == nil {
 		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
-		return policytypeschema
+		return nil, policyTypeNotFoundError
 	}
 
-	a1.Logger.Debug("keysmap : %+v", valmap[key])
+	a1.Logger.Debug("policytype map : %+v", valmap)
 
 	var item models.PolicyTypeSchema
 	valStr := fmt.Sprint(valmap[key])
@@ -175,7 +165,7 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 	valToUnmarshall, err := strconv.Unquote(valkey)
 	if err != nil {
 		a1.Logger.Error("unquote error : %+v", err)
-		return nil
+		return nil, err
 	}
 
 	a1.Logger.Debug("Policy type for %+v :  %+v", key, string(valToUnmarshall))
@@ -185,7 +175,7 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 	a1.Logger.Debug(" Unmarshalled json : %+v", (errunm))
 	a1.Logger.Debug("Policy type Name :  %v", (item.Name))
 
-	return &item
+	return &item, nil
 }
 
 func (rh *Resthook) CreatePolicyType(policyTypeId models.PolicyTypeID, httprequest models.PolicyTypeSchema) error {
@@ -363,7 +353,11 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	a1.Logger.Debug("CreatePolicyInstance function")
 	//  validate the PUT against the schema
 	var policyTypeSchema *models.PolicyTypeSchema
-	policyTypeSchema = rh.GetPolicyType(policyTypeId)
+	policyTypeSchema, err := rh.GetPolicyType(policyTypeId)
+	if err != nil {
+		a1.Logger.Error("failed to get policy type")
+		return err
+	}
 	schemaStr, err := json.Marshal(policyTypeSchema.CreateSchema)
 	if err != nil {
 		a1.Logger.Error("Json Marshal error : %+v", err)
@@ -426,19 +420,13 @@ func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyIn
 	a1.Logger.Debug("key1 : %+v", typekey)
 
 	valmap, err := rh.db.Get(a1MediatorNs, keys[:])
-	if len(valmap) == 0 {
-		a1.Logger.Debug("policy type Not Present for policyid : %v", policyTypeId)
-		return map[string]interface{}{}, policyTypeNotFoundError
-	}
-
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy type. err: %v", err)
-		return map[string]interface{}{}, err
+		return nil, err
 	}
-
 	if valmap[typekey] == nil {
 		a1.Logger.Debug("policy type Not Present for policyid : %v", policyTypeId)
-		return map[string]interface{}{}, policyTypeNotFoundError
+		return nil, policyTypeNotFoundError
 	}
 
 	a1.Logger.Debug("keysmap : %+v", valmap[typekey])
@@ -454,7 +442,7 @@ func (rh *Resthook) GetPolicyInstance(policyTypeId models.PolicyTypeID, policyIn
 
 	if instanceMap[instancekey] == nil {
 		a1.Logger.Debug("policy instance Not Present for policyinstaneid : %v", policyInstanceID)
-		return map[string]interface{}{}, policyInstanceNotFoundError
+		return nil, policyInstanceNotFoundError
 	}
 
 	var valStr map[string]interface{}
@@ -498,6 +486,10 @@ func (rh *Resthook) GetAllPolicyInstance(policyTypeId models.PolicyTypeID) ([]mo
 func (rh *Resthook) DeletePolicyType(policyTypeId models.PolicyTypeID) error {
 	a1.Logger.Debug("DeletePolicyType")
 
+	if err := rh.typeValidity(policyTypeId); err != nil {
+		return err
+	}
+
 	policyinstances, err := rh.GetAllPolicyInstance(policyTypeId)
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy. err: %v", err)
@@ -532,7 +524,7 @@ func (rh *Resthook) typeValidity(policyTypeId models.PolicyTypeID) error {
 		a1.Logger.Error("error in retrieving policytype err: %v", err)
 		return err
 	}
-	if len(valmap) == 0 {
+	if valmap[typekey] == nil {
 		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
 		return policyTypeNotFoundError
 	}
