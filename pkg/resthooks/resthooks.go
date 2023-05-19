@@ -395,7 +395,7 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 		}
 
 		message := rmr.Message{}
-		rmrMessage, err := message.PolicyMessage(strconv.FormatInt((int64(policyTypeId)), 10), string(policyInstanceID), httpBodyString, operation)
+		rmrMessage, err := message.PolicyMessage(int64(policyTypeId), string(policyInstanceID), httpBodyString, operation)
 		if err != nil {
 			a1.Logger.Error("error : %v", err)
 			return err
@@ -712,7 +712,7 @@ func (rh *Resthook) DeletePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	rh.storeDeletedPolicyInstanceMetadata(policyTypeId, policyInstanceID, creation_timestamp.(string))
 
 	message := rmr.Message{}
-	rmrMessage, err1 := message.PolicyMessage(strconv.FormatInt((int64(policyTypeId)), 10), string(policyInstanceID), "", "DELETE")
+	rmrMessage, err1 := message.PolicyMessage(int64(policyTypeId), string(policyInstanceID), "", "DELETE")
 	if err1 != nil {
 		a1.Logger.Error("error : %v", err1)
 		return err1

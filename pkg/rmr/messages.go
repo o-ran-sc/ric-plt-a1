@@ -29,13 +29,16 @@ import (
 type Message struct {
 }
 
-func (m *Message) PolicyMessage(policyTypeId string, policyInstanceID string, httpBody string, operation string) (string, error) {
-	var datajson interface{}
-	datajson = map[string]string{"operation": operation,
-		"policy_type_id":     policyTypeId,
-		"policy_instance_id": policyInstanceID,
-		"payload":            httpBody}
-	data, err := json.Marshal(datajson)
+type PolicyRequestMessage struct {
+	Operation        string `json:"operation"`
+	PolicyTypeId     int64  `json:"policy_type_id"`
+	PolicyInstanceID string `json:"policy_instance_id"`
+	Payload          string `json:"payload"`
+}
+
+func (m *Message) PolicyMessage(policyTypeId int64, policyInstanceID string, httpBody string, operation string) (string, error) {
+	policyReqMsg := PolicyRequestMessage{Operation: operation, PolicyTypeId: policyTypeId, PolicyInstanceID: policyInstanceID, Payload: httpBody}
+	data, err := json.Marshal(policyReqMsg)
 	if err != nil {
 		a1.Logger.Error("marshal error : %v", err)
 		return "", err
