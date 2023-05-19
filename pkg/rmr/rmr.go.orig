@@ -161,7 +161,7 @@ func (rmr *RmrSender) Consume(msg *xapp.RMRParams) (err error) {
 			}
 			a1.Logger.Debug("policyinstance ", policyinstance.(string))
 			message := Message{}
-			rmrMessage, err1 := message.PolicyMessage(int64(policytypeid), string(policyinstanceid), policyinstance.(string), "CREATE")
+			rmrMessage, err1 := message.PolicyMessage(strconv.FormatInt((int64(policytypeid)), 10), string(policyinstanceid), policyinstance.(string), "CREATE")
 			if err1 != nil {
 				a1.Logger.Error("error : %v", err1)
 				return err1
