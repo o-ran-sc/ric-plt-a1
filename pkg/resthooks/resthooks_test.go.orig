@@ -93,7 +93,7 @@ func TestGetPolicyType(t *testing.T) {
 	keys[0] = key
 	//Setup Expectations
 	sdlInst.On("Get", a1MediatorNs, keys[:]).Return(map[string]interface{}{key: policyTypeSchema}, nil)
-	resp, _ := rh.GetPolicyType(policyTypeId)
+	resp := rh.GetPolicyType(policyTypeId)
 	assert.NotNil(t, resp)
 
 	sdlInst.AssertExpectations(t)
