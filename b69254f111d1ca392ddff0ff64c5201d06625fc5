@@ -106,6 +106,23 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7378f362_fff9c659",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-06-12T07:39:45Z",
+      "side": 1,
+      "message": "Hi @Prashant ,\nFollowing is the command and flags used for code generation with \nSwagger Version:v0.29.07 \n\nswagger generate server --spec\u003dapi.yaml --target\u003dpkg --exclude-main\n\nKindly check.",
+      "revId": "b69254f111d1ca392ddff0ff64c5201d06625fc5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "374025db_91d19366",
