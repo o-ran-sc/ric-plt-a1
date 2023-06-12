@@ -49,7 +49,7 @@ func NewA1ControllerGetPolicyType(ctx *middleware.Context, handler A1ControllerG
 	return &A1ControllerGetPolicyType{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerGetPolicyType swagger:route GET /a1-p/policytypes/{policy_type_id} A1 Mediator a1ControllerGetPolicyType
+/* A1ControllerGetPolicyType swagger:route GET /a1-p/policytypes/{policy_type_id} A1 Mediator a1ControllerGetPolicyType
 
 Get this policy type
 
@@ -63,17 +63,15 @@ type A1ControllerGetPolicyType struct {
 func (o *A1ControllerGetPolicyType) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerGetPolicyTypeParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

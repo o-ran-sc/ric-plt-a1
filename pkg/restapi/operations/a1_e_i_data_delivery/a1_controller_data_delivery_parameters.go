@@ -34,7 +34,8 @@ import (
 )
 
 // NewA1ControllerDataDeliveryParams creates a new A1ControllerDataDeliveryParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewA1ControllerDataDeliveryParams() A1ControllerDataDeliveryParams {
 
 	return A1ControllerDataDeliveryParams{}

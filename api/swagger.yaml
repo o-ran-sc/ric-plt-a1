@@ -170,6 +170,11 @@ paths:
         description: >
           represents a policy instance identifier. UUIDs are advisable but can
           be any string
+      - name: notificationDestination
+        in: query
+        type: string
+        description: >
+          URL send by non-RT RIC. This where non-RT RIC expects status updates on the policy creation
     get:
       description: |
         Retrieve the policy instance
@@ -281,16 +286,17 @@ paths:
           schema:
             type: object
             properties:
-              instance_status:
+              enforceStatus:
                 type: string
                 enum:
-                  - IN EFFECT
-                  - NOT IN EFFECT
-              has_been_deleted:
-                type: boolean
-              created_at:
+                  - ENFORCED
+                  - NOT_ENFORCED
+              enforceReason:
                 type: string
-                format: date-time
+                enum:
+                 - SCOPE_NOT_APPLICABLE
+                 - STATEMENT_NOT_APPLICABLE
+                 - OTHER_REASON
         '404':
           description: >
             there is no policy instance with this policy_instance_id or there is

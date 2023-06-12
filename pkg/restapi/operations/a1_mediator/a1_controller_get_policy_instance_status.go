@@ -26,6 +26,7 @@ package a1_mediator
 // Editing this file might prove futile when you re-run the generate command
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 
@@ -54,7 +55,7 @@ func NewA1ControllerGetPolicyInstanceStatus(ctx *middleware.Context, handler A1C
 	return &A1ControllerGetPolicyInstanceStatus{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerGetPolicyInstanceStatus swagger:route GET /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}/status A1 Mediator a1ControllerGetPolicyInstanceStatus
+/* A1ControllerGetPolicyInstanceStatus swagger:route GET /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}/status A1 Mediator a1ControllerGetPolicyInstanceStatus
 
 Retrieve the policy instance status across all handlers of the policy If this endpoint returns successfully (200), it is either IN EFFECT or NOT IN EFFECT. IN EFFECT is returned if at least one policy handler in the RIC is implementing the policy NOT IN EFFECT is returned otherwise If a policy instance is successfully deleted, this endpoint will return a 404 (not a 200)
 
@@ -68,17 +69,15 @@ type A1ControllerGetPolicyInstanceStatus struct {
 func (o *A1ControllerGetPolicyInstanceStatus) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerGetPolicyInstanceStatusParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
@@ -88,27 +87,24 @@ func (o *A1ControllerGetPolicyInstanceStatus) ServeHTTP(rw http.ResponseWriter, 
 // swagger:model A1ControllerGetPolicyInstanceStatusOKBody
 type A1ControllerGetPolicyInstanceStatusOKBody struct {
 
-	// created at
-	// Format: date-time
-	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
+	// enforce reason
+	// Enum: [SCOPE_NOT_APPLICABLE STATEMENT_NOT_APPLICABLE OTHER_REASON]
+	EnforceReason string `json:"enforceReason,omitempty"`
 
-	// has been deleted
-	HasBeenDeleted bool `json:"has_been_deleted,omitempty"`
-
-	// instance status
-	// Enum: [IN EFFECT NOT IN EFFECT]
-	InstanceStatus string `json:"instance_status,omitempty"`
+	// enforce status
+	// Enum: [ENFORCED NOT_ENFORCED]
+	EnforceStatus string `json:"enforceStatus,omitempty"`
 }
 
 // Validate validates this a1 controller get policy instance status o k body
 func (o *A1ControllerGetPolicyInstanceStatusOKBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := o.validateCreatedAt(formats); err != nil {
+	if err := o.validateEnforceReason(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := o.validateInstanceStatus(formats); err != nil {
+	if err := o.validateEnforceStatus(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -118,59 +114,95 @@ func (o *A1ControllerGetPolicyInstanceStatusOKBody) Validate(formats strfmt.Regi
 	return nil
 }
 
-func (o *A1ControllerGetPolicyInstanceStatusOKBody) validateCreatedAt(formats strfmt.Registry) error {
-
-	if swag.IsZero(o.CreatedAt) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("a1ControllerGetPolicyInstanceStatusOK"+"."+"created_at", "body", "date-time", o.CreatedAt.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var a1ControllerGetPolicyInstanceStatusOKBodyTypeInstanceStatusPropEnum []interface{}
+var a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceReasonPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IN EFFECT","NOT IN EFFECT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["SCOPE_NOT_APPLICABLE","STATEMENT_NOT_APPLICABLE","OTHER_REASON"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		a1ControllerGetPolicyInstanceStatusOKBodyTypeInstanceStatusPropEnum = append(a1ControllerGetPolicyInstanceStatusOKBodyTypeInstanceStatusPropEnum, v)
+		a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceReasonPropEnum = append(a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceReasonPropEnum, v)
 	}
 }
 
 const (
 
-	// A1ControllerGetPolicyInstanceStatusOKBodyInstanceStatusINEFFECT captures enum value "IN EFFECT"
-	A1ControllerGetPolicyInstanceStatusOKBodyInstanceStatusINEFFECT string = "IN EFFECT"
+	// A1ControllerGetPolicyInstanceStatusOKBodyEnforceReasonSCOPENOTAPPLICABLE captures enum value "SCOPE_NOT_APPLICABLE"
+	A1ControllerGetPolicyInstanceStatusOKBodyEnforceReasonSCOPENOTAPPLICABLE string = "SCOPE_NOT_APPLICABLE"
 
-	// A1ControllerGetPolicyInstanceStatusOKBodyInstanceStatusNOTINEFFECT captures enum value "NOT IN EFFECT"
-	A1ControllerGetPolicyInstanceStatusOKBodyInstanceStatusNOTINEFFECT string = "NOT IN EFFECT"
+	// A1ControllerGetPolicyInstanceStatusOKBodyEnforceReasonSTATEMENTNOTAPPLICABLE captures enum value "STATEMENT_NOT_APPLICABLE"
+	A1ControllerGetPolicyInstanceStatusOKBodyEnforceReasonSTATEMENTNOTAPPLICABLE string = "STATEMENT_NOT_APPLICABLE"
+
+	// A1ControllerGetPolicyInstanceStatusOKBodyEnforceReasonOTHERREASON captures enum value "OTHER_REASON"
+	A1ControllerGetPolicyInstanceStatusOKBodyEnforceReasonOTHERREASON string = "OTHER_REASON"
 )
 
 // prop value enum
-func (o *A1ControllerGetPolicyInstanceStatusOKBody) validateInstanceStatusEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, a1ControllerGetPolicyInstanceStatusOKBodyTypeInstanceStatusPropEnum); err != nil {
+func (o *A1ControllerGetPolicyInstanceStatusOKBody) validateEnforceReasonEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceReasonPropEnum, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *A1ControllerGetPolicyInstanceStatusOKBody) validateInstanceStatus(formats strfmt.Registry) error {
-
-	if swag.IsZero(o.InstanceStatus) { // not required
+func (o *A1ControllerGetPolicyInstanceStatusOKBody) validateEnforceReason(formats strfmt.Registry) error {
+	if swag.IsZero(o.EnforceReason) { // not required
 		return nil
 	}
 
 	// value enum
-	if err := o.validateInstanceStatusEnum("a1ControllerGetPolicyInstanceStatusOK"+"."+"instance_status", "body", o.InstanceStatus); err != nil {
+	if err := o.validateEnforceReasonEnum("a1ControllerGetPolicyInstanceStatusOK"+"."+"enforceReason", "body", o.EnforceReason); err != nil {
 		return err
 	}
 
+	return nil
+}
+
+var a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["ENFORCED","NOT_ENFORCED"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceStatusPropEnum = append(a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceStatusPropEnum, v)
+	}
+}
+
+const (
+
+	// A1ControllerGetPolicyInstanceStatusOKBodyEnforceStatusENFORCED captures enum value "ENFORCED"
+	A1ControllerGetPolicyInstanceStatusOKBodyEnforceStatusENFORCED string = "ENFORCED"
+
+	// A1ControllerGetPolicyInstanceStatusOKBodyEnforceStatusNOTENFORCED captures enum value "NOT_ENFORCED"
+	A1ControllerGetPolicyInstanceStatusOKBodyEnforceStatusNOTENFORCED string = "NOT_ENFORCED"
+)
+
+// prop value enum
+func (o *A1ControllerGetPolicyInstanceStatusOKBody) validateEnforceStatusEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, a1ControllerGetPolicyInstanceStatusOKBodyTypeEnforceStatusPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *A1ControllerGetPolicyInstanceStatusOKBody) validateEnforceStatus(formats strfmt.Registry) error {
+	if swag.IsZero(o.EnforceStatus) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateEnforceStatusEnum("a1ControllerGetPolicyInstanceStatusOK"+"."+"enforceStatus", "body", o.EnforceStatus); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this a1 controller get policy instance status o k body based on context it is used
+func (o *A1ControllerGetPolicyInstanceStatusOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
