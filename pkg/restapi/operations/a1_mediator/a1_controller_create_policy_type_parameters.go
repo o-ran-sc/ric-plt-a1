@@ -26,6 +26,7 @@ package a1_mediator
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -35,11 +36,12 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-       "gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/models"
 )
 
 // NewA1ControllerCreatePolicyTypeParams creates a new A1ControllerCreatePolicyTypeParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewA1ControllerCreatePolicyTypeParams() A1ControllerCreatePolicyTypeParams {
 
 	return A1ControllerCreatePolicyTypeParams{}
@@ -88,16 +90,21 @@ func (o *A1ControllerCreatePolicyTypeParams) BindRequest(r *http.Request, route 
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.Body = &body
 			}
 		}
 	}
+
 	rPolicyTypeID, rhkPolicyTypeID, _ := route.Params.GetOK("policy_type_id")
 	if err := o.bindPolicyTypeID(rPolicyTypeID, rhkPolicyTypeID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -130,11 +137,11 @@ func (o *A1ControllerCreatePolicyTypeParams) bindPolicyTypeID(rawData []string, 
 // validatePolicyTypeID carries on validations for parameter PolicyTypeID
 func (o *A1ControllerCreatePolicyTypeParams) validatePolicyTypeID(formats strfmt.Registry) error {
 
-	if err := validate.MinimumInt("policy_type_id", "path", int64(o.PolicyTypeID), 1, false); err != nil {
+	if err := validate.MinimumInt("policy_type_id", "path", o.PolicyTypeID, 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("policy_type_id", "path", int64(o.PolicyTypeID), 2.147483647e+09, false); err != nil {
+	if err := validate.MaximumInt("policy_type_id", "path", o.PolicyTypeID, 2.147483647e+09, false); err != nil {
 		return err
 	}
 

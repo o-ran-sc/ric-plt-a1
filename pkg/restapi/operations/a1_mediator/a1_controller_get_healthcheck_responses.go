@@ -34,8 +34,8 @@ import (
 // A1ControllerGetHealthcheckOKCode is the HTTP code returned for type A1ControllerGetHealthcheckOK
 const A1ControllerGetHealthcheckOKCode int = 200
 
-/*A1ControllerGetHealthcheckOK A1 is healthy. Anything other than a 200 should be considered a1 as failing
-
+/*
+A1ControllerGetHealthcheckOK A1 is healthy. Anything other than a 200 should be considered a1 as failing
 
 swagger:response a1ControllerGetHealthcheckOK
 */
@@ -55,7 +55,6 @@ func (o *A1ControllerGetHealthcheckOK) WriteResponse(rw http.ResponseWriter, pro
 
 	rw.WriteHeader(200)
 }
-
 // A1ControllerGetHealthcheckInternalServerErrorCode is the HTTP code returned for type A1ControllerGetHealthcheckInternalServerError
 const A1ControllerGetHealthcheckInternalServerErrorCode int = 500
 
@@ -79,3 +78,4 @@ func (o *A1ControllerGetHealthcheckInternalServerError) WriteResponse(rw http.Re
 
 	rw.WriteHeader(500)
 }
+

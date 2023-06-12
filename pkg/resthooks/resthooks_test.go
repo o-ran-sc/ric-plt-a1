@@ -1,21 +1,23 @@
 /*
 ==================================================================================
-  Copyright (c) 2021 Samsung
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+	Copyright (c) 2021 Samsung
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	 Licensed under the Apache License, Version 2.0 (the "License");
+	 you may not use this file except in compliance with the License.
+	 You may obtain a copy of the License at
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+	     http://www.apache.org/licenses/LICENSE-2.0
 
-   This source code is part of the near-RT RIC (RAN Intelligent Controller)
-   platform project (RICP).
+	 Unless required by applicable law or agreed to in writing, software
+	 distributed under the License is distributed on an "AS IS" BASIS,
+	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 See the License for the specific language governing permissions and
+	 limitations under the License.
+
+	 This source code is part of the near-RT RIC (RAN Intelligent Controller)
+	 platform project (RICP).
+
 ==================================================================================
 */
 package resthooks
@@ -157,7 +159,7 @@ func TestCreatePolicyTypeInstance(t *testing.T) {
 	sdlInst.On("Set", "A1m_ns", metadatainstancearr).Return(nil)
 	rmrSenderInst.On("RmrSendToXapp", "httpBodyString", 20010, int(policyTypeId)).Return(true)
 
-	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata)
+	errresp := rh.CreatePolicyInstance(policyTypeId, policyInstanceID, instancedata, "")
 
 	assert.Nil(t, errresp)
 	sdlInst.AssertExpectations(t)
@@ -254,7 +256,9 @@ func TestDeletePolicyInstance(t *testing.T) {
 	description := "various parameters to control admission of dual connection"
 	policyTypeSchema.Description = &description
 	schema := `{"$schema": "http://json-schema.org/draft-07/schema#","type":"object","properties": {"enforce": {"type":"boolean","default":"true",},"window_length": {"type":        "integer","default":1,"minimum":1,"maximum":60,"description": "Sliding window length (in minutes)",},
+
 "blocking_rate": {"type":"number","default":10,"minimum":1,"maximum":100,"description": "% Connections to block",},"additionalProperties": false,},}`
+
 	policyTypeSchema.CreateSchema = schema
 
 	key := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
@@ -264,11 +268,11 @@ func TestDeletePolicyInstance(t *testing.T) {
 	sdlInst.On("Get", a1MediatorNs, policytypekeys[:]).Return(map[string]interface{}{key: policyTypeSchema}, nil)
 
 	httpBody := `{
-		"enforce":true,
-		"window_length":20,
-	   "blocking_rate":20,
-		"trigger_threshold":10
-		}`
+			"enforce":true,
+			"window_length":20,
+		   "blocking_rate":20,
+			"trigger_threshold":10
+			}`
 	instancekey := a1InstancePrefix + strconv.FormatInt(20001, 10) + "." + string(policyInstanceID)
 	var instancekeys [1]string
 	instancekeys[0] = instancekey
@@ -279,9 +283,9 @@ func TestDeletePolicyInstance(t *testing.T) {
 	instanceMetadataKey := a1InstanceMetadataPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
 	instanceMetadataKeys[0] = instanceMetadataKey
 	httpBody = `{
-		"created_at":"2022-11-02 10:30:20",
-			"instance_status":"NOT IN EFFECT"
-		}`
+			"created_at":"2022-11-02 10:30:20",
+				"instance_status":"NOT IN EFFECT"
+			}`
 
 	sdlInst.On("Get", a1MediatorNs, instanceMetadataKeys[:]).Return(httpBody, nil)
 
@@ -304,7 +308,10 @@ func TestDeletePolicyInstance(t *testing.T) {
 	httpBodyString := `{"operation":"DELETE","payload":"","policy_instance_id":"123456","policy_type_id":"20001"}`
 
 	rmrSenderInst.On("RmrSendToXapp", httpBodyString, 20010, int(policyTypeId)).Return(true)
-
+	notificationDestinationkey := a1NotificationDestinationPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	var notificationDestinationkeys [1]string
+	notificationDestinationkeys[0] = notificationDestinationkey
+	sdlInst.On("Remove", a1MediatorNs, notificationDestinationkeys[:]).Return(nil)
 	errresp := rh.DeletePolicyInstance(policyTypeId, policyInstanceID)
 
 	assert.Nil(t, errresp)

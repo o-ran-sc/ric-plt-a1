@@ -1,21 +1,23 @@
 /*
 ==================================================================================
-  Copyright (c) 2021 Samsung
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+	Copyright (c) 2021 Samsung
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	 Licensed under the Apache License, Version 2.0 (the "License");
+	 you may not use this file except in compliance with the License.
+	 You may obtain a copy of the License at
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+	     http://www.apache.org/licenses/LICENSE-2.0
 
-   This source code is part of the near-RT RIC (RAN Intelligent Controller)
-   platform project (RICP).
+	 Unless required by applicable law or agreed to in writing, software
+	 distributed under the License is distributed on an "AS IS" BASIS,
+	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 See the License for the specific language governing permissions and
+	 limitations under the License.
+
+	 This source code is part of the near-RT RIC (RAN Intelligent Controller)
+	 platform project (RICP).
+
 ==================================================================================
 */
 package resthooks
@@ -39,13 +41,14 @@ import (
 )
 
 const (
-	a1PolicyPrefix           = "a1.policy_type."
-	a1MediatorNs             = "A1m_ns"
-	a1InstancePrefix         = "a1.policy_instance."
-	a1InstanceMetadataPrefix = "a1.policy_inst_metadata."
-	a1HandlerPrefix          = "a1.policy_handler."
-	a1PolicyRequest          = 20010
-	a1EIDataDelivery         = 20017
+	a1PolicyPrefix                  = "a1.policy_type."
+	a1MediatorNs                    = "A1m_ns"
+	a1InstancePrefix                = "a1.policy_instance."
+	a1NotificationDestinationPrefix = "a1.policy_notification_destination."
+	a1InstanceMetadataPrefix        = "a1.policy_inst_metadata."
+	a1HandlerPrefix                 = "a1.policy_handler."
+	a1PolicyRequest                 = 20010
+	a1EIDataDelivery                = 20017
 )
 
 var typeAlreadyError = errors.New("Policy Type already exists")
@@ -65,7 +68,7 @@ func (rh *Resthook) CanPolicyTypeBeDeleted(err error) bool {
 	return err == policyTypeCanNotBeDeletedError
 }
 
-func (rh *Resthook) IsPolicyTypePresent(err error) bool {
+func (rh *Resthook) IsPolicyTypeNotFound(err error) bool {
 	return err == policyTypeNotFoundError
 }
 
@@ -272,7 +275,7 @@ func validate(httpBodyString string, schemaString string) bool {
 	return true
 }
 
-func (rh *Resthook) storePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) (string, error) {
+func (rh *Resthook) storePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}, notificationDestination string) (string, error) {
 	var keys [1]string
 	operation := "CREATE"
 	typekey := a1PolicyPrefix + strconv.FormatInt((int64(policyTypeId)), 10)
@@ -292,6 +295,7 @@ func (rh *Resthook) storePolicyInstance(policyTypeId models.PolicyTypeID, policy
 	// TODO : rmr creation_timestamp := time.Now() // will be needed for rmr to notify the creation of instance
 
 	instancekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	notificationDestinationkey := a1NotificationDestinationPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
 	keys[0] = typekey
 	instanceMap, err := rh.db.Get(a1MediatorNs, keys[:])
 	if err != nil {
@@ -305,14 +309,21 @@ func (rh *Resthook) storePolicyInstance(policyTypeId models.PolicyTypeID, policy
 		data, _ := json.Marshal(httpBody)
 		a1.Logger.Debug("Marshaled String : %+v", string(data))
 		a1.Logger.Debug("key   : %+v", instancekey)
-		success, err1 := rh.db.SetIf(a1MediatorNs, instancekey, instanceMap[instancekey], string(data))
-		if err1 != nil {
-			a1.Logger.Error("error2 :%+v", err1)
-			return operation, err1
+		success, err := rh.db.SetIf(a1MediatorNs, instancekey, instanceMap[instancekey], string(data))
+		if err != nil {
+			a1.Logger.Error("error2 :%+v", err)
+			return operation, err
 		}
 		if !success {
 			a1.Logger.Debug("Policy instance %+v already exist", policyInstanceID)
 			return operation, InstanceAlreadyError
+		}
+
+		if len(notificationDestination) > 0 {
+			if err = rh.db.Set(a1MediatorNs, notificationDestinationkey, notificationDestination); err != nil {
+				a1.Logger.Error("error3 :%+v", err)
+				return operation, err
+			}
 		}
 	} else {
 		data, _ := json.Marshal(httpBody)
@@ -324,10 +335,15 @@ func (rh *Resthook) storePolicyInstance(policyTypeId models.PolicyTypeID, policy
 		a1.Logger.Debug("policyinstancetype map : %+v", instance_map[1])
 		a1.Logger.Debug("policyinstancetype to create : %+v", instance_map)
 
-		err1 := rh.db.Set(a1MediatorNs, instancekey, string(data))
-		if err1 != nil {
-			a1.Logger.Error("error1 :%+v", err1)
-			return operation, err1
+		if err = rh.db.Set(a1MediatorNs, instancekey, string(data)); err != nil {
+			a1.Logger.Error("error4 :%+v", err)
+			return operation, err
+		}
+		if len(notificationDestination) > 0 {
+			if err := rh.db.Set(a1MediatorNs, notificationDestinationkey, notificationDestination); err != nil {
+				a1.Logger.Error("error :%+v", err)
+				return operation, err
+			}
 		}
 	}
 	a1.Logger.Debug("Policy Instance created ")
@@ -359,7 +375,7 @@ func (rh *Resthook) storePolicyInstanceMetadata(policyTypeId models.PolicyTypeID
 	return true, nil
 }
 
-func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}) error {
+func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID, httpBody interface{}, notificationDestination string) error {
 	a1.Logger.Debug("CreatePolicyInstance function")
 	//  validate the PUT against the schema
 	var policyTypeSchema *models.PolicyTypeSchema
@@ -379,7 +395,7 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	isvalid := validate(httpBodyString, schemaString)
 	if isvalid {
 		var operation string
-		operation, err = rh.storePolicyInstance(policyTypeId, policyInstanceID, httpBody)
+		operation, err = rh.storePolicyInstance(policyTypeId, policyInstanceID, httpBody, notificationDestination)
 		if err != nil {
 			a1.Logger.Error("error :%+v", err)
 			return err
@@ -593,8 +609,9 @@ func (rh *Resthook) getPolicyInstanceStatus(policyTypeId models.PolicyTypeID, po
 func (rh *Resthook) GetPolicyInstanceStatus(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) (*a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody, error) {
 	err := rh.instanceValidity(policyTypeId, policyInstanceID)
 	policyInstanceStatus := a1_mediator.A1ControllerGetPolicyInstanceStatusOKBody{}
-	policyInstanceStatus.InstanceStatus = "NOT IN EFFECT"
-	if err != nil && err == policyInstanceNotFoundError || err == policyTypeNotFoundError {
+	policyInstanceStatus.EnforceStatus = "NOT_ENFORCED"
+	policyInstanceStatus.EnforceReason = "OTHER_REASON"
+	if err != nil && (err == policyInstanceNotFoundError || err == policyTypeNotFoundError) {
 		return &policyInstanceStatus, err
 	}
 	metadata, err := rh.getMetaData(policyTypeId, policyInstanceID)
@@ -614,13 +631,13 @@ func (rh *Resthook) GetPolicyInstanceStatus(policyTypeId models.PolicyTypeID, po
 		//this error maps to 503 error but can be mapped to 500: internal error
 		return &policyInstanceStatus, err
 	}
-	resp, err := rh.getPolicyInstanceStatus(policyTypeId, policyInstanceID)
-	if err != nil || (err == nil && resp == false) {
+	enforced, err := rh.getPolicyInstanceStatus(policyTypeId, policyInstanceID)
+	if err != nil || (err == nil && !enforced) {
 		a1.Logger.Error("marshal error : %v", err)
 		return &policyInstanceStatus, err
-	} else if policyInstanceStatus.HasBeenDeleted == true {
-		policyInstanceStatus.InstanceStatus = "IN EFFECT"
 	}
+	policyInstanceStatus.EnforceStatus = "ENFORCED"
+	policyInstanceStatus.EnforceReason = ""
 	return &policyInstanceStatus, nil
 }
 
@@ -656,9 +673,22 @@ func (rh *Resthook) deleteInstancedata(policyTypeId models.PolicyTypeID, policyI
 	keys[0] = instancekey
 	err := rh.db.Remove(a1MediatorNs, keys[:])
 	if err != nil {
-		a1.Logger.Error("error in deleting policy type err: %v", err)
+		a1.Logger.Error("error in deleting policy instance err: %v", err)
 		return err
 	}
+	return nil
+}
+
+func (rh *Resthook) deleteNotificationDestination(policyTypeId models.PolicyTypeID, policyInstanceID models.PolicyInstanceID) error {
+	var keys [1]string
+	notificationDestinationkey := a1NotificationDestinationPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
+	keys[0] = notificationDestinationkey
+	err := rh.db.Remove(a1MediatorNs, keys[:])
+	if err != nil {
+		a1.Logger.Error("error in deleting notificationDestination err: %v", err)
+		return err
+	}
+
 	return nil
 }
 
@@ -708,6 +738,8 @@ func (rh *Resthook) DeletePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	rh.deleteMetadata(policyTypeId, policyInstanceID)
 
 	rh.deleteInstancedata(policyTypeId, policyInstanceID)
+
+	rh.deleteNotificationDestination(policyTypeId, policyInstanceID)
 
 	rh.storeDeletedPolicyInstanceMetadata(policyTypeId, policyInstanceID, creation_timestamp.(string))
 

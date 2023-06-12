@@ -49,7 +49,7 @@ func NewA1ControllerGetPolicyInstance(ctx *middleware.Context, handler A1Control
 	return &A1ControllerGetPolicyInstance{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerGetPolicyInstance swagger:route GET /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerGetPolicyInstance
+/* A1ControllerGetPolicyInstance swagger:route GET /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerGetPolicyInstance
 
 Retrieve the policy instance
 
@@ -63,17 +63,15 @@ type A1ControllerGetPolicyInstance struct {
 func (o *A1ControllerGetPolicyInstance) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerGetPolicyInstanceParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

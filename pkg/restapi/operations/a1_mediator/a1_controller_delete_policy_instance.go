@@ -49,7 +49,7 @@ func NewA1ControllerDeletePolicyInstance(ctx *middleware.Context, handler A1Cont
 	return &A1ControllerDeletePolicyInstance{Context: ctx, Handler: handler}
 }
 
-/*A1ControllerDeletePolicyInstance swagger:route DELETE /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerDeletePolicyInstance
+/* A1ControllerDeletePolicyInstance swagger:route DELETE /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerDeletePolicyInstance
 
 Delete this policy instance
 
@@ -63,17 +63,15 @@ type A1ControllerDeletePolicyInstance struct {
 func (o *A1ControllerDeletePolicyInstance) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewA1ControllerDeletePolicyInstanceParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

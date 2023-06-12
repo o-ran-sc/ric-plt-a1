@@ -45,7 +45,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 	"golang.org/x/net/netutil"
 
-       "gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi/operations"
+	"gerrit.o-ran-sc.org/r/ric-plt/a1/pkg/restapi/operations"
 )
 
 const (
@@ -324,9 +324,6 @@ func (s *Server) Serve() (err error) {
 			// this happens with a wrong custom TLS configurator
 			s.Fatalf("no certificate was configured for TLS")
 		}
-
-		// must have at least one certificate or panics
-		httpsServer.TLSConfig.BuildNameToCertificate()
 
 		configureServer(httpsServer, "https", s.httpsServerL.Addr().String())
 

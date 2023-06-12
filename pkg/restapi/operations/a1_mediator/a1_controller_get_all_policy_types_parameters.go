@@ -33,7 +33,8 @@ import (
 )
 
 // NewA1ControllerGetAllPolicyTypesParams creates a new A1ControllerGetAllPolicyTypesParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewA1ControllerGetAllPolicyTypesParams() A1ControllerGetAllPolicyTypesParams {
 
 	return A1ControllerGetAllPolicyTypesParams{}
