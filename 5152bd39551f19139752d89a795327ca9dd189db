@@ -16,6 +16,24 @@
       "message": "Looks good to me ,\nCould you mention the version of swagger and the command used  for generation of code in comments to avoid this for future development.",
       "revId": "5152bd39551f19139752d89a795327ca9dd189db",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15d04e7d_f5f1e8c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002112
+      },
+      "writtenOn": "2023-06-13T13:03:22Z",
+      "side": 1,
+      "message": "Code compilation for A1:\n\ndocker pull quay.io/goswagger/swagger:v0.29.0  (In future, we can use latest tag)\n\nalias swagger\u003d\u0027docker run -rm -it  -user $(id -u):$(id -g) -e GOPATH\u003d$(go env GOPATH):/go -v $HOME:$HOME -w $(pwd) quay.io/goswagger/swagger\u0027\n\nswagger version\nversion: v0.29.0\n\ncd \u0027oran-sc/a1\u0027\nswagger generate server -spec\u003dapi/swagger.yaml -name A1 --target\u003dpkg --exclude-main\n\n\n1) In Auto-generation – the “Samsung” – Copyright information is added after “Auto-generation” – So this becomes a manual step for everyone – to keep back the Samsung information. Maybe we need a different mechanism here.\n2) Auto compilation changes the content of “pkg/restapi/operations/a1_mediator/a1_controller_get_healthcheck_responses.go” – Where we need to take code from latest repo. (Not the auto-generated code)",
+      "parentUuid": "db555376_c51cbbca",
+      "revId": "5152bd39551f19139752d89a795327ca9dd189db",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
