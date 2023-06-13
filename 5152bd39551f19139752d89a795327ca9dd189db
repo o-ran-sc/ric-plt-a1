@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db555376_c51cbbca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-06-13T07:36:08Z",
+      "side": 1,
+      "message": "Looks good to me ,\nCould you mention the version of swagger and the command used  for generation of code in comments to avoid this for future development.",
+      "revId": "5152bd39551f19139752d89a795327ca9dd189db",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
