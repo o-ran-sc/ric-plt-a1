@@ -64,6 +64,6 @@ func ParseConfiguration() *Configuration {
 	config.MaxRetryOnFailure = viper.GetInt("MAX_RETRY_ON_FAILURE")
 	viper.SetDefault("MAX_RETRY_ON_FAILURE", 1)
 	config.Port = viper.GetInt("PORT")
-	viper.SetDefault("PORT", 4561)
+	viper.SetDefault("PORT", 4562)
 	return &config
 }
