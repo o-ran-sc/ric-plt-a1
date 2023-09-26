@@ -36,5 +36,5 @@ func TestParseConfigurationSuccess(t *testing.T) {
 	assert.Equal(t, false, config.LowLatency)
 	assert.Equal(t, false, config.FastAck)
 	assert.Equal(t, 1, config.MaxRetryOnFailure)
-	assert.Equal(t, 4561, config.Port)
+	assert.Equal(t, 4562, config.Port)
 }
