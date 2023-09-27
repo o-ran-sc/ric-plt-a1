@@ -16,6 +16,24 @@
       "message": "There were two more places which I think should be changed to 4562. The port 4562 is also what is used in our ric-dep based deployment. \n\nAlexandre, could you confirm my additions (+1). Naman, I think it woudl be good if you can also double-check and give a +1.",
       "revId": "899af56b1d7bf0b289498f63834e2356646c2770",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8812a0b4_6dcc7bd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001074
+      },
+      "writtenOn": "2023-09-27T12:53:08Z",
+      "side": 1,
+      "message": "The ric-dep is correct. The only problem is in the config.yaml file that is built into the container image.\nMaybe a good idea would be change A1 mediator to use RMR port set via configmap defined in ric-dep.\nLet me know if you want that I include this change in this commit.",
+      "parentUuid": "766c1a50_ed7d97fd",
+      "revId": "899af56b1d7bf0b289498f63834e2356646c2770",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
