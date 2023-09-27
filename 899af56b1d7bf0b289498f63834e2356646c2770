@@ -34,6 +34,24 @@
       "parentUuid": "766c1a50_ed7d97fd",
       "revId": "899af56b1d7bf0b289498f63834e2356646c2770",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aae4209_998f8114",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000108
+      },
+      "writtenOn": "2023-09-27T14:04:49Z",
+      "side": 1,
+      "message": "Let\u0027s stick with current solution and only correct config.yaml. I think this is rarely changed and configmap is more for something that is frequently changed. So I am fine with current patchset.",
+      "parentUuid": "8812a0b4_6dcc7bd4",
+      "revId": "899af56b1d7bf0b289498f63834e2356646c2770",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
