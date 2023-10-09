@@ -63,7 +63,7 @@ func (o *A1ControllerGetPolicyInstanceStatusURL) SetBasePath(bp string) {
 func (o *A1ControllerGetPolicyInstanceStatusURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}/status"
+	var _path = "/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}/status"
 
 	policyInstanceID := o.PolicyInstanceID
 	if policyInstanceID != "" {

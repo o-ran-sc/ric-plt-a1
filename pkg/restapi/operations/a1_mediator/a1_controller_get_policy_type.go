@@ -49,7 +49,7 @@ func NewA1ControllerGetPolicyType(ctx *middleware.Context, handler A1ControllerG
 	return &A1ControllerGetPolicyType{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerGetPolicyType swagger:route GET /a1-p/policytypes/{policy_type_id} A1 Mediator a1ControllerGetPolicyType
+/* A1ControllerGetPolicyType swagger:route GET /A1-P/v2/policytypes/{policy_type_id} A1 Mediator a1ControllerGetPolicyType
 
 Get this policy type
 

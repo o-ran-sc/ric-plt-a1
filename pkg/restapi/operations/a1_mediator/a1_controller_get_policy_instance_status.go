@@ -55,7 +55,7 @@ func NewA1ControllerGetPolicyInstanceStatus(ctx *middleware.Context, handler A1C
 	return &A1ControllerGetPolicyInstanceStatus{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerGetPolicyInstanceStatus swagger:route GET /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}/status A1 Mediator a1ControllerGetPolicyInstanceStatus
+/* A1ControllerGetPolicyInstanceStatus swagger:route GET /A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}/status A1 Mediator a1ControllerGetPolicyInstanceStatus
 
 Retrieve the policy instance status across all handlers of the policy If this endpoint returns successfully (200), it is either IN EFFECT or NOT IN EFFECT. IN EFFECT is returned if at least one policy handler in the RIC is implementing the policy NOT IN EFFECT is returned otherwise If a policy instance is successfully deleted, this endpoint will return a 404 (not a 200)
 

@@ -49,7 +49,7 @@ func NewA1ControllerGetHealthcheck(ctx *middleware.Context, handler A1Controller
 	return &A1ControllerGetHealthcheck{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerGetHealthcheck swagger:route GET /a1-p/healthcheck A1 Mediator a1ControllerGetHealthcheck
+/* A1ControllerGetHealthcheck swagger:route GET /A1-P/v2/healthcheck A1 Mediator a1ControllerGetHealthcheck
 
 Perform a healthcheck on a1
 

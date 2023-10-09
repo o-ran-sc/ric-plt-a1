@@ -55,7 +55,7 @@ func (o *A1ControllerGetHealthcheckURL) SetBasePath(bp string) {
 func (o *A1ControllerGetHealthcheckURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/a1-p/healthcheck"
+	var _path = "/A1-P/v2/healthcheck"
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)

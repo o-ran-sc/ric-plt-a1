@@ -357,11 +357,11 @@ func (o *A1API) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}"] = a1_mediator.NewA1ControllerCreateOrReplacePolicyInstance(o.context, o.A1MediatorA1ControllerCreateOrReplacePolicyInstanceHandler)
+	o.handlers["PUT"]["/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}"] = a1_mediator.NewA1ControllerCreateOrReplacePolicyInstance(o.context, o.A1MediatorA1ControllerCreateOrReplacePolicyInstanceHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/a1-p/policytypes/{policy_type_id}"] = a1_mediator.NewA1ControllerCreatePolicyType(o.context, o.A1MediatorA1ControllerCreatePolicyTypeHandler)
+	o.handlers["PUT"]["/A1-P/v2/policytypes/{policy_type_id}"] = a1_mediator.NewA1ControllerCreatePolicyType(o.context, o.A1MediatorA1ControllerCreatePolicyTypeHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -369,35 +369,35 @@ func (o *A1API) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}"] = a1_mediator.NewA1ControllerDeletePolicyInstance(o.context, o.A1MediatorA1ControllerDeletePolicyInstanceHandler)
+	o.handlers["DELETE"]["/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}"] = a1_mediator.NewA1ControllerDeletePolicyInstance(o.context, o.A1MediatorA1ControllerDeletePolicyInstanceHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/a1-p/policytypes/{policy_type_id}"] = a1_mediator.NewA1ControllerDeletePolicyType(o.context, o.A1MediatorA1ControllerDeletePolicyTypeHandler)
+	o.handlers["DELETE"]["/A1-P/v2/policytypes/{policy_type_id}"] = a1_mediator.NewA1ControllerDeletePolicyType(o.context, o.A1MediatorA1ControllerDeletePolicyTypeHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/a1-p/policytypes/{policy_type_id}/policies"] = a1_mediator.NewA1ControllerGetAllInstancesForType(o.context, o.A1MediatorA1ControllerGetAllInstancesForTypeHandler)
+	o.handlers["GET"]["/A1-P/v2/policytypes/{policy_type_id}/policies"] = a1_mediator.NewA1ControllerGetAllInstancesForType(o.context, o.A1MediatorA1ControllerGetAllInstancesForTypeHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/a1-p/policytypes"] = a1_mediator.NewA1ControllerGetAllPolicyTypes(o.context, o.A1MediatorA1ControllerGetAllPolicyTypesHandler)
+	o.handlers["GET"]["/A1-P/v2/policytypes"] = a1_mediator.NewA1ControllerGetAllPolicyTypes(o.context, o.A1MediatorA1ControllerGetAllPolicyTypesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/a1-p/healthcheck"] = a1_mediator.NewA1ControllerGetHealthcheck(o.context, o.A1MediatorA1ControllerGetHealthcheckHandler)
+	o.handlers["GET"]["/A1-P/v2/healthcheck"] = a1_mediator.NewA1ControllerGetHealthcheck(o.context, o.A1MediatorA1ControllerGetHealthcheckHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}"] = a1_mediator.NewA1ControllerGetPolicyInstance(o.context, o.A1MediatorA1ControllerGetPolicyInstanceHandler)
+	o.handlers["GET"]["/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}"] = a1_mediator.NewA1ControllerGetPolicyInstance(o.context, o.A1MediatorA1ControllerGetPolicyInstanceHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}/status"] = a1_mediator.NewA1ControllerGetPolicyInstanceStatus(o.context, o.A1MediatorA1ControllerGetPolicyInstanceStatusHandler)
+	o.handlers["GET"]["/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}/status"] = a1_mediator.NewA1ControllerGetPolicyInstanceStatus(o.context, o.A1MediatorA1ControllerGetPolicyInstanceStatusHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/a1-p/policytypes/{policy_type_id}"] = a1_mediator.NewA1ControllerGetPolicyType(o.context, o.A1MediatorA1ControllerGetPolicyTypeHandler)
+	o.handlers["GET"]["/A1-P/v2/policytypes/{policy_type_id}"] = a1_mediator.NewA1ControllerGetPolicyType(o.context, o.A1MediatorA1ControllerGetPolicyTypeHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

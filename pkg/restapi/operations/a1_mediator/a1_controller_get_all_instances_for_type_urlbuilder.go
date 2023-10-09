@@ -62,7 +62,7 @@ func (o *A1ControllerGetAllInstancesForTypeURL) SetBasePath(bp string) {
 func (o *A1ControllerGetAllInstancesForTypeURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/a1-p/policytypes/{policy_type_id}/policies"
+	var _path = "/A1-P/v2/policytypes/{policy_type_id}/policies"
 
 	policyTypeID := swag.FormatInt64(o.PolicyTypeID)
 	if policyTypeID != "" {

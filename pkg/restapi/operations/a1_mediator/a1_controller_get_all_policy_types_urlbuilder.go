@@ -55,7 +55,7 @@ func (o *A1ControllerGetAllPolicyTypesURL) SetBasePath(bp string) {
 func (o *A1ControllerGetAllPolicyTypesURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/a1-p/policytypes"
+	var _path = "/A1-P/v2/policytypes"
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)

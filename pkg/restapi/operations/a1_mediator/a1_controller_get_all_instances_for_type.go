@@ -49,7 +49,7 @@ func NewA1ControllerGetAllInstancesForType(ctx *middleware.Context, handler A1Co
 	return &A1ControllerGetAllInstancesForType{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerGetAllInstancesForType swagger:route GET /a1-p/policytypes/{policy_type_id}/policies A1 Mediator a1ControllerGetAllInstancesForType
+/* A1ControllerGetAllInstancesForType swagger:route GET /A1-P/v2/policytypes/{policy_type_id}/policies A1 Mediator a1ControllerGetAllInstancesForType
 
 get a list of all policy instance ids for this policy type id
 

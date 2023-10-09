@@ -49,7 +49,7 @@ func NewA1ControllerCreatePolicyType(ctx *middleware.Context, handler A1Controll
 	return &A1ControllerCreatePolicyType{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerCreatePolicyType swagger:route PUT /a1-p/policytypes/{policy_type_id} A1 Mediator a1ControllerCreatePolicyType
+/* A1ControllerCreatePolicyType swagger:route PUT /A1-P/v2/policytypes/{policy_type_id} A1 Mediator a1ControllerCreatePolicyType
 
 Create a new policy type . Replace is not currently allowed; to replace, for now do a DELETE and then a PUT again.
 

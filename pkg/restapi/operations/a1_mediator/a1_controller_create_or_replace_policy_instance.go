@@ -49,7 +49,7 @@ func NewA1ControllerCreateOrReplacePolicyInstance(ctx *middleware.Context, handl
 	return &A1ControllerCreateOrReplacePolicyInstance{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerCreateOrReplacePolicyInstance swagger:route PUT /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerCreateOrReplacePolicyInstance
+/* A1ControllerCreateOrReplacePolicyInstance swagger:route PUT /A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerCreateOrReplacePolicyInstance
 
 Create or replace a policy instance of type policy_type_id. The schema of the PUT body is defined by the create_schema field of the policy type.
 

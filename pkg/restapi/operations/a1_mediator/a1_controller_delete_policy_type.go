@@ -49,7 +49,7 @@ func NewA1ControllerDeletePolicyType(ctx *middleware.Context, handler A1Controll
 	return &A1ControllerDeletePolicyType{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerDeletePolicyType swagger:route DELETE /a1-p/policytypes/{policy_type_id} A1 Mediator a1ControllerDeletePolicyType
+/* A1ControllerDeletePolicyType swagger:route DELETE /A1-P/v2/policytypes/{policy_type_id} A1 Mediator a1ControllerDeletePolicyType
 
 Delete this policy type. Can only be performed if there are no instances of this type
 

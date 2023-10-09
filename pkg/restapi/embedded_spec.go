@@ -44,7 +44,7 @@ func init() {
     "version": "2.1.0"
   },
   "paths": {
-    "/a1-p/healthcheck": {
+    "/A1-P/v2/healthcheck": {
       "get": {
         "description": "Perform a healthcheck on a1\n",
         "tags": [
@@ -58,7 +58,7 @@ func init() {
         }
       }
     },
-    "/a1-p/policytypes": {
+    "/A1-P/v2/policytypes": {
       "get": {
         "description": "Get a list of all registered policy type ids",
         "produces": [
@@ -90,7 +90,7 @@ func init() {
         }
       }
     },
-    "/a1-p/policytypes/{policy_type_id}": {
+    "/A1-P/v2/policytypes/{policy_type_id}": {
       "get": {
         "description": "Get this policy type\n",
         "produces": [
@@ -178,7 +178,7 @@ func init() {
         }
       ]
     },
-    "/a1-p/policytypes/{policy_type_id}/policies": {
+    "/A1-P/v2/policytypes/{policy_type_id}/policies": {
       "get": {
         "description": "get a list of all policy instance ids for this policy type id",
         "produces": [
@@ -221,7 +221,7 @@ func init() {
         }
       ]
     },
-    "/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}": {
+    "/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}": {
       "get": {
         "description": "Retrieve the policy instance\n",
         "produces": [
@@ -323,7 +323,7 @@ func init() {
         }
       ]
     },
-    "/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}/status": {
+    "/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}/status": {
       "get": {
         "description": "Retrieve the policy instance status across all handlers of the policy If this endpoint returns successfully (200), it is either IN EFFECT or NOT IN EFFECT. IN EFFECT is returned if at least one policy handler in the RIC is implementing the policy NOT IN EFFECT is returned otherwise If a policy instance is successfully deleted, this endpoint will return a 404 (not a 200)\n",
         "produces": [
@@ -465,7 +465,7 @@ func init() {
     "version": "2.1.0"
   },
   "paths": {
-    "/a1-p/healthcheck": {
+    "/A1-P/v2/healthcheck": {
       "get": {
         "description": "Perform a healthcheck on a1\n",
         "tags": [
@@ -479,7 +479,7 @@ func init() {
         }
       }
     },
-    "/a1-p/policytypes": {
+    "/A1-P/v2/policytypes": {
       "get": {
         "description": "Get a list of all registered policy type ids",
         "produces": [
@@ -511,7 +511,7 @@ func init() {
         }
       }
     },
-    "/a1-p/policytypes/{policy_type_id}": {
+    "/A1-P/v2/policytypes/{policy_type_id}": {
       "get": {
         "description": "Get this policy type\n",
         "produces": [
@@ -599,7 +599,7 @@ func init() {
         }
       ]
     },
-    "/a1-p/policytypes/{policy_type_id}/policies": {
+    "/A1-P/v2/policytypes/{policy_type_id}/policies": {
       "get": {
         "description": "get a list of all policy instance ids for this policy type id",
         "produces": [
@@ -642,7 +642,7 @@ func init() {
         }
       ]
     },
-    "/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}": {
+    "/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}": {
       "get": {
         "description": "Retrieve the policy instance\n",
         "produces": [
@@ -744,7 +744,7 @@ func init() {
         }
       ]
     },
-    "/a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id}/status": {
+    "/A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id}/status": {
       "get": {
         "description": "Retrieve the policy instance status across all handlers of the policy If this endpoint returns successfully (200), it is either IN EFFECT or NOT IN EFFECT. IN EFFECT is returned if at least one policy handler in the RIC is implementing the policy NOT IN EFFECT is returned otherwise If a policy instance is successfully deleted, this endpoint will return a 404 (not a 200)\n",
         "produces": [

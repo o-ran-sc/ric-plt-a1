@@ -49,7 +49,7 @@ func NewA1ControllerGetAllPolicyTypes(ctx *middleware.Context, handler A1Control
 	return &A1ControllerGetAllPolicyTypes{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerGetAllPolicyTypes swagger:route GET /a1-p/policytypes A1 Mediator a1ControllerGetAllPolicyTypes
+/* A1ControllerGetAllPolicyTypes swagger:route GET /A1-P/v2/policytypes A1 Mediator a1ControllerGetAllPolicyTypes
 
 Get a list of all registered policy type ids
 

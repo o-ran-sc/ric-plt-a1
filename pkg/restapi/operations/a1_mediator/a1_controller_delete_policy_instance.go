@@ -49,7 +49,7 @@ func NewA1ControllerDeletePolicyInstance(ctx *middleware.Context, handler A1Cont
 	return &A1ControllerDeletePolicyInstance{Context: ctx, Handler: handler}
 }
 
-/* A1ControllerDeletePolicyInstance swagger:route DELETE /a1-p/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerDeletePolicyInstance
+/* A1ControllerDeletePolicyInstance swagger:route DELETE /A1-P/v2/policytypes/{policy_type_id}/policies/{policy_instance_id} A1 Mediator a1ControllerDeletePolicyInstance
 
 Delete this policy instance
 
