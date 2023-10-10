@@ -5,7 +5,7 @@ test_name: test healthcheck
 stages:
   - name: test the a1 healthcheck
     request:
-      url: http://localhost:10000/a1-p/healthcheck
+      url: http://localhost:10000/A1-P/v2/healthcheck
       method: GET
     response:
       status_code: 200
@@ -17,14 +17,14 @@ test_name: test admission control
 stages:
   - name: type not there yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666
       method: GET
     response:
       status_code: 404
 
   - name: type list empty
     request:
-      url: http://localhost:10000/a1-p/policytypes
+      url: http://localhost:10000/A1-P/v2/policytypes
       method: GET
     response:
       status_code: 200
@@ -32,14 +32,14 @@ stages:
 
   - name: instance list 404
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies
       method: GET
     response:
       status_code: 404
 
   - name: put the type
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666
       method: PUT
       json:
         name: Admission Control
@@ -81,14 +81,14 @@ stages:
 
   - name: type there now
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666
       method: GET
     response:
       status_code: 200
 
   - name: now in type list
     request:
-      url: http://localhost:10000/a1-p/policytypes
+      url: http://localhost:10000/A1-P/v2/policytypes
       method: GET
     response:
       status_code: 200
@@ -96,7 +96,7 @@ stages:
 
   - name: instance list 200 but empty
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies
       method: GET
     response:
       status_code: 200
@@ -104,21 +104,21 @@ stages:
 
   - name: test the admission control policy get not there yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy
       method: GET
     response:
       status_code: 404
 
   - name: test the admission control policy status get not there yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy/status
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy/status
       method: GET
     response:
       status_code: 404
 
   - name: bad body for admission control policy
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy
       method: PUT
       json:
         not: "expected"
@@ -129,7 +129,7 @@ stages:
 
   - name: not a json
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy
       method: PUT
       data: "asdf"
     response:
@@ -138,7 +138,7 @@ stages:
   # put it properly
   - name: put the admission control policy instance
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy
       method: PUT
       json:
         class: 12
@@ -154,14 +154,14 @@ stages:
   - name: cant delete type with instances
     delay_before: 3  # wait for the type acks to come back first
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666
       method: DELETE
     response:
       status_code: 400
 
   - name: test the admission control policy get
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy
       method: GET
     response:
       status_code: 200
@@ -175,7 +175,7 @@ stages:
   - name: test the admission control policy status get
     delay_before: 10 # give it a few seconds for rmr
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy/status
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy/status
       method: GET
     response:
       status_code: 200
@@ -186,7 +186,7 @@ stages:
 
   - name: instance list 200 and contains the instance
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies
       method: GET
     response:
       status_code: 200
@@ -197,7 +197,7 @@ stages:
   - name: delete the instance
     delay_after: 4
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy
       method: DELETE
     response:
       status_code: 202
@@ -206,7 +206,7 @@ stages:
     delay_before: 3 # give it a few seconds for rmr
     delay_after: 10 # 3 + 10 > 10; that is, wait until t2 expires
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy/status
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy/status
       method: GET
     response:
       status_code: 200
@@ -218,7 +218,7 @@ stages:
 
   - name: instance list 200 but no instance
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies
       method: GET
     response:
       status_code: 200
@@ -226,42 +226,42 @@ stages:
 
   - name: cant get instance status
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy/status
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy/status
       method: GET
     response:
       status_code: 404
 
   - name: cant get instance
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666/policies/admission_control_policy
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666/policies/admission_control_policy
       method: GET
     response:
       status_code: 404
 
   - name: delete ac type
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666
       method: DELETE
     response:
       status_code: 204
 
   - name: cant delete again
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666
       method: DELETE
     response:
       status_code: 404
 
   - name: cant get
     request:
-      url: http://localhost:10000/a1-p/policytypes/6660666
+      url: http://localhost:10000/A1-P/v2/policytypes/6660666
       method: DELETE
     response:
       status_code: 404
 
   - name: empty type list
     request:
-      url: http://localhost:10000/a1-p/policytypes
+      url: http://localhost:10000/A1-P/v2/policytypes
       method: GET
     response:
       status_code: 200
@@ -276,14 +276,14 @@ stages:
 
   - name: test the delay policy type not there yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001
+      url: http://localhost:10000/A1-P/v2/policytypes/20001
       method: GET
     response:
       status_code: 404
 
   - name: not yet in type list
     request:
-      url: http://localhost:10000/a1-p/policytypes
+      url: http://localhost:10000/A1-P/v2/policytypes
       method: GET
     response:
       status_code: 200
@@ -291,14 +291,14 @@ stages:
 
   - name: instance list 404
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies
       method: GET
     response:
       status_code: 404
 
   - name: put the type
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001
+      url: http://localhost:10000/A1-P/v2/policytypes/20001
       method: PUT
       json:
         name: test policy
@@ -318,7 +318,7 @@ stages:
 
   - name: type there now
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001
+      url: http://localhost:10000/A1-P/v2/policytypes/20001
       method: GET
     response:
       status_code: 200
@@ -338,7 +338,7 @@ stages:
 
   - name: now in type list
     request:
-      url: http://localhost:10000/a1-p/policytypes
+      url: http://localhost:10000/A1-P/v2/policytypes
       method: GET
     response:
       status_code: 200
@@ -347,7 +347,7 @@ stages:
 
   - name: instance list 200 but empty
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies
       method: GET
     response:
       status_code: 200
@@ -355,21 +355,21 @@ stages:
 
   - name: test the delay policy instance get not there yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest
       method: GET
     response:
       status_code: 404
 
   - name: test the delay policy status get not there yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest/status
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest/status
       method: GET
     response:
       status_code: 404
 
   - name: bad body for delaytest
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest
       method: PUT
       json:
         not: "welcome"
@@ -378,7 +378,7 @@ stages:
 
   - name: create delay policy instance
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest
       method: PUT
       json:
         test: foo
@@ -389,7 +389,7 @@ stages:
 
   - name: test the delay status get, not in effect yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest/status
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest/status
       method: GET
     response:
       status_code: 200
@@ -400,7 +400,7 @@ stages:
 
   - name: test the delay policy get
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest
       method: GET
     response:
       status_code: 200
@@ -409,7 +409,7 @@ stages:
 
   - name: instance list 200 and there
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies
       method: GET
     response:
       status_code: 200
@@ -420,7 +420,7 @@ stages:
     max_retries: 3
     delay_before: 6  # give it a few seconds for rmr ; delay reciever sleeps for 5 seconds by default
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest/status
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest/status
       method: GET
     response:
       status_code: 200
@@ -432,14 +432,14 @@ stages:
   # DELETE the instance and make sure subsequent GETs return properly
   - name: delete the instance
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest
       method: DELETE
     response:
       status_code: 202
 
   - name: test the delay status get immediately
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest/status
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest/status
       method: GET
     response:
       status_code: 200
@@ -452,7 +452,7 @@ stages:
   - name: test the delay status get after delay but before timers
     delay_before: 7
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest/status
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest/status
       method: GET
     response:
       status_code: 200
@@ -465,7 +465,7 @@ stages:
   - name: test the delay status get after delay and after the timers
     delay_before: 7
     request:
-      url: http://localhost:10000/a1-p/policytypes/20001/policies/delaytest/status
+      url: http://localhost:10000/A1-P/v2/policytypes/20001/policies/delaytest/status
       method: GET
     response:
       status_code: 404
@@ -477,14 +477,14 @@ test_name: test query
 stages:
   - name: type not there yet
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001
       method: GET
     response:
       status_code: 404
 
   - name: put the type
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001
       method: PUT
       json:
         name: query test
@@ -504,14 +504,14 @@ stages:
 
   - name: type there now
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001
       method: GET
     response:
       status_code: 200
 
   - name: instance list 200 but empty
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001/policies
       method: GET
     response:
       status_code: 200
@@ -519,7 +519,7 @@ stages:
 
   - name: instance 1
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001/policies/qt1
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001/policies/qt1
       method: PUT
       json:
         foo: "bar1"
@@ -530,7 +530,7 @@ stages:
 
   - name: instance 2
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001/policies/qt2
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001/policies/qt2
       method: PUT
       json:
         foo: "bar2"
@@ -541,7 +541,7 @@ stages:
 
   - name: instance list
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001/policies
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001/policies
       method: GET
     response:
       status_code: 200
@@ -554,7 +554,7 @@ stages:
     max_retries: 100
     delay_before: 1
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001/policies/qt1/status
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001/policies/qt1/status
       method: GET
     response:
       status_code: 200
@@ -567,7 +567,7 @@ stages:
     max_retries: 100
     delay_before: 1
     request:
-      url: http://localhost:10000/a1-p/policytypes/1006001/policies/qt2/status
+      url: http://localhost:10000/A1-P/v2/policytypes/1006001/policies/qt2/status
       method: GET
     response:
       status_code: 200
@@ -584,7 +584,7 @@ stages:
 
   - name: put the type
     request:
-      url: http://localhost:10000/a1-p/policytypes/20002
+      url: http://localhost:10000/A1-P/v2/policytypes/20002
       method: PUT
       json:
         name: test policy
@@ -602,7 +602,7 @@ stages:
 
   - name: create policy instance that will go to a broken routing endpoint
     request:
-      url: http://localhost:10000/a1-p/policytypes/20002/policies/brokentest
+      url: http://localhost:10000/A1-P/v2/policytypes/20002/policies/brokentest
       method: PUT
       json:
         test: foo
@@ -613,7 +613,7 @@ stages:
 
   - name: should be no status
     request:
-      url: http://localhost:10000/a1-p/policytypes/20002/policies/brokentest/status
+      url: http://localhost:10000/A1-P/v2/policytypes/20002/policies/brokentest/status
       method: GET
     response:
       status_code: 200
@@ -629,21 +629,21 @@ stages:
 
   - name: bad type get
     request:
-      url: http://localhost:10000/a1-p/policytypes/20666
+      url: http://localhost:10000/A1-P/v2/policytypes/20666
       method: GET
     response:
       status_code: 404
 
   - name: bad instance get bad type
     request:
-      url: http://localhost:10000/a1-p/policytypes/20666/policies/nonono
+      url: http://localhost:10000/A1-P/v2/policytypes/20666/policies/nonono
       method: GET
     response:
       status_code: 404
 
   - name: bad int range 1
     request:
-      url: http://localhost:10000/a1-p/policytypes/0
+      url: http://localhost:10000/A1-P/v2/policytypes/0
       method: PUT
       json:
         name: test policy
@@ -657,7 +657,7 @@ stages:
 
   - name: bad int range 2
     request:
-      url: http://localhost:10000/a1-p/policytypes/2147483648
+      url: http://localhost:10000/A1-P/v2/policytypes/2147483648
       method: PUT
       json:
         name: test policy
