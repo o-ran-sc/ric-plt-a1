@@ -28,7 +28,7 @@ repository and exposing the server's HTTP port on the Docker host::
 
 Then test the server with an invocation such as this::
 
-    curl localhost:10000/a1-p/healthcheck
+    curl localhost:10000/A1-P/v2/healthcheck
 
 
 Integration testing

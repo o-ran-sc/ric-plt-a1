@@ -42,7 +42,7 @@ the curl command-line tool to send the request::
 
 .. code::
     
-    $ curl -X PUT --header "Content-Type: application/json" --data-raw @create.json "http://localhost/a1-p/policytypes/20008"
+    $ curl -X PUT --header "Content-Type: application/json" --data-raw @create.json "http://localhost/A1-P/v2/policytypes/20008"
 
 
 Send the following JSON to create an instance of policy type 20008:
@@ -58,7 +58,7 @@ For example, you can use the curl command-line tool to send this request::
 
 .. code::
 
-    $ curl -X PUT --header "Content-Type: application/json" --data '{"threshold" : 5}' "http://localhost/a1-p/policytypes/20008/policies/tsapolicy145"
+    $ curl -X PUT --header "Content-Type: application/json" --data '{"threshold" : 5}' "http://localhost/A1-P/v2/policytypes/20008/policies/tsapolicy145"
 
 
 Integrating Xapps with A1
@@ -102,7 +102,7 @@ Following are the api and the response::
 
 .. code::
 
-    $ curl -v -X GET "http://localhost/a1-p/healthcheck"
+    $ curl -v -X GET "http://localhost/A1-P/v2/healthcheck"
 
 .. code-block:: yaml  
 
@@ -112,7 +112,7 @@ Following are the api and the response::
 
 .. code::
 
-    $ curl -X GET "http://localhost/a1-p/policytypes/"
+    $ curl -X GET "http://localhost/A1-P/v2/policytypes/"
 
 .. code-block:: yaml
 
@@ -123,7 +123,7 @@ Following are the api and the response::
 
 .. code::
 
-    $ curl -s -X GET "http://localhost/a1-p/policytypes/20001" | jq .
+    $ curl -s -X GET "http://localhost/A1-P/v2/policytypes/20001" | jq .
 
 .. code-block:: yaml
 
@@ -163,7 +163,7 @@ Following are the api and the response::
 
 .. code::
 
-    $ curl -s -X GET "http://localhost/a1-p/policytypes/20001/policies/" | jq .
+    $ curl -s -X GET "http://localhost/A1-P/v2/policytypes/20001/policies/" | jq .
 
 .. code-block:: yaml
   
@@ -176,7 +176,7 @@ Following are the api and the response::
 
 .. code::
 
-    $ curl -s -X GET "http://localhost/a1-p/policytypes/20001/policies/1234" | jq .
+    $ curl -s -X GET "http://localhost/A1-P/v2/policytypes/20001/policies/1234" | jq .
 
 .. code-block:: yaml
 
@@ -191,7 +191,7 @@ Following are the api and the response::
 
 .. code::
 
-    $ curl -X PUT "http://localhost/a1-p/policytypes/21003/" -H "Content-Type: application/json" -d @policy_schema_ratecontrol.json
+    $ curl -X PUT "http://localhost/A1-P/v2/policytypes/21003/" -H "Content-Type: application/json" -d @policy_schema_ratecontrol.json
 
 
     $ cat policy_schema_ratecontrol.json
@@ -321,7 +321,7 @@ Following are the api and the response::
 
 .. code::
 
-    $ curl -X PUT "http://localhost/a1-p/policytypes/21003/policies/1234" -H "Content-Type: application/json" -d @policy_instance_ratecontrol.json
+    $ curl -X PUT "http://localhost/A1-P/v2/policytypes/21003/policies/1234" -H "Content-Type: application/json" -d @policy_instance_ratecontrol.json
     
     $ cat policy_instance_ratecontrol.json
 
@@ -340,7 +340,7 @@ Following are the api and the response::
     
 .. code::
 
-    $ curl -s -X GET "http://localhost/a1-p/policytypes/21004/policies/1235/status" | jq .
+    $ curl -s -X GET "http://localhost/A1-P/v2/policytypes/21004/policies/1235/status" | jq .
 
 .. code-block:: yaml
   
@@ -354,13 +354,13 @@ Following are the api and the response::
     
 .. code::
 
-    $ curl -s -X DELETE "http://localhost/a1-p/policytypes/21004/"
+    $ curl -s -X DELETE "http://localhost/A1-P/v2/policytypes/21004/"
 
 #. Delete policy instance
     
 .. code::
 
-    $ curl -s -X DELETE "http://localhost/a1-p/policytypes/21004/policies/1234/"
+    $ curl -s -X DELETE "http://localhost/A1-P/v2/policytypes/21004/policies/1234/"
 
 #. A1-EI data delivery for a job id:
 

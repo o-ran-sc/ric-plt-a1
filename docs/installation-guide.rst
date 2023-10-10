@@ -52,4 +52,4 @@ Storage Data Layer (SDL) service is not available or has not been mocked as show
 
 ::
 
-    curl docker-host-name-or-ip:10000/a1-p/healthcheck
+    curl docker-host-name-or-ip:10000/A1-P/v2/healthcheck

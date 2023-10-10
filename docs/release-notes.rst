@@ -294,7 +294,7 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
 
 ::
 
-   * Rename all /ric/ URLs to be consistent with requirements of /a1-p/
+   * Rename all /ric/ URLs to be consistent with requirements of /A1-P/v2/
 
 
 [0.9.0] - 7/22/2019
