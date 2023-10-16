@@ -138,7 +138,7 @@ func (rh *Resthook) GetAllPolicyType() []models.PolicyTypeID {
 	return policyTypeIDs
 }
 
-func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.PolicyTypeSchema {
+func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) (*models.PolicyTypeSchema, error) {
 	a1.Logger.Debug("GetPolicyType1")
 
 	var policytypeschema *models.PolicyTypeSchema
@@ -155,17 +155,17 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 
 	if len(valmap) == 0 {
 		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
-		return policytypeschema
+		return policytypeschema, policyTypeNotFoundError
 	}
 
 	if err != nil {
 		a1.Logger.Error("error in retrieving policy type. err: %v", err)
-		return nil
+		return nil,policyTypeNotFoundError
 	}
 
 	if valmap[key] == nil {
 		a1.Logger.Error("policy type Not Present for policyid : %v", policyTypeId)
-		return policytypeschema
+		return policytypeschema,policyTypeNotFoundError
 	}
 
 	a1.Logger.Debug("keysmap : %+v", valmap[key])
@@ -178,7 +178,7 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 	valToUnmarshall, err := strconv.Unquote(valkey)
 	if err != nil {
 		a1.Logger.Error("unquote error : %+v", err)
-		return nil
+		return nil,policyTypeNotFoundError
 	}
 
 	a1.Logger.Debug("Policy type for %+v :  %+v", key, string(valToUnmarshall))
@@ -188,7 +188,7 @@ func (rh *Resthook) GetPolicyType(policyTypeId models.PolicyTypeID) *models.Poli
 	a1.Logger.Debug(" Unmarshalled json : %+v", (errunm))
 	a1.Logger.Debug("Policy type Name :  %v", (item.Name))
 
-	return &item
+	return &item,nil
 }
 
 func (rh *Resthook) CreatePolicyType(policyTypeId models.PolicyTypeID, httprequest models.PolicyTypeSchema) error {
@@ -296,7 +296,7 @@ func (rh *Resthook) storePolicyInstance(policyTypeId models.PolicyTypeID, policy
 
 	instancekey := a1InstancePrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
 	notificationDestinationkey := a1NotificationDestinationPrefix + strconv.FormatInt((int64(policyTypeId)), 10) + "." + string(policyInstanceID)
-	keys[0] = typekey
+	keys[0] = instancekey
 	instanceMap, err := rh.db.Get(a1MediatorNs, keys[:])
 	if err != nil {
 		a1.Logger.Error("policy type error : %v", err)
@@ -379,7 +379,11 @@ func (rh *Resthook) CreatePolicyInstance(policyTypeId models.PolicyTypeID, polic
 	a1.Logger.Debug("CreatePolicyInstance function")
 	//  validate the PUT against the schema
 	var policyTypeSchema *models.PolicyTypeSchema
-	policyTypeSchema = rh.GetPolicyType(policyTypeId)
+	policyTypeSchema, err := rh.GetPolicyType(policyTypeId)
+	if err != nil {
+		a1.Logger.Error("error : %+v", err)
+		return err
+	}
 	schemaStr, err := json.Marshal(policyTypeSchema.CreateSchema)
 	if err != nil {
 		a1.Logger.Error("Json Marshal error : %+v", err)
