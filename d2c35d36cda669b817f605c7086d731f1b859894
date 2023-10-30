@@ -16,6 +16,23 @@
       "message": "Kindly review and merge , releasing new image for latest url update as per specs",
       "revId": "d2c35d36cda669b817f605c7086d731f1b859894",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edd0a474_5b42445c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-10-30T15:41:20Z",
+      "side": 1,
+      "message": "recheck",
+      "revId": "d2c35d36cda669b817f605c7086d731f1b859894",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
