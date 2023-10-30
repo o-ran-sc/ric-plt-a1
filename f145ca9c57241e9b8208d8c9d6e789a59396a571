@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de4e1e3b_64b087a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-10-30T15:36:18Z",
+      "side": 1,
+      "message": "Kindly review and merge , releasing new image for latest url update as per specs",
+      "revId": "f145ca9c57241e9b8208d8c9d6e789a59396a571",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
