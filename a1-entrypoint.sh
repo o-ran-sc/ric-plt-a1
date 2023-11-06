@@ -15,5 +15,5 @@
 #   limitations under the License.
 
 # Start services, etc.
-/opt/a1-mediator/a1 -f /opt/ric/config/config.yaml
+/opt/a1-mediator/a1 -f /opt/a1-mediator/config.yaml
 
