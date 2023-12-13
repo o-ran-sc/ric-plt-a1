@@ -16,6 +16,24 @@
       "message": "Suggest to revert this change. \nThe URL endpoints change, but the data model has not been updated to comply with the specification.",
       "revId": "6ea99a47ed6f33ddce8a10329fb12d9c8c5ce3f8",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39c2b36e_cf527caa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001361
+      },
+      "writtenOn": "2023-12-13T13:29:42Z",
+      "side": 1,
+      "message": "Hi John , could you please clarify which data model you are referring to?",
+      "parentUuid": "90aeb03b_dd1fce07",
+      "revId": "6ea99a47ed6f33ddce8a10329fb12d9c8c5ce3f8",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ],
   "submitRequirementResults": [
