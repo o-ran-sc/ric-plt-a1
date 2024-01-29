@@ -34,11 +34,11 @@ repositories:
     - ric-plt/a1
 committers:
     - <<: *oran_ric_plt_a1_ptl
-    - name: 'Scott Daniels'
-      email: 'daniels@research.att.com'
-      company: 'research.att'
-      id: 'EScottDaniels'
-      timezone: 'Unknown/Unknown'
+    - name: 'Rimjhim Verma'
+      email: 'rimjhim.verma@nokia.com'
+      company: 'nokia'
+      id: 'rimverma'
+      timezone: 'Asia/Kolkata'
     - name: 'Naman Gupta'
       email: 'naman.gupta@samsung.com'
       company: 'samsung'
@@ -53,6 +53,12 @@ tsc:
     # yamllint disable rule:line-length
     approval: 'missing'
     changes:
+        - type: 'Promotion'
+          name: 'Rimjhim Verma'
+          link: ''
+        - type: 'Removal'
+          name: 'Scott Daniels'
+          link: ''
         - type: 'Removal'
           name: 'Tommy Carpenter'
           link: 'https://lists.o-ran-sc.org/g/toc/topic/removal_of_committer_tommy_c/74795766?p=,,,100,0,0,0::recentpostdate%2Fsticky,,,100,2,0,74795766'
