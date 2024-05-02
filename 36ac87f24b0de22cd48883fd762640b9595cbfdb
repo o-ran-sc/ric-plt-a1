@@ -1,0 +1,8 @@
+Verified+1: ORAN Jobbuilder <releng+oran-jobbuilder@linuxfoundation.org>
+Verified+1: ORAN Required GHA <releng+oran.required.gha@linuxfoundation.org>
+Code-Review+2: RIMJHIM VERMA <rimjhim.verma@nokia.com>
+Submitted-by: RIMJHIM VERMA <rimjhim.verma@nokia.com>
+Submitted-at: Thu, 02 May 2024 06:52:16 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/ric-plt/a1/+/12215
+Project: ric-plt/a1
+Branch: refs/heads/master
