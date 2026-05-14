@@ -52,7 +52,7 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
 * Add tiny RMR routing table for use in demo and test
 * Extend documentation for running a container locally
 * Add documentation of start/init parameters to _RmrLoop class
-* Add new environment variable USE_FAKE_SDL (`RIC-351 <https://jira.o-ran-sc.org/browse/RIC-351>`_)
+* Add new environment variable USE_FAKE_SDL (`RIC-351 <https://lf-o-ran-sc.atlassian.net/jira/browse/RIC-351>`_)
 * Respond with error if policy type ID differs from ID in object on create
 * Upgrade integration tests to use Tavern version 1.0.0
 
@@ -120,8 +120,8 @@ and this project adheres to `Semantic Versioning <http://semver.org/>`__.
 * Represents a resillent version of 2.0.0 that uses Redis for persistence
 * Now relies on SDL and dbaas; SDL is the python interface library to dbaas
 * Adds a 503 http code to nearly all http methods, as A1 now depends on an upstream system
-* Integration tests have a copy of a dbaas helm chart, however the goal is to simplify that deployment per https://jira.o-ran-sc.org/browse/RIC-45
-* Unit tests have a mockup of SDL, however again the goal is to simplify as SDL grows per https://jira.o-ran-sc.org/browse/RIC-44
+* Integration tests have a copy of a dbaas helm chart, however the goal is to simplify that deployment per https://lf-o-ran-sc.atlassian.net/jira/browse/RIC-45
+* Unit tests have a mockup of SDL, however again the goal is to simplify as SDL grows per https://lf-o-ran-sc.atlassian.net/jira/browse/RIC-44
 
 
 [2.0.0] - 12/9/2019
